@@ -12,3 +12,4 @@ yarn-error.log
 .env
 /flask-server/venv
 /public/uploads/video
+/storage/framework/views
