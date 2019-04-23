@@ -1,0 +1,423 @@
+/* phan header*/
+
+#usrname,
+#psw {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    width: 100%;
+}
+
+#food-name,
+#cooking-steps {
+    border-radius: 4px;
+    background-color: #e5e5e5;
+    color: black;
+    width: 100%;
+}
+
+#btn-signin,
+#btn-signup {
+    border-radius: 4px;
+    background-color: #3e5b77;
+    opacity: 0.8;
+}
+
+#btn-signin-cancel {
+    border-radius: 4px;
+    background-color: #db1313;
+    opacity: 0.8;
+    min-width: 70px;
+    height: 35px;
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+.modal-header,
+.close {
+    background-color: #3e5b77;
+    color: white !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-footer {
+    background-color: #f9f9f9;
+}
+
+
+/* post post*/
+
+#input-post-title {
+    background-color: #fafafa;
+    width: 100%;
+    color: black;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.textarea-post-post {
+    background-color: #fafafa;
+    width: 100%;
+    color: black;
+    border-radius: 4px;
+}
+
+.delete-post-post {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.delete-post-post:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.send-post-post {
+    border-radius: 4px;
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.send-post-post:hover {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.send-post-post:action {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.send-post-post:visited {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.send-post-post:focus {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.select-image-button-post-post {
+    border-radius: 30px;
+    background-color: #d6cca4;
+    width: 100px;
+    height: 34px;
+    min-width: 100px;
+    min-height: 34px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.select-image-button-post-post:hover {
+    border-radius: 30px;
+    background-color: #d6cca4;
+    width: 100px;
+    height: 34px;
+    min-width: 100px;
+    min-height: 34px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.select-post-post-type-dish {
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15 !important;
+    border: 1px solid #ccc !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
+    display: block !important;
+    width: 100% !important;
+    height: 34px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    color: #555 !important;
+    background-color: #fff !important;
+    border-radius: 4px !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+.select-post-post-food-category {
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15 !important;
+    border: 1px solid #ccc !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
+    display: block !important;
+    width: 100% !important;
+    height: 34px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    color: #555 !important;
+    background-color: #fff !important;
+    border-radius: 4px !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+
+/*.form-control {
+	background-color: white;
+}*/
+
+
+/* phan list bai post */
+
+.avatar-user {
+    min-width: 59px;
+    min-height: 59px;
+    width: 59px;
+    height: 59px;
+}
+
+.name-user-post {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
+.info-recipe-user-post {
+    font-size: 12px;
+    font-weight: 300
+}
+
+.user-post-title-p1 {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.user-post-title-p2 {
+    font-size: 13px;
+    font-style: italic;
+    margin-top: -15px;
+}
+
+.user-post-button-like {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    width: 20px;
+    height: 40px;
+    border-color: #fff;
+    text-align: center;
+    min-width: 70px;
+    margin-top: -10px;
+}
+
+.user-post-button-like:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.user-post-button-comment {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    width: 20px;
+    height: 40px;
+    border-color: #fff;
+    text-align: center;
+    min-width: 100px;
+    margin-top: -10px;
+}
+
+.user-post-button-comment:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.user-post-button-share {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    width: 20px;
+    height: 40px;
+    border-color: #fff;
+    text-align: center;
+    min-width: 100px;
+    margin-top: -10px;
+}
+
+.user-post-button-share:hover {
+    background-color: #fff;
+    color: black;
+}
+
+.user-post-react p {
+    padding-left: 10px;
+    color: #428bca;
+}
+
+.user-post-item-avatar-img {
+    width: 36.13;
+    height: 36.13;
+    min-height: 36.13;
+    min-width: 36.13;
+}
+
+.user-post-item-comment-username {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
+.user-post-reply-comment {
+    background-color: #fff;
+    width: 100%;
+    color: black;
+    border-radius: 4px;
+}
+
+.user-post-delete-reply-comment {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.user-post-delete-reply-comment:hover {
+    background-color: #fff;
+    color: black;
+    border: 0;
+}
+
+.user-post-answer-reply-comment {
+    border-radius: 4px;
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.user-post-answer-reply-comment:hover {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.user-post-answer-reply-comment:active {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.user-post-answer-reply-comment:visited {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+.user-post-review-comment-area {
+    background-color: #fff;
+    width: 100%;
+    color: black;
+    border-radius: 4px;
+}
+
+.user-post-delete-review-comment {
+    border-radius: 4px;
+    background-color: #fff;
+    color: black;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.user-post-delete-review-comment:hover {
+    background-color: #fff;
+    color: black;
+    min-width: 50px;
+}
+
+.user-post-answer-review-comment {
+    border-radius: 4px;
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+    min-width: 50px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.user-post-answer-review-comment:hover {
+    background-color: #428bca;
+    opacity: 80;
+    color: #fff;
+}
+
+
+/* like ,unlike*/
+
+.like {
+    color: #428bca;
+}
+
+.like:hover {
+    color: #428bca;
+}
+
+.unlike {
+    color: black;
+}
+
+.unlike:hover {
+    color: : black;
+}
+
+
+/* modal recipient*/
+
+.modal-recipient {
+    border-radius: 4px;
+    background-color: #cb202d;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.modal-recipient:hover {
+    background-color: #cb202d;
+}
+
+
+/* top chef*/
+
+.top-chef-title p {
+    font-weight: bold;
+    font-size: 18px;
+    font-style: inherit;
+    color: black;
+    margin-top: 10px;
+}
+
+.chef-info-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
+.chef-info-recipe {
+    font-size: 12px;
+    font-weight: 300;
+}

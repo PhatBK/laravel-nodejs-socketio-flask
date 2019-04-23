@@ -1,0 +1,41 @@
+/* phan header*/
+#usrname,#psw{
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+
+#food-name ,#cooking-steps {
+    border-radius: 4px;
+    background-color :#e5e5e5;
+    color: black;
+    width: 100%;
+}
+
+#btn-signin ,#btn-signup{
+	border-radius: 4px;
+	background-color: #3e5b77;
+	opacity:0.8;
+}
+
+#btn-signin-cancel {
+	border-radius: 4px;
+	background-color: #db1313;
+	opacity:0.8;
+	min-width: 70px;
+	height: 35px;
+	font-size: 15px;
+    margin-top: 0px;
+}
+
+.modal-header, .close {
+    background-color: #3e5b77;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-footer {
+    background-color: #f9f9f9;
+}
