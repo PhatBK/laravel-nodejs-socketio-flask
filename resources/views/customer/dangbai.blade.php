@@ -131,6 +131,7 @@
         </div>
 </div>
 </header> <!--End of header -->
+
 <section class="wide-box" style="margin-top: 20px ">
     <div class="container">
         <div class="col-md-8">
@@ -797,6 +798,119 @@
 <script src="vendor_customer/assets/js/dangbai.js"></script>
 <script src="vendor_customer/assets/js/modalHeader.js"></script>
 {{-- hết thư viện --}}
+{{-- Xử lý cookie--}}
+<script>
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires;
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function deleteCookie(cname) {
+        var result = true;
+        if (findCookie(cname)) {
+            document.cookie = cname + "=" + "" + "; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        return result;
+    }
+
+    function setCookieMy(cname, cvalue, exDate) {
+        document.cookie = cname + "=" + cvalue + ";" + "expires=Thu, 01 Jan 2020 00:00:00 GMT";
+    }
+
+    function findCookie(cname) {
+        var result = null;
+        var allCookie = document.cookie.split(';');
+        for (var i = 0; i < allCookie.length; i++) {
+            if (allCookie[i].split('=')[0] === cname) {
+                result = allCookie[i].split('=')[1];
+            }
+        }
+        return result;
+    };
+</script>
+{{--check user_id--}}
+@if(Auth::user())
+    <script>
+        var user_id = `{{ Auth::user()->id }}`;
+        var user_loged = true;
+        deleteCookie("user_id");
+    </script>
+@else
+    <script>
+        var user_id = findCookie("user_id") || null;
+        var user_loged = false;
+    </script>
+@endif
+
+<script>
+    var referer = document.referrer;
+    var mon_an_id_referrer = 0;
+
+    if (referer) {
+        var split_referrer = parseInt(referer.split('/').pop());
+        if (split_referrer == NaN) {
+            mon_an_id_referrer = 0;
+        }
+        if (Number.isInteger(split_referrer)) {
+            mon_an_id_referrer = split_referrer
+        } else {
+            mon_an_id_referrer = 0;
+        }
+    }
+</script>
+
+<script>
+    function sendKeySearch(data) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: 'user/logs/data/key-search',
+            data: {
+                'id_mon_an': data,
+                'user_id': user_id || findCookie("user_id"),
+                'user_loged': user_loged,
+                'mon_an_id_referrer': mon_an_id_referrer,
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.status) {
+                    if (!findCookie("user_id")) {
+                        setCookieMy("user_id", response.data, 1);
+                    }
+                }
+                if (user_loged) {
+                    deleteCookie("user_id");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+</script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajaxSetup({
@@ -857,11 +971,18 @@
                               var str="";
                               var list_monan=response;
                               for (var i=0; i < list_monan.length; i++) {
-                                str+=
-                                    "<a  href='chitietmonan/"+ list_monan[i].id +"' class='list-group-item'>"
-                                   +"<img src='uploads/monan/"+ list_monan[i].anh_monan +"' width='50px' height='50px' class='img-rounded'>"
-                                   +"<span class='text-info'>" + list_monan[i].ten_monan +"</span>"
-                                   +"</a>";
+                                  str +=
+                                      `
+                                         <a onclick="sendKeySearch(${list_monan[i].id})" href='chitietmonan/${list_monan[i].id}' class='list-group-item'>
+                                         <img src='uploads/monan/${list_monan[i].anh_monan}' width='50px' height='50px' class='img-rounded'>
+                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                         <span class='text-info'>${list_monan[i].ten_monan}</span>
+                                         </a>
+                                    `;
+                                  //  "<a  href='chitietmonan/"+ list_monan[i].id +"' class='list-group-item'>"
+                                  // +"<img src='uploads/monan/"+ list_monan[i].anh_monan +"' width='50px' height='50px' class='img-rounded'>"
+                                  // +"<span class='text-info'>" + list_monan[i].ten_monan +"</span>"
+                                  // +"</a>";
                               }
                               document.getElementById('ketqua').innerHTML=str;
                           },
@@ -918,7 +1039,6 @@
                 dataType: "json",
                 async: "true",
                 cache: "false",
-
                 success: function (data) {
                     offset = offset +10;
                     console.log(data);
@@ -932,8 +1052,9 @@
                         }
 
                         var str_user_online = ``;
-                        if(user_online !=null) {
-                             str_user_online = `<div class="user-post-review-comment-container" id="`+data[i].userpost.id+`-user-post-review-comment-container">
+                        if (user_online != null) {
+                            str_user_online =
+                                `<div class="user-post-review-comment-container" id="` + data[i].userpost.id + `-user-post-review-comment-container">
                                     <form>
                                         <div class="row">
                                             <div class="col-sm-1 img-ava">
@@ -960,57 +1081,65 @@
                         if(user_online !=null) {
 
                             if(like==1) {
-                                str_like = `<a class="user-post-button-like btn like-unlike like" onclick="clickLike('`+data[i].userpost.id+`-user-post-button-like','`+user_online.id+`')" id="`+data[i].userpost.id+`-user-post-button-like" aria-pressed="true" style="transition: 0s">
-                                                        <span style="font-size: 15px">
-                                                            <i class="fa fa-thumbs-o-up " aria-hidden="true"></i> thích
-                                                        </span>
-                                                    </a>`;
+                                str_like =
+                                    `<a class="user-post-button-like btn like-unlike like" onclick="clickLike('` + data[i].userpost.id + `-user-post-button-like','` + user_online.id + `')" id="` + data[i].userpost.id + `-user-post-button-like" aria-pressed="true" style="transition: 0s">
+                                        <span style="font-size: 15px">
+                                            <i class="fa fa-thumbs-o-up " aria-hidden="true"></i> thích
+                                        </span>
+                                     </a>`;
                             } else {
-                                str_like = `<a class="user-post-button-like btn like-unlike unlike" onclick="clickLike('`+data[i].userpost.id+`-user-post-button-like','`+user_online.id+`')" id="`+data[i].userpost.id+`-user-post-button-like" aria-pressed="false" style="transition: 0s">
-                                                        <span style="font-size: 15px">
-                                                            <i class="fa fa-thumbs-o-up  " aria-hidden="true"></i> thích
-                                                        </span>
-                                                    </a>`;
+                                str_like =
+                                    `<a class="user-post-button-like btn like-unlike unlike" onclick="clickLike('` + data[i].userpost.id + `-user-post-button-like','` + user_online.id + `')" id="` + data[i].userpost.id + `-user-post-button-like" aria-pressed="false" style="transition: 0s">
+                                        <span style="font-size: 15px">
+                                            <i class="fa fa-thumbs-o-up  " aria-hidden="true"></i> thích
+                                        </span>
+                                     </a>`;
                             }
                         } else {
-                            str_like = `<a class="user-post-button-like btn like-unlike unlike disabled" id="`+data[i].userpost.id+`-user-post-button-like" aria-pressed="false" style="transition: 0s">
-                                                        <span style="font-size: 15px">
-                                                            <i class="fa fa-thumbs-o-up  " aria-hidden="true"></i> thích
-                                                        </span>
-                                                </a>`;
+                            str_like =
+                                `<a class="user-post-button-like btn like-unlike unlike disabled" id="` + data[i].userpost.id + `-user-post-button-like" aria-pressed="false" style="transition: 0s">
+                                        <span style="font-size: 15px">
+                                            <i class="fa fa-thumbs-o-up  " aria-hidden="true"></i> thích
+                                        </span>
+                                 </a>`;
                         }
 
                         var str_check = ``;
+
                         if(like==1) {
                             if(data[i].userpost.soluotthich>1) {
-                                str_check = `<div class="row">
-                                    <div class="col-sm-12" >
-                                        <p>
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                            ban va `+(data[i].userpost.soluotthich - 1)+` người thích bài viết này
-                                        </p>
-                                    </div>
-                                </div>`;
+                                str_check =
+                                    `<div class="row">
+                                        <div class="col-sm-12" >
+                                            <p>
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                ban va ` + (data[i].userpost.soluotthich - 1) + ` người thích bài viết này
+                                            </p>
+                                        </div>
+                                     </div>`;
+
                             } else if(data[i].userpost.soluotthich == 1 ) {
-                                str_check = `<div class="row">
-                                    <div class="col-sm-12" >
-                                        <p>
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                            ban thích bài viết này
-                                        </p>
-                                    </div>
-                                </div>`;
+                                str_check =
+                                    `<div class="row">
+                                        <div class="col-sm-12" >
+                                            <p>
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                ban thích bài viết này
+                                            </p>
+                                        </div>
+                                     </div>`;
                             }
                         } else {
                             if(data[i].userpost.soluotthich>0) {
-                                str_check = `<div class="row">
-                                    <div class="col-sm-12" >
-                                        <p>
-                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                            `+data[i].userpost.soluotthich+` người thích bài viết này
-                                        </p>
-                                    </div>
-                                </div>`;
+                                str_check =
+                                    `<div class="row">
+                                        <div class="col-sm-12" >
+                                            <p>
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                ` + data[i].userpost.soluotthich + ` người thích bài viết này
+                                            </p>
+                                        </div>
+                                     </div>`;
                             }
                         }
 
@@ -1019,211 +1148,179 @@
 
                             var arr_reportcomment = ``;
 
-                            for(var k =0;k<data[i].userpost.commentpost[j].reportcommentpost.length;k++) {
-                                arr_reportcomment = arr_reportcomment + `
-                                                    <div class="reply-comment">
-                                                        <div class="col-sm-12" style="margin-bottom: 10px">
-                                                            <div class="row">
-                                                                <div class="col-sm-1 img-ava">
-                                                                    <img src="`+data[i].userpost.commentpost[j].reportcommentpost[k].user.anhdaidien+`" class="img-circle img-responsive user-post-item-avatar-img">
-                                                                </div>
-                                                                <div class="col-sm-10 comment-content">
-                                                                    <div class="row">
-                                                                        <p class="user-post-item-comment-username">`+data[i].userpost.commentpost[j].reportcommentpost[k].user.tentaikhoan+`</p>
+                            for (var k = 0; k < data[i].userpost.commentpost[j].reportcommentpost.length; k++) {
+                                arr_reportcomment = arr_reportcomment +
+                                    `<div class="reply-comment">
+                                                            <div class="col-sm-12" style="margin-bottom: 10px">
+                                                                <div class="row">
+                                                                    <div class="col-sm-1 img-ava">
+                                                                        <img src="` + data[i].userpost.commentpost[j].reportcommentpost[k].user.anhdaidien + `" class="img-circle img-responsive user-post-item-avatar-img">
                                                                     </div>
-                                                                    <div class="row">
-                                                                        <p>`+data[i].userpost.commentpost[j].reportcommentpost[k].noidung+`</p>
+                                                                    <div class="col-sm-10 comment-content">
+                                                                        <div class="row">
+                                                                            <p class="user-post-item-comment-username">` + data[i].userpost.commentpost[j].reportcommentpost[k].user.tentaikhoan + `</p>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <p>` + data[i].userpost.commentpost[j].reportcommentpost[k].noidung + `</p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    `;
+                                                        </div>`;
                             }
-
 
                             var str_online = ``;
-                            if(user_online != null) {
-                                str_online = `
-                                                <div class="row">
-                                                    <a style="font-size: 14px;font-weight: 400;" href="javascript:void(0)" class="reply" onclick="replyCommentPost('`+data[i].userpost.commentpost[j].id+`-reply')" id="`+data[i].userpost.commentpost[j].id+`-reply">Trả lời</a>
-                                                </div>
-                                                `;
-                            }
 
+                            if (user_online != null) {
+                                str_online =
+                                    `<div class="row">
+                                            <a style="font-size: 14px;font-weight: 400;" href="javascript:void(0)" class="reply" onclick="replyCommentPost('` + data[i].userpost.commentpost[j].id + `-reply')" id="` + data[i].userpost.commentpost[j].id + `-reply">Trả lời</a>
+                                         </div>`;
+                            }
                             var str_report_online = ``;
-                            if(user_online!=null) {
-                                str_report_online = `
-                                                <div class="row user-post-reply-area" id="`+data[i].userpost.commentpost[j].id+`-user-post-reply-area" style="display: none">
-                                                    <div class="">
-                                                        <div class="col-sm-1 img-ava">
-                                                            <img src="`+user_online.anhdaidien+`" class="img-circle img-responsive user-post-item-avatar-img">
-                                                        </div>
-                                                        <div class="col-sm-11" style="margin-left: -10px">
-                                                            <span>
-                                                                <textarea type="text" class="form-control user-post-reply-comment" onkeyup="keyupReplyComment('`+data[i].userpost.commentpost[j].id+`-user-post-reply-comment')" id="`+data[i].userpost.commentpost[j].id+`-user-post-reply-comment"></textarea>
-                                                            </span>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="">
-                                                            <div class="pull-right" style="padding-right: 30px;margin-top: -10px">
-                                                                <a class="user-post-delete-reply-comment btn" onclick="deleteReplyComment('`+data[i].userpost.commentpost[j].id+`-user-post-delete-reply-comment')" id="`+data[i].userpost.commentpost[j].id+`-user-post-delete-reply-comment">Hủy</a>
-                                                                <a class="user-post-answer-reply-comment btn disabled" onclick="answerReplyComment('`+data[i].userpost.commentpost[j].id+`-user-post-answer-reply-comment','`+user_online.id+`')" id="`+data[i].userpost.commentpost[j].id+`-user-post-answer-reply-comment">Trả lời</a>
-                                                            </div>
-                                                        </div>
+                            if (user_online != null) {
+                                str_report_online =
+                                    `<div class="row user-post-reply-area" id="` + data[i].userpost.commentpost[j].id + `-user-post-reply-area" style="display: none">
+                                            <div class="">
+                                                <div class="col-sm-1 img-ava">
+                                                    <img src="` + user_online.anhdaidien + `" class="img-circle img-responsive user-post-item-avatar-img">
+                                                </div>
+                                                <div class="col-sm-11" style="margin-left: -10px">
+                                                    <span>
+                                                        <textarea type="text" class="form-control user-post-reply-comment" onkeyup="keyupReplyComment('` + data[i].userpost.commentpost[j].id + `-user-post-reply-comment')" id="` + data[i].userpost.commentpost[j].id + `-user-post-reply-comment"></textarea>
+                                                    </span>
+                                                </div>
+                                            </div>
 
+                                            <div class="">
+                                                    <div class="pull-right" style="padding-right: 30px;margin-top: -10px">
+                                                        <a class="user-post-delete-reply-comment btn" onclick="deleteReplyComment('` + data[i].userpost.commentpost[j].id + `-user-post-delete-reply-comment')" id="` + data[i].userpost.commentpost[j].id + `-user-post-delete-reply-comment">Hủy</a>
+                                                        <a class="user-post-answer-reply-comment btn disabled" onclick="answerReplyComment('` + data[i].userpost.commentpost[j].id + `-user-post-answer-reply-comment','` + user_online.id + `')" id="` + data[i].userpost.commentpost[j].id + `-user-post-answer-reply-comment">Trả lời</a>
                                                     </div>
-                                                    `;
+                                                </div>
+
+                                            </div>`;
                             }
 
-                            arr_list_comment = arr_list_comment + `<div class="user-post-item-comment row" id="`+data[i].userpost.commentpost[j].id+`-user-post-item-comment" style="margin-bottom: 20px">
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-1 user-post-item-comment-avatar">
+                            arr_list_comment = arr_list_comment +
+                                `<div class="user-post-item-comment row" id="
+                                    ` + data[i].userpost.commentpost[j].id + `
+                                        -user-post-item-comment" style="margin-bottom: 20px">
 
-                                                        <img src="`+data[i].userpost.commentpost[j].user.anhdaidien+`" class="img-circle img-responsive user-post-item-avatar-img">
-
-
-                                            </div>
-                                            <div class="col-sm-11 user-post-item-comment-content" id="`+data[i].userpost.commentpost[j].id+`-user-post-item-comment-content">
-                                                <div class="row">
-
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-1 user-post-item-comment-avatar">
+                                                    <img src="` + data[i].userpost.commentpost[j].user.anhdaidien + `" class="img-circle img-responsive user-post-item-avatar-img">
+                                                </div>
+                                                <div class="col-sm-11 user-post-item-comment-content" id="` + data[i].userpost.commentpost[j].id + `-user-post-item-comment-content">
+                                                    <div class="row">
                                                             <p class="user-post-item-comment-username">`+data[i].userpost.commentpost[j].user.tentaikhoan+`</p>
-
-                                                </div>
-                                                <div class="row">
-                                                    <p>`+data[i].userpost.commentpost[j].noidung+`</p>
-                                                </div>
-                                                `+ str_online +`
-
-                                                <!-- list reply comment -->
-                                                <div class="row list-reply-comment" id="`+data[i].userpost.commentpost[j].id+`-list-reply-comment">
-
+                                                    </div>
+                                                    <div class="row">
+                                                        <p>` + data[i].userpost.commentpost[j].noidung + `</p>
+                                                    </div>
+                                                    ` + str_online + `
+                                                    <div class="row list-reply-comment" id="` + data[i].userpost.commentpost[j].id + `-list-reply-comment">
                                                     `+arr_reportcomment+`
-
+                                                    </div>
+                                                    ` + str_report_online + `
                                                 </div>
+                                            </div>
 
-                                                <!-- -->
-                                                `+ str_report_online +`
+                                        </div>
+                                    </div>`;
+                        }
+                        element = element + `<div class="panel panel-default user-post" id="` + data[i].userpost.id + `-user-post">
+                        <div class="panel-body">
+                            <div class="row user-post-header">
+                                <div class="col-sm-2">
+                                    <img src="` + data[i].userpost.user.anhdaidien + `" class="card-img rounded-circle img-circle avatar-user">
+                                </div>
+                                <div class="col-sm-5" style="margin-left: -40px ">
+                                    <div class="row">
+                                        <p class="name-user-post" >` + data[i].userpost.user.tentaikhoan + `</p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="info-recipe-user-post">nổi bật ` + data[i].userpost.user.noibat + `</p>
+                                    </div>
+                                </div>
+                                <div class="pull-right timestamp-user-post" style="margin-right: 10px">
+                                    <span style="font-size: 12px">` + data[i].userpost.created_at + `</span>
+                                    <span> <i class="fa fa-globe" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                            <div class="row user-post-title" style="margin-top: 20px">
+                                <div class="container">
+                                    <div class="col-sm-12">
+                                        <p class="user-post-title-p1">` + data[i].userpost.tieude + ` </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top: 5px">
+                            <div class="user-post-content" >
+                                <div class="row user-post-text-content" style="margin: 0px">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            ` + data[i].userpost.noidung.replace(/\n/g, '</br>') + `
 
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row user-post-img-content" style="margin: 0px">
+                                    <div class="col-sm-12" style="padding-top: 20px;padding-bottom: 20px">
+                                        ` + arr_img + `
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="user-post-review-acts">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="pull-left">
+                                            <div style="padding-left: 20px">
+                                                    ` + str_like + `
+                                                    <a class="user-post-button-comment btn" onclick="clickButtonComment('` + data[i].userpost.id + `-user-post-button-comment')" id="` + data[i].userpost.id + `-user-post-button-comment">
+                                                        <span  style="font-size: 15px">
+                                                            <i class="fa fa-comments-o " aria-hidden="true"></i> bình luận
+                                                        </span>
+                                                    </a>
+                                                    <a class="user-post-button-share btn" href="https://www.facebook.com/sharer/sharer.php?u=http://bkcook.ddns.net/bkcook.vn/public/baidangchitiet/` + data[i].userpost.id + `&amp;src=sdkpreparse" target="_blank">
+                                                        <span  style="font-size: 15px">
+                                                            <i class="fa fa-share-square-o" aria-hidden="true"></i> chia sẻ
+                                                        </span>
+                                                    </a>
                                             </div>
                                         </div>
-
-                                    </div>
-
-
-                                </div>`;
-                        }
-
-                        element = element + `<div class="panel panel-default user-post" id="`+data[i].userpost.id+`-user-post">
-                    <div class="panel-body">
-                        <div class="row user-post-header">
-                            <div class="col-sm-2">
-
-                                <img src="`+data[i].userpost.user.anhdaidien+`" class="card-img rounded-circle img-circle avatar-user">
-
-                            </div>
-
-                            <div class="col-sm-5" style="margin-left: -40px ">
-                                <div class="row">
-                                    <p class="name-user-post" >`+data[i].userpost.user.tentaikhoan+`</p>
-                                </div>
-                                <div class="row">
-                                    <p class="info-recipe-user-post">nổi bật `+data[i].userpost.user.noibat+`</p>
-                                </div>
-                            </div>
-
-                            <div class="pull-right timestamp-user-post" style="margin-right: 10px">
-                                <span style="font-size: 12px">`+data[i].userpost.created_at+`</span>
-                                <span> <i class="fa fa-globe" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="row user-post-title" style="margin-top: 20px">
-                            <div class="container">
-                                <div class="col-sm-12">
-                                    <p class="user-post-title-p1">`+data[i].userpost.tieude+` </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr style="margin-top: 5px">
-
-                        <div class="user-post-content" >
-                            <div class="row user-post-text-content" style="margin: 0px">
-                                <div class="col-sm-12">
-                                    <p>
-                                        `+data[i].userpost.noidung.replace(/\n/g,'</br>')+`
-
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row user-post-img-content" style="margin: 0px">
-                                <div class="col-sm-12" style="padding-top: 20px;padding-bottom: 20px">
-                                    `+arr_img+`
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="user-post-review-acts">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="pull-left">
-                                        <div style="padding-left: 20px">
-                                                `+str_like+`
-                                                <a class="user-post-button-comment btn" onclick="clickButtonComment('`+data[i].userpost.id+`-user-post-button-comment')" id="`+data[i].userpost.id+`-user-post-button-comment">
-                                                    <span  style="font-size: 15px">
-                                                        <i class="fa fa-comments-o " aria-hidden="true"></i> bình luận
-                                                    </span>
-                                                </a>
-                                                <a class="user-post-button-share btn" href="https://www.facebook.com/sharer/sharer.php?u=http://bkcook.ddns.net/bkcook.vn/public/baidangchitiet/`+data[i].userpost.id+`&amp;src=sdkpreparse" target="_blank">
-                                                    <span  style="font-size: 15px">
-                                                        <i class="fa fa-share-square-o" aria-hidden="true"></i> chia sẻ
-                                                    </span>
-                                                </a>
-
+                                        <div class="pull-right user-post-view">
+                                            <span style="font-size: 14px">` + data[i].userpost.soluotxem + ` lượt xem <i class="fa fa-eye" aria-hidden="true"></i></span>
                                         </div>
-
-                                    </div>
-                                    <div class="pull-right user-post-view">
-                                        <span style="font-size: 14px">`+data[i].userpost.soluotxem+` lượt xem <i class="fa fa-eye" aria-hidden="true"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-footer" id="`+data[i].userpost.id+`-panel-footer">
-
-                        <div class="user-post-react" id="`+data[i].userpost.id+`-user-post-react">
-                            `+str_check+`
-                        </div>
-
-
-                        <hr style="margin: 10px">
-
-                        <div class="user-post-comment-area">
-                            <div class="user-post-list-comment" id="`+data[i].userpost.id+`-user-post-list-comment">
-                                `+arr_list_comment+`
+                        <div class="panel-footer" id="` + data[i].userpost.id + `-panel-footer">
+                            <div class="user-post-react" id="` + data[i].userpost.id + `-user-post-react">
+                                ` + str_check + `
                             </div>
+                            <hr style="margin: 10px">
 
-                            <!-- review comment -->
-
-                            `+ str_user_online+`
-
+                            <div class="user-post-comment-area">
+                                <div class="user-post-list-comment" id="` + data[i].userpost.id + `-user-post-list-comment">
+                                    ` + arr_list_comment + `
+                                </div>
+                                ` + str_user_online + `
+                            </div>
                         </div>
-                    </div>
-                </div>`;
-                    }
+                    </div>`;
                     $(".list-user-post").append(element);
+                    }
                 },
-
                 Error: function (x, e) {
                     alert("Some error");
                 }
             });
         }
-
         {{-- end load more--}}
 </script>
 {{-- sửa thông tin tài khoản --}}

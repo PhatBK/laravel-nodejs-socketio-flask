@@ -2,11 +2,19 @@ var app = require('express')();
 var server = require('http').Server(app);
 var request = require('request');
 var io = require('socket.io')(server);
-var fs = require("fs"); 
+var fs = require("fs");
+
+// var data_config = fs.readFileSync('config.txt','utf-8');
+// var arr_config = data_config.split("=");
+// Address = arr_config[1].trim();
 
 var data_config = fs.readFileSync('config.txt','utf-8');
-var arr_config = data_config.split("=");
-Address = arr_config[1].trim();
+var arr_config = data_config.split(";");
+var host = arr_config[0].split("=");
+Address = host[1].trim();
+var dir = arr_config[1].split("=");
+Dir_root = dir[1].trim();
+
 var PORT = 1108;
 console.log(Address);
 var user_count = 0;
@@ -54,7 +62,8 @@ io.on('connection', function(socket){
 
         // send data
         // io.emit("user posts post",data);
-        var uri = Address + '/bkcook.vn/public/api/savedatauserpost';
+        // var uri = Address + '/bkcook.vn/public/api/savedatauserpost';
+        var uri = Address + Dir_root + '/public/api/savedatauserpost';
         request({
             uri: uri,
             method: 'GET',
@@ -79,7 +88,8 @@ io.on('connection', function(socket){
  
     socket.on('comment user post',function(data) {
 
-        var uri = Address + '/bkcook.vn/public/api/savedatacommentpost';
+        // var uri = Address + '/bkcook.vn/public/api/savedatacommentpost';
+        var uri = Address + Dir_root + '/public/api/savedatacommentpost';
         request({
             uri: uri,
             method: 'GET',  
@@ -104,7 +114,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('reply comment user post',function(data) {
-        var uri = Address + '/bkcook.vn/public/api/savedatareplycommentpost';
+        // var uri = Address + '/bkcook.vn/public/api/savedatareplycommentpost';
+        var uri = Address + Dir_root + '/public/api/savedatareplycommentpost';
         request({
             uri: uri,
             method: 'GET',
@@ -124,10 +135,11 @@ io.on('connection', function(socket){
             io.emit("reply comment user post",body);
 
         });
-    }) 
+    });
 
     socket.on('like unlike user post',function(data) {
-        var uri = Address + '/bkcook.vn/public/api/savedatalikepost';
+        // var uri = Address + '/bkcook.vn/public/api/savedatalikepost';
+        var uri = Address + Dir_root + '/public/api/savedatalikepost';
         request({
             uri: uri,
             method: 'GET',
@@ -147,10 +159,11 @@ io.on('connection', function(socket){
             io.emit("like unlike user post",body);
 
         });
-    })
+    });
     
     socket.on('comment monan',function(data) {
-        var uri = Address + '/bkcook.vn/public/api/savedatacommentmonan';
+        // var uri = Address + '/bkcook.vn/public/api/savedatacommentmonan';
+        var uri = Address + Dir_root + '/public/api/savedatacommentmonan';
         request({
             uri: uri,
             method: 'GET',

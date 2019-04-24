@@ -186,12 +186,20 @@
 			</div>
 			{{-- Món ăn được xem nhiều nhất --}}
 			<div id="monanlienquan_xem_nhieu_nhat" class="col-md-3">
-				<h5 style="text-align: center;">Thịnh Hành</h5>
-				@foreach($monan_lienquan as $md)
+				<h5 style="text-align: center; color: #478500;">Thịnh Hành</h5>
+				@foreach($popularest_foods as $m_popul)
 				<div id="baiviet">
-					<img src="uploads/monan/{{$md->anh_monan}}">
-					<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>
+					<img src="uploads/monan/{{$m_popul->anh_monan}}">
+					<p><a href="chitietmonan/{{$m_popul->id}}">{{$m_popul->ten_monan}}</a></p>
 				</div>
+				@endforeach
+				<hr style="color: cornsilk">
+				<h5 style="text-align: center; color: orangered;">Mới Nhất</h5>
+				@foreach($new_last_foods as $m_new_last)
+					<div id="baiviet_">
+						<img src="uploads/monan/{{$m_new_last->anh_monan}}">
+						<p><a href="chitietmonan/{{$m_new_last->id}}">{{$m_new_last->ten_monan}}</a></p>
+					</div>
 				@endforeach
 			</div>
 			
@@ -235,7 +243,7 @@
 			<div id="monanlienquan" class="col-md-3">
 				<h5 style="text-align: center;">Món Ăn Liên Quan</h5>
 				@foreach($monan_lienquan as $md)
-				<div id="baiviet">
+					<div id="baiviet__">
 					<img src="uploads/monan/{{$md->anh_monan}}">
 					<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>
 				</div>
@@ -409,15 +417,11 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 @if(Auth::user())
 	<script>
 		var user_id = `{{ Auth::user()->id }}`;
+		deleteCookie("user_id");
 	</script>
 @else
 	<script>
         var user_id = findCookie("user_id") || null;
-		// if (!findCookie("user_id")) {
-		// 	var user_id = null;
-        // } else {
-		// 	var user_id = findCookie("user_id");
-		// }
 	</script>
 @endif
 <script>
@@ -506,36 +510,36 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	};
 	
 	// Tự động gửi dữ liệu đi sau một khoảng thời gian được set
-	
-	setInterval(function() {
-    	var time = Date.now() - start;
-    	$.ajaxSetup({
-    	headers: {
-    			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    		}
-    	});
-    	$.ajax({
-    		type:'POST',
-			url: 'user/logs/data/page-time',
-			data:{
-				'time' : time,
-				'id_mon_an': id_mon_an,
-				'ten_mon_an': ten_mon_an,
-				'user_id': user_id,
-				'referer': referer,
-				'mon_an_id_referrer': mon_an_id_referrer,
-				'play_video': play_video,
-				'date_visit': date_visit,
-				'time_visit_start': time_visit_start,
-			},
-			success:function(response){
-				console.log(response);
-			},
-			error:function( err) {
-				console.log(err);
-			}
-		});
-	}, 10000);
+
+	// setInterval(function() {
+	// 	var time = Date.now() - start;
+	// 	$.ajaxSetup({
+	// 	headers: {
+	// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 		}
+	// 	});
+	// 	$.ajax({
+	// 		type:'POST',
+	// 		url: 'user/logs/data/page-time',
+	// 		data:{
+	// 			'time' : time,
+	// 			'id_mon_an': id_mon_an,
+	// 			'ten_mon_an': ten_mon_an,
+	// 			'user_id': user_id,
+	// 			'referer': referer,
+	// 			'mon_an_id_referrer': mon_an_id_referrer,
+	// 			'play_video': play_video,
+	// 			'date_visit': date_visit,
+	// 			'time_visit_start': time_visit_start,
+	// 		},
+	// 		success:function(response){
+	// 			console.log(response);
+	// 		},
+	// 		error:function( err) {
+	// 			console.log(err);
+	// 		}
+	// 	});
+	// }, 20000);
 </script>
 
 <script src="vendor_customer/vendor/js/socket.io.js"></script>
@@ -547,7 +551,7 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		$('#yourModal{{$monan->video->id}}').on('hidden.bs.modal', function (e) {
 			// $('#yourModal{{$monan->video->id}}')[0].pause();
 			$('#yourModal{{$monan->video->id}} svideo').attr("src", $("#yourModal{{$monan->video->id}}  svideo").attr("src"));
-			console.log('ID video :'+ {{$monan->video->id}});
+			console.log(`'ID video :' + {{$monan->video->id}}`);
 			e.preventDefault();
 		    $('.videoplayer').children('iframe').attr('src', '');
 		    $('.modal-background').fadeOut();

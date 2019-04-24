@@ -31,7 +31,7 @@ class MonAn extends Model {
 		return $this->hasOne('App\Models\Video', 'id_monan', 'id');
 	}
 	public function comment() {
-		return $this->hasMany('App\Models\CommentMonAn', 'id_monan', 'id');
+        return $this->hasMany('App\Models\CommentMonAn', 'id_monan', 'id')->orderBy('created_at', 'desc');
 	}
 	public function nhahanglienket() {
 		return $this->hasMany('App\Models\NhaHangLienKet', 'id_monan', 'id');

@@ -268,10 +268,6 @@
     {{--hết form tìm kiếm--}}
     {{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
 </header>
-
-
-
-
     {{-- Xử lý cookie--}}
 <script>
     function setCookie(cname, cvalue, exdays) {
@@ -321,16 +317,12 @@
     <script>
         var user_id = `{{ Auth::user()->id }}`;
         var user_loged = true;
+        deleteCookie("user_id");
     </script>
 @else
     <script>
         var user_id = findCookie("user_id") || null;
-        // if (!findCookie("user_id")) {
-        //     var user_id = null;
-        // } else {
-        //     var user_id = findCookie("user_id");
-        // }
-        // var user_loged = false;
+        var user_loged = false;
     </script>
 @endif
 
@@ -369,15 +361,13 @@
             },
             success:function(response){
                 console.log(response);
-                if (response.status || !response.loged) {
+                if (response.status) {
                     if (!findCookie("user_id")) {
                         setCookieMy("user_id", response.data, 1);
                     }
-                } else if (response.loged) {
+                }
+                if (user_loged) {
                     deleteCookie("user_id");
-                    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-                } else {
-                    alert("undifine error");
                 }
             },
             error:function( err) {

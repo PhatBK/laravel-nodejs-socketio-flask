@@ -2,38 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use http\Env\Response;
-use Illuminate\Http\Request;
 use App\Models\UserImplictsData;
 use App\Models\UserSearchKey;
-
-use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecommenderCoreController extends Controller
 {
+    protected $user_id_auth = null;
+    protected $wasLogin = null;
+
     function __construct()
     {
-       
-    }
-    public function getAPI() {
-
+        if (!Auth::user()) {
+            $this->user_id_auth = rand(10000000, 100000000);
+            $this->wasLogin = false;
+        } else {
+            $this->wasLogin = true;
+        }
     }
     public function postUserPageTime(Request $req) {
-
         $user_agent = $req->header('user-agent');
-       
         $anonymouse = false;
+        if (Auth::user()) {
+            $this->user_id_auth = Auth::user()->id;
+            $anonymouse = false;
+        }
         $is_play_video = false;
-        $user_id_rand = rand(1000000, 100000000);
-      
-        if (!$req->user_id) {
-            $req->user_id = $user_id_rand;
+
+        if ($req->user_id == null) {
+            $req->user_id = $this->user_id_auth;
             $anonymouse = true;
         }
         if (!$req->play_video) {
             $is_play_video = false;
         } else {
             $is_play_video = true;
+        }
+        if (!Auth::user() && !($req->user_id == null)) {
+            $anonymouse = true;
         }
         $time = $req->time / 1000;
         $user_id = $req->user_id;
@@ -48,7 +55,7 @@ class RecommenderCoreController extends Controller
             $mon_an_id_referrer, $ten_mon, $user_id, $ip,
             $user_agent, $referer, $is_play_video,
             $req->date_visit, $req->time_visit_start,
-            $user_id_rand
+            $this->user_id_auth
         );
 
         $user_data_saved = new UserImplictsData();
@@ -73,45 +80,37 @@ class RecommenderCoreController extends Controller
         if ($req->id_mon_an) {
             $key_search = new UserSearchKey();
             $anonymouse = false;
-            $user_id_rand = rand(1000000, 100000000);
-
-            if ($req->user_id == null || !$req->user_loged) {
-                $req->user_id = $user_id_rand;
-                $anonymouse = true;
-                $key_search->user_id = $req->user_id;
-                $key_search->mon_an_id = $req->id_mon_an;
-                $key_search->mon_an_id_referrer	 = $req->mon_an_id_referrer;
-                $key_search->anonymouse = $anonymouse;
-
-                $key_search->save();
-                $data = [
-                    'status' => true,
-                    'code' => 200,
-                    'data' =>$user_id_rand,
-                    'loged' => false,
-                ];
-                return response()->json($data);
-            } else if ($req->user_id && $req->user_loged) {
-                $key_search->user_id = $req->user_id;
-                $key_search->mon_an_id = $req->id_mon_an;
-                $key_search->mon_an_id_referrer	 = $req->mon_an_id_referrer;
-                $key_search->anonymouse = $anonymouse;
-
-                $key_search->save();
-                $data = [
-                    'status' => false,
-                    'code' => 200,
-                    'data' => null,
-                    'loged' => true,
-                ];
-                return response()->json($data);
-            } else {
-                return response()->json("Unsuccess");
+            if (Auth::user()) {
+                $this->user_id_auth = Auth::user()->id;
+                $anonymouse = false;
             }
+            if ($req->user_id == null) {
+                $req->user_id = $this->user_id_auth;
+                $anonymouse = true;
+            }
+            if (!Auth::user() && !($req->user_id == null)) {
+                $anonymouse = true;
+            }
+            $key_search->user_id = $req->user_id;
+            $key_search->mon_an_id = $req->id_mon_an;
+            $key_search->mon_an_id_referrer = $req->mon_an_id_referrer;
+            $key_search->anonymouse = $anonymouse;
 
+            $key_search->save();
+            $data = [
+                'status' => true,
+                'code' => 200,
+                'data' => $req->user_id,
+            ];
+            return response()->json($data);
         } else {
             return Response()-> json("Unsuccess");
         }
+    }
+
+    public function getAPI()
+    {
+
     }
     public  function getUserServeyView() {
         return view('');

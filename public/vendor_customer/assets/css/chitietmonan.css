@@ -160,12 +160,20 @@ span.luong {
     overflow: hidden;
 }
 
+#baiviet_ {
+    overflow: hidden;
+}
+
+#baiviet__ {
+    overflow: hidden;
+}
+
 #monanlienquan {
     overflow: auto;
     height: 33em;
     margin-bottom: 20px;
     background-color: white;
-    padding: 20px 10 20px 0px;
+    padding: 20px 10px 20px 0px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)!important;
     padding-top: 15px;
 }
@@ -180,6 +188,7 @@ span.luong {
     width: 50px;
     padding: 5px;
     float: left;
+    margin-left: 15px;
 }
 
 #monanlienquan p {

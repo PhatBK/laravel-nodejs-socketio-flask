@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="vendor_customer/assets/css/fonticons.css">
     <link rel="stylesheet" href="vendor_customer/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendor_customer/assets/css/bootstrap.min.css">
-
     <!--For Plugins external css-->
     <link rel="stylesheet" href="vendor_customer/assets/css/teamslide.css"/>
     <link rel="stylesheet" href="vendor_customer/assets/css/plugins.css"/>
@@ -38,13 +37,12 @@
 <section id="content" class="content container-fluid">
  @if (session('thongbao'))
     <script>
-       {{session('thongbao')}}
+        {{--       {{session('thongbao')}}--}}
     </script>
     @endif
-
     @if (session('thongbaoloi'))
     <script>
-       {{session('thongbaoloi')}}
+        {{--       {{session('thongbaoloi')}}--}}
     </script>
     @endif
     @if(count($errors) > 0)
@@ -56,14 +54,8 @@
      @endif
 @yield('content')
 @include('customer.layouts.couter')
-
 </section>
-
 <hr class="alert-warning" style="border: 5px;">
-
-{{-- @include('customer.layouts.couter') --}}
-
-{{-- @include('customer.layouts.footer') --}}
 <!-- START SCROLL TO TOP  -->
 <div class="scrollup">
     <a href="#"><i class="fa fa-chevron-up"></i></a>
@@ -79,21 +71,6 @@
 <script src="vendor_customer/assets/js/modalHeader.js"></script>
 <script src="vendor_customer/assets/js/plugins.js"></script>
 <script src="vendor_customer/assets/js/main.js"></script>
-
-{{-- Tự động load lại trang --}}
-{{-- <script>
-     var time = new Date().getTime();
-     $(document.body).bind("mousemove keypress", function(e) {
-         time = new Date().getTime();
-     })
-     function refresh() {
-         if(new Date().getTime() - time >= 60000)
-             window.location.reload(true);
-         else
-             setTimeout(refresh, 150000);
-     }
-     setTimeout(refresh, 150000);
-</script> --}}
 
 @yield('script')
 </body>

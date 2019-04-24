@@ -18,7 +18,6 @@ use App\Models\VungMien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
-use Illuminate\Support\Collection;
 
 
 class BKCookController extends Controller {
@@ -196,10 +195,15 @@ class BKCookController extends Controller {
 				$monan->save();
 				Session::put('id', $id);
 			}
+
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
 			$monan_lienquan = [];
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(6)->get();
 			$monan_lienquan_congdung = MonAn::where('id_congdung', $monan->id_congdung)->orderBy('id', 'desc')->take(6)->get();
+
+            $new_last_foods = MonAn::orderBy('created_at', 'desc')->take(4)->get();
+            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(4)->get();
+
 			// Gộp hai mảng chứa kết quả
 			for ($i = 0; $i < count($monan_lienquan_loaimon); $i++) {
 				if (!$monan.equalTo($monan_lienquan_loaimon[$i])) {
@@ -214,8 +218,10 @@ class BKCookController extends Controller {
 			$monan_lienquan = collect($monan_lienquan)->unique();
 			
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
-			$comments = $monan->comment;
-			$danhgias = $monan->danhgiamonan;
+
+            $comments = $monan->comment;
+
+            $danhgias = $monan->danhgiamonan;
 			$diem = 0;
 			$trungbinh = 0;
 			foreach ($danhgias as $dg) {
@@ -226,7 +232,18 @@ class BKCookController extends Controller {
 			} else {
 				$trungbinh = 0;
 			}
-			return view('customer.chitietmonan', compact('monan', 'monan_lienquan', 'cacbuocnau', 'baiviet_lienquans', 'comments', 'trungbinh'));
+            return view('customer.chitietmonan',
+                compact(
+                    'monan',
+                    'monan_lienquan',
+                    'cacbuocnau',
+                    'baiviet_lienquans',
+                    'comments',
+                    'trungbinh',
+                    'popularest_foods',
+                    'new_last_foods'
+                )
+            );
 		} else {
 			return view('customer.chitietmucdich');
 		}
