@@ -176,15 +176,10 @@ io.on('connection', function(socket){
         }, function(error, response, body) {
             if (error) 
                 throw error;
-            //in ra header
             console.log(body);
-            // in ra body nhận được
-            // console.log(body);
             io.emit("comment monan",body);
-
         });
-    })
- 
+    });
 });
 
 server.listen(PORT, function(){

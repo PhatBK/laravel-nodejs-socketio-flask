@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommentPost;
-use App\Models\LikePost;
 use App\Models\LoaiMon;
 use App\Models\MonAn;
-use App\Models\ReportCommentPost;
 use App\Models\TheLoai;
 use App\Models\UserPost;
 use DB;
@@ -61,7 +59,7 @@ class DangBaiController extends Controller {
 	public function loadDangBai() {
 		$food_category = TheLoai::all();
 		$user_posts = UserPost::orderBy('created_at', 'desc')->limit(10)->get();
-		$top10_users = DB::table('users')->orderBy('noibat', 'desc')->limit(10)->get();
+        $top10_users = DB::table('users')->orderBy('noibat', 'desc')->limit(5)->get();
 
 		return view('customer.dangbai', compact('food_category', 'user_posts', 'top10_users'));
 	}
@@ -71,7 +69,7 @@ class DangBaiController extends Controller {
 		return response()->json($data);
 	}
 	public function checklike(Request $request) {
-		$baiviet = UserPost::find($id);
+//		$baiviet = UserPost::find($id);
 	}
 
 	public function loadthembaiviet(Request $request) {
@@ -109,7 +107,7 @@ class DangBaiController extends Controller {
 
 	public function baidangchitiet($id) {
 		$user_post = UserPost::find($id);
-		$top10_users = DB::table('users')->orderBy('noibat', 'desc')->limit(10)->get();
+        $top10_users = DB::table('users')->orderBy('noibat', 'desc')->limit(5)->get();
 		return view('customer.baidangchitiet', compact('user_post', 'top10_users'));
 	}
 

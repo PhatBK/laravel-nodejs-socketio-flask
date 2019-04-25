@@ -522,7 +522,8 @@
                         <div class="top-chef-title">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <p><span><i class="fa fa-users" aria-hidden="true"></i> </span> Top Thành Viên</p>
+                                    <p style="text-align: center;"><span><i class="fa fa-users" aria-hidden="true"></i> </span>
+                                        Top Thành Viên</p>
                                 </div>
                             </div>
 

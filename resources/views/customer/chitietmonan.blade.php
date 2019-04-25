@@ -18,9 +18,19 @@
 							<span  class="fa fa-star-o" data-rating="6" id="o6" ></span>
 							<span  class="fa fa-star-o" data-rating="7" id="o7" ></span>
 							<input type="hidden" name="whatever1" class="rating-value" value="{{$trungbinh}}">
-							<span style="font-size: 14px;" id="lx">Trung Bình :<b style="color:red;">{{$trungbinh}}</b></span>
+                        <span style="font-size: 14px;" id="lx">Trung Bình: <b
+                                    style="color:red; font-size: 15pt;">{{$trungbinh}}</b></span>
 							<br>
 							<span style="font-size: 14px; color: blue;" id="lx">Lượt Xem:<b style="color:orangered;">{{$monan->so_luot_xem}}</b></span>
+                        <script>
+                            var decimal = {{$trungbinh}} -Math.floor({{$trungbinh}});
+                            var number_started = (decimal < 0.5) ? Math.floor({{$trungbinh}}) : Math.ceil({{$trungbinh}});
+                            for (i = 1; i <= number_started; i++) {
+                                started_id = "o" + i;
+                                document.getElementById(started_id).classList.remove('fa-star-o');
+                                document.getElementById(started_id).classList.add('fa-star');
+                            }
+                        </script>
 					</div>
 					<br>
 					<a style="background-color: #90b3ed;" class="user-post-button-share btn" href="https://www.facebook.com/sharer/sharer.php?u=http://bkcook.ddns.net/bkcook.vn/public/chitietmonan/{{$monan->id}}&amp;src=sdkpreparse" target="_blank">
@@ -41,25 +51,24 @@
 						@if(!Auth::user())
 						<div id="vote" class="container signin">
 								<div class="star-rating">
-								<span  class="fa fa-star-o" data-rating="1" id="1" ></span>
-								<span  class="fa fa-star-o" data-rating="2" id="2" ></span>
-								<span  class="fa fa-star-o" data-rating="3" id="3" ></span>
-								<span  class="fa fa-star-o" data-rating="4" id="4" ></span>
-								<span  class="fa fa-star-o" data-rating="5" id="5" ></span>
-								<span  class="fa fa-star-o" data-rating="6" id="6" ></span>
-								<span  class="fa fa-star-o" data-rating="7" id="7" ></span>
-								<input type="hidden" name="whatever1" class="rating-value" value="4.1">
-								<span style="font-size: 14px;" id="lx"></span>
+                                    <span class="fa fa-star-o" data-rating="1" id="1"></span>
+                                    <span class="fa fa-star-o" data-rating="2" id="2"></span>
+                                    <span class="fa fa-star-o" data-rating="3" id="3"></span>
+                                    <span class="fa fa-star-o" data-rating="4" id="4"></span>
+                                    <span class="fa fa-star-o" data-rating="5" id="5"></span>
+                                    <span class="fa fa-star-o" data-rating="6" id="6"></span>
+                                    <span class="fa fa-star-o" data-rating="7" id="7"></span>
+                                    <input type="hidden" name="whatever1" class="rating-value" value="">
+                                    <span style="font-size: 14px;" id="lx"></span>&nbsp;&nbsp;
+                                    <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated"
+                                                                                      style="color: blue; font-size: 15pt;"></i></b>
 								</div>
 							</div>
 						@endif
+
 						@if (Auth::user())
 						<div id="vote" class="container">
-								<div class="star-rating"
-									@if(!Auth::user())
-										onclick="login_for_rate()"
-									@endif
-								>
+                            <div class="star-rating">
 								<span  class="fa fa-star-o" data-rating="1" id="1" ></span>
 								<span  class="fa fa-star-o" data-rating="2" id="2" ></span>
 								<span  class="fa fa-star-o" data-rating="3" id="3" ></span>
@@ -68,26 +77,63 @@
 								<span  class="fa fa-star-o" data-rating="6" id="6" ></span>
 								<span  class="fa fa-star-o" data-rating="7" id="7" ></span>
 								<input type="hidden" name="whatever1" class="rating-value" value="4.1">
-								<span style="font-size: 14px;" id="lx"></span>
+                                <span style="font-size: 14px;" id="lx"></span>&nbsp;&nbsp;
+
 								@if(Auth::user() && $monan->danhgiamonan )
 										@foreach ($monan->danhgiamonan as $dg)
 											@if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))
 												<script>
-													for( i = 1 ;i <= {{$dg->danhgia}}; i++){
-														document.getElementById(i).classList.remove('fa-star-o');
-														document.getElementById(i).classList.add('fa-star');
+                                                    for (var j = 1; j <= `{{ $dg->danhgia }}`; j++) {
+                                                        document.getElementById(j).classList.remove('fa-star-o');
+                                                        document.getElementById(j).classList.add('fa-star');
 													}
 												</script>
-												@break
+                                            @break
 											@endif
 										@endforeach
 								@endif
+                                @php $flag_rate = false; @endphp
+                                {{--								@if(Auth::user())--}}
+                                {{--								&nbsp;&nbsp;<b style="color: gray; font-size: 11pt;">rated:--}}
+                                {{--										@if ($monan->danhgiamonan)--}}
+                                {{--											@foreach ($monan->danhgiamonan as $dg)--}}
+                                {{--												@if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))--}}
+                                {{--													<i style="color: blue; font-size: 15pt;">{{$dg->danhgia }}</i>--}}
+                                {{--												    {{$flag_rate = true}}--}}
+                                {{--													@break--}}
+                                {{--												@endif--}}
+                                {{--											@endforeach--}}
+                                {{--											--}}
+                                {{--										@endif--}}
+                                {{--										@if ($flag_rate)--}}
+                                {{--										<b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>--}}
+                                {{--										@endif--}}
+
+                                {{--									</b>--}}
+                                {{--								@endif--}}
 								@if(Auth::user())
-								&nbsp;&nbsp;<b style="color: gray;">(đánh giá của bạn)</b>
+                                    &nbsp;&nbsp;
+                                    @if ($monan->danhgiamonan)
+                                        @foreach ($monan->danhgiamonan as $dg)
+                                            @if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))
+                                                <b style="color: gray; font-size: 11pt;">rated:<i
+                                                            style="color: blue; font-size: 15pt;">{{$dg->danhgia }}</i></b>
+                                                {{--													{{$flag_rate = true}}--}}
+                                                @php $flag_rate = true; @endphp
+                                                @break
+                                            @endif
+                                        @endforeach
+
+                                    @endif
+                                    @if (!$flag_rate)
+                                        <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated"
+                                                                                          style="color: blue; font-size: 15pt;"></i></b>
+                                    @endif
 								@endif
-								</div>
-							</div>
+                            </div>
+                        </div>
 						@endif
+                    {{--					   <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>--}}
 						
 				<div id="mota">
 					<p>{{$monan->gioithieu}}</p>
@@ -106,7 +152,8 @@
 							<b> {{$monan->do_kho}}</b>
 						</div>
 						<div style="text-align: center;">
-							<button type="button" style="background: red;" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+                            <button type="button" style="background: green;" class="btn btn-info btn-lg"
+                                    data-toggle="modal" data-target="#myModal">
 								<p>Gợi Ý Món Ăn Cho Bạn !!</p>
 							</button>
 							<!-- Modal chứa các món ăn có thể nấu cùng món đan xem -->
@@ -500,7 +547,7 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
                     setCookieMy("user_id", response[response.length -1], 1);
                 }
 				if (user_loged) {
-				    deleteCookie("user_id")
+                    deleteCookie("user_id");
                 }
 			},
 			error:function( err) {
@@ -508,38 +555,6 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 			}
 		});
 	};
-	
-	// Tự động gửi dữ liệu đi sau một khoảng thời gian được set
-
-	// setInterval(function() {
-	// 	var time = Date.now() - start;
-	// 	$.ajaxSetup({
-	// 	headers: {
-	// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 		}
-	// 	});
-	// 	$.ajax({
-	// 		type:'POST',
-	// 		url: 'user/logs/data/page-time',
-	// 		data:{
-	// 			'time' : time,
-	// 			'id_mon_an': id_mon_an,
-	// 			'ten_mon_an': ten_mon_an,
-	// 			'user_id': user_id,
-	// 			'referer': referer,
-	// 			'mon_an_id_referrer': mon_an_id_referrer,
-	// 			'play_video': play_video,
-	// 			'date_visit': date_visit,
-	// 			'time_visit_start': time_visit_start,
-	// 		},
-	// 		success:function(response){
-	// 			console.log(response);
-	// 		},
-	// 		error:function( err) {
-	// 			console.log(err);
-	// 		}
-	// 	});
-	// }, 20000);
 </script>
 
 <script src="vendor_customer/vendor/js/socket.io.js"></script>
@@ -569,7 +584,6 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 			var str="<ul class='list-nguyenlieu'>";
 			for (var i = 0;i< arr.length-1; i++) {
 				arrLuong = arr[i].split(",");
-
 				str+="<li>"+ arrLuong[0].trim() + " <span class='luong'> " + arrLuong[1].trim() + "</span></li>";
 			}
 			str+="</ul>";
@@ -631,6 +645,7 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
     	$(".commentList").append(element);
     });
 </script>
+
 {{-- Phần Ajax sử lý đánh giá --}}
 @if(Auth::user())
 	<script type="text/javascript">
@@ -644,29 +659,30 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	            var sao = $(this).attr("id");
 	            var moni = `{{$monan->id}}`;
 	            var useri = `{{Auth::user()->id}}`;
-	            if((sao=="1")||(sao=="2")||(sao=="3")||(sao=="4")||(sao=="5")||(sao=="6")||(sao == "7")){
-	            var saoi = parseInt(sao);
-				console.log(useri + ' :da danh gia mon:' + moni);
-				var url = "{{route('danhgia_monan')}}";
-	            var op='';
-	            $.ajax({
-	                type:'POST',
-	                url: url,
-	                data:{'moni':moni,
-	            	      'useri':useri,
-	            	  	  'saoi':saoi},
-	                success:function(response){
-	                    console.log(response);
-	                    for( i = 1 ;i <= saoi ; i++){
-							document.getElementById(i).classList.remove('fa-star-o');
-							document.getElementById(i).classList.add('fa-star');
-						}
-						alert('Bạn đã đánh giá '+ saoi +' sao cho món ' +'{{$monan->ten_monan}}');
-	                },
-	                error:function() {
-	                    console.log('error');
-	                }
-	            });
+                if ((sao == "1") || (sao == "2") || (sao == "3") || (sao == "4") || (sao == "5") || (sao == "6") || (sao == "7")) {
+                    var saoi = parseInt(sao);
+                    document.getElementById('ajax_rated').innerHTML = "" + saoi;
+                    var url = "{{route('danhgia_monan')}}";
+                    var op = '';
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: {
+                            'moni': moni,
+                            'useri': useri,
+                            'saoi': saoi
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            for (i = 1; i <= saoi; i++) {
+                                document.getElementById(i).classList.remove('fa-star-o');
+                                document.getElementById(i).classList.add('fa-star');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
 	            }else{
 	            	console.log("đay không phải là sao..ahihi");
 	            }

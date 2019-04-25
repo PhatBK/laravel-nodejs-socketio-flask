@@ -17,6 +17,7 @@ use App\Models\Video;
 use App\Models\VungMien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 
@@ -505,16 +506,51 @@ class BKCookController extends Controller {
 	}
 	// đánh giá món ăn
 	public function danhgia_monan(Request $request) {
-		$id_monan = $request->moni;
-		$id_user = $request->useri;
-		$sosao = $request->saoi;
-		$danhgia = new DanhGiaMonAn;
-		$danhgia->id_user = $id_user;
-		$danhgia->id_monan = $id_monan;
-		$danhgia->danhgia = $sosao;
-		$danhgia->save();
-		$data = $danhgia;
-		return response()->json($data);
+
+        $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
+        $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
+
+        if (count((array)$danh_gia_olded) != 0) {
+            $sosao = $request->saoi;
+            DB::table('danhgiamonan')
+                ->where($contrain)
+                ->update(['danhgia' => $sosao]);
+
+//	        $danh_gia_olded->update([
+//	            'danhgia' => $sosao
+//            ]);
+
+//            $danh_gia_olded->save();
+
+            $data = $danh_gia_olded;
+            return response()->json($data);
+
+        } else {
+            $id_monan = $request->moni;
+            $id_user = $request->useri;
+            $sosao = $request->saoi;
+            $danhgia = new DanhGiaMonAn;
+            $danhgia->id_user = $id_user;
+            $danhgia->id_monan = $id_monan;
+            $danhgia->danhgia = $sosao;
+            $danhgia->save();
+            $data = $danhgia;
+            return response()->json($data);
+        }
+
+
+//		$id_monan = $request->moni;
+//		$id_user = $request->useri;
+//		$sosao = $request->saoi;
+//		$danhgia = new DanhGiaMonAn;
+//		$danhgia->id_user = $id_user;
+//		$danhgia->id_monan = $id_monan;
+//		$danhgia->danhgia = $sosao;
+//		$danhgia->save();
+//		$data = $danhgia;
+//		return response()->json($data);
+
+//      return response()->json( $danh_gia_olded);
 	}
 	//like món ăn
 	public function like_monan(Request $request) {
