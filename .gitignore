@@ -13,3 +13,4 @@ yarn-error.log
 /flask/venv
 /public/uploads/video
 /storage/framework/views
+/.tmp.drivedownload
