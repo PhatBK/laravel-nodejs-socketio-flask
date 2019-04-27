@@ -569,4 +569,15 @@ class BKCookController extends Controller {
 		}
 
 	}
+	public function postUserSurvey(Request $req) {
+		$response = null;
+		$finish = false;
+		$user_id = Auth::user()->id;
+
+		$response = $finish ? "Success" : "Unsuccess" ;
+
+		return response()->json($response);
+
+
+	}
 }

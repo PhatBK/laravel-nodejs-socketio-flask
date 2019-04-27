@@ -371,10 +371,18 @@ Route::get('crawler','NangCapHeThongController@getCrawler');
 Route::get('bmr/{cannang}/{chieucao}/{tuoi}/{gioitinh}','NangCapHeThongController@tinhBMR');
 Route::get('users','NangCapHeThongController@get_firebase');
 
-Route::get('user/logs/data/survey', 'RecommenderCoreController@getUserServeyView');
+// Route::get('user/logs/data/survey', 'RecommenderCoreController@getUserServeyView');
+// Route::post('user/logs/data/survey', 'RecommenderCoreController@postUserServeyView');
+// Route::post('user/logs/data/key-search', 'RecommenderCoreController@postUserKeySearch');
+// Route::post('user/logs/data/page-time', 'RecommenderCoreController@postUserPageTime');
+
+// Collector data from user
+Route::post('user/data/survey', 'BKCookController@postUserSurvey');
 Route::post('user/logs/data/survey', 'RecommenderCoreController@postUserServeyView');
-Route::post('user/logs/data/key-search', 'RecommenderCoreController@postUserKeySearch');
-Route::post('user/logs/data/page-time', 'RecommenderCoreController@postUserPageTime');
+Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
+Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
+
+Route::post('user/api/request/start-recommend', 'RecommenderCoreController@postStartRecommender');
 
 Route::get('/api/call/flask', 'RecommenderCoreController@getFlaskAPI');
 Route::get('/api/send/flask', 'RecommenderCoreController@sendFlaskAPI');

@@ -2,8 +2,8 @@
 # coding=utf-8
 from flask import Flask
 from flask import jsonify
-from flask_restful import Resource, Api
-from flask_cors import CORS
+# from flask_restful import Resource, Api
+# from flask_cors import CORS
 
 from sklearn import datasets
 import numpy as np
@@ -13,7 +13,7 @@ import requests
 app = Flask(__name__)
 app.config['TESTING'] = True
 
-CORS(app)
+# CORS(app)
 
 def add_tow(n1, n2):
     return n1 + n2
@@ -41,6 +41,13 @@ def hello_world():
     # print(mx)
     return "Successfully"
 
+@app.route('/api/start/recommender/v1')
+def start_recommend():
+     data = requests.get('http://127.0.0.1/DATN-20182/public/api/send/flask');
+     response = {1,2,3,4,5}
+     print(data.json())
+     return jsonify(response)
+
 @app.route('/api/data/get/v1')
 def get_data_api():
     data = [1,2,3,4,5]
@@ -52,9 +59,9 @@ def get_data_api_amthucquanhta():
     print(data)
     print(data.status_code)
     print(data.json())
-    task = {"summary": "Take out trash", "description": "" }
 
-    requests.post('http://127.0.0.1/DATN-20182/public/api/call/flask',  data=json.dumps(task),headers={'Content-Type':'application/json'})
+    # task = {"summary": "Take out trash", "description": "" }
+    # requests.post('http://127.0.0.1/DATN-20182/public/api/call/flask',  data=json.dumps(task),headers={'Content-Type':'application/json'})
     return jsonify(data.json())
 
 

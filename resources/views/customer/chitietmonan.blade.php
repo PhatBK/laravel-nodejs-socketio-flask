@@ -690,5 +690,27 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	    });
 	</script>
 @endif
+<script>
+		setTimeout(function() {
+			$.ajaxSetup({
+				headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+			});
+			$.ajax({
+				type:'post',
+				url: 'user/api/request/start-recommend',
+				data:{
+					flag: true
+				},
+				success:function(response){
+					console.log(response);
+				},
+				error:function( err) {
+					console.log(err);
+				}
+			});
+		}, 15000);
+	</script>
 @endsection
 
