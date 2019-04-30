@@ -8,10 +8,10 @@ class VerifyCsrfToken extends Middleware
 {
     /**
      * The URIs that should be excluded from CSRF verification.
-     *
+     * Những route không cần phải validate csrf token
      * @var array
      */
     protected $except = [
-        //
+        '/api/recommender/flask/post/results',
     ];
 }

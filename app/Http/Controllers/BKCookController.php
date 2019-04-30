@@ -505,27 +505,28 @@ class BKCookController extends Controller {
 		}
 	}
 	// đánh giá món ăn
+	// 
 	public function danhgia_monan(Request $request) {
 
         $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
         $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
 
-        if (count((array)$danh_gia_olded) != 0) {
-            $sosao = $request->saoi;
-            DB::table('danhgiamonan')
-                ->where($contrain)
-                ->update(['danhgia' => $sosao]);
+//         if (count((array)$danh_gia_olded) != 0) {
+//             $sosao = $request->saoi;
+//             DB::table('danhgiamonan')
+//                 ->where($contrain)
+//                 ->update(['danhgia' => $sosao]);
 
-//	        $danh_gia_olded->update([
-//	            'danhgia' => $sosao
-//            ]);
+// //	        $danh_gia_olded->update([
+// //	            'danhgia' => $sosao
+// //            ]);
 
-//            $danh_gia_olded->save();
+// //            $danh_gia_olded->save();
 
-            $data = $danh_gia_olded;
-            return response()->json($data);
+//             $data = $danh_gia_olded;
+//             return response()->json($data);
 
-        } else {
+//         } else {
             $id_monan = $request->moni;
             $id_user = $request->useri;
             $sosao = $request->saoi;
@@ -536,7 +537,7 @@ class BKCookController extends Controller {
             $danhgia->save();
             $data = $danhgia;
             return response()->json($data);
-        }
+        // }
 
 
 //		$id_monan = $request->moni;

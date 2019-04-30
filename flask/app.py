@@ -10,11 +10,22 @@ import numpy as np
 import json
 import requests
 
+# ToDo Recommender engine task
+from recommendation_data import dataset
+import collaborative_filtering
+
+
+print('Lisa de similaryty:')
+print(collaborative_filtering.most_similar_users('Lisa Rose', 4, dataset))
+print("Recommendations for Lisa Rose:")
+print(collaborative_filtering.user_reommendations_knn('Lisa Rose', dataset, 0.8))
+
+
 app = Flask(__name__)
 app.config['TESTING'] = True
 
 # CORS(app)
-
+print(datasets)
 def add_tow(n1, n2):
     return n1 + n2
 
@@ -43,10 +54,19 @@ def hello_world():
 
 @app.route('/api/start/recommender/v1')
 def start_recommend():
-     data = requests.get('http://127.0.0.1/DATN-20182/public/api/send/flask');
-     response = {1,2,3,4,5}
-     print(data.json())
-     return jsonify(response)
+    data = requests.get('http://127.0.0.1/DATN-20182/public/api/send/flask');
+    print(data.json())
+    # tính toán recommend
+    # Todo
+    results = {
+        'code': 200,
+        'type': 'array',
+        'data': jsonify([1,2,3,4,5,6,7])
+    }
+    # gửi lại dữ liệu cho server web app
+    data_send = requests.post('http://127.0.0.1/DATN-20182/public/api/recommender/flask/post/results', data = results);
+    print(data_send)
+    return "Successfully"
 
 @app.route('/api/data/get/v1')
 def get_data_api():
@@ -63,7 +83,9 @@ def get_data_api_amthucquanhta():
     # task = {"summary": "Take out trash", "description": "" }
     # requests.post('http://127.0.0.1/DATN-20182/public/api/call/flask',  data=json.dumps(task),headers={'Content-Type':'application/json'})
     return jsonify(data.json())
-
+@app.route('')
+def func_utils():
+    return "";
 
 
 

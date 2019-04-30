@@ -23,7 +23,7 @@
 							<br>
 							<span style="font-size: 14px; color: blue;" id="lx">Lượt Xem:<b style="color:orangered;">{{$monan->so_luot_xem}}</b></span>
                         <script>
-                            var decimal = {{$trungbinh}} -Math.floor({{$trungbinh}});
+                            var decimal = {{$trungbinh}} - Math.floor({{$trungbinh}});
                             var number_started = (decimal < 0.5) ? Math.floor({{$trungbinh}}) : Math.ceil({{$trungbinh}});
                             for (i = 1; i <= number_started; i++) {
                                 started_id = "o" + i;
@@ -691,26 +691,53 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	</script>
 @endif
 <script>
-		setTimeout(function() {
-			$.ajaxSetup({
-				headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					}
-			});
-			$.ajax({
-				type:'post',
-				url: 'user/api/request/start-recommend',
-				data:{
-					flag: true
-				},
-				success:function(response){
-					console.log(response);
-				},
-				error:function( err) {
-					console.log(err);
+	// var count = 0;
+	// var timeout = 15000;
+	// setInterval(function() {
+	// 	$.ajaxSetup({
+	// 			headers: {
+	// 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	// 				}
+	// 		});
+	// 		$.ajax({
+	// 			type:'post',
+	// 			url: 'user/api/request/start-recommend',
+	// 			data:{
+	// 				flag: true
+	// 			},
+	// 			success:function(response){
+	// 				console.log(response);
+	// 				count++;
+	// 			},
+	// 			error:function( err) {
+	// 				console.log(err);
+	// 			}
+	// 		});
+	// 		if (count == 2) {
+	// 			timeout = 30000;
+	// 		}
+	// }, timeout);
+
+	setTimeout(function() {
+		$.ajaxSetup({
+			headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
-			});
-		}, 15000);
+		});
+		$.ajax({
+			type:'post',
+			url: 'user/api/request/start-recommend',
+			data:{
+				flag: true
+			},
+			success:function(response){
+				console.log(response);
+			},
+			error:function( err) {
+				console.log(err);
+			}
+		});
+	}, 15000);
 	</script>
 @endsection
 
