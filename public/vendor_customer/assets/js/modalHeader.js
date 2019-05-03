@@ -15,4 +15,7 @@ jQuery(document).ready(function ($) {
 	$("#form").submit(function(){
 	 	 $("#modal-search").modal();
 	});
+    $(".survey").click(function() {
+        $("#modal-survey").modal();
+    })
 });

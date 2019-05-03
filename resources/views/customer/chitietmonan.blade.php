@@ -1,6 +1,6 @@
 @extends('customer.layouts.master')
 @section('content')
-<section id="chitietmonan" class="chitietmonan" style="margin-top:3em;">
+<section id="chitietmonan" class="chitietmonana" style="margin-top:3em;" >
 	<div class="container">
 		<div id='tongquan' class="row">
 			<div class="tongquan-left col-md-9">
@@ -33,7 +33,7 @@
                         </script>
 					</div>
 					<br>
-					<a style="background-color: #90b3ed;" class="user-post-button-share btn" href="https://www.facebook.com/sharer/sharer.php?u=http://bkcook.ddns.net/bkcook.vn/public/chitietmonan/{{$monan->id}}&amp;src=sdkpreparse" target="_blank">
+					<a style="background-color: #90b3ed;" class="user-post-button-share btn" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1/DATN-20182/public/chitietmonan/{{$monan->id}}&amp;src=sdkpreparse" target="_blank">
                         <span style="font-size: 15px">
                             <i class="fa fa-share-square-o" aria-hidden="true"></i>Chia Sẻ Facebook
                         </span>
@@ -154,7 +154,7 @@
 						<div style="text-align: center;">
                             <button type="button" style="background: green;" class="btn btn-info btn-lg"
                                     data-toggle="modal" data-target="#myModal">
-								<p>Gợi Ý Món Ăn Cho Bạn !!</p>
+								<p>Bữa Ăn Cho Bạn !!</p>
 							</button>
 							<!-- Modal chứa các món ăn có thể nấu cùng món đan xem -->
 							<div id="myModal" class="modal fade" role="dialog">
@@ -207,6 +207,60 @@
 								  </div>
 							</div>
 							{{-- hết modal gợi ý món ăn --}}
+						</div>
+						{{-- Khảo sát người dùng --}}
+						<div>
+							<!-- Modal khảo sát thị yếu của người dùng -->
+							<div id="modal-survey" class="modal fade" role="dialog">
+								  <div class="modal-dialog">
+								    <!-- Modal content-->
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal">&times;</button>
+								        <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
+								      </div>
+								      <div class="modal-body">
+								      	<div class="row">
+									      	<div class="col-md-3">
+										      	{{-- món đang xem --}}
+										      	<a href="" title="Xem chi tiết món ăn:{{$monan->ten_monan}}" target="_blank">
+										      	<p style="color: red;">{{ $monan->ten_monan }}</p>
+										      	<img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
+										      	<br><br>
+										      	<u>Xem chi tiết</u> 
+										        </a>
+
+										    </div>
+										    <div class="col-md-3">
+												{{-- Các món được gợi ý --}}
+												<p style="color: red;">{{ $monan->ten_monan }}</p>
+										        <img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
+									      	</div>
+									      	<div class="col-md-3">
+												{{-- Các món được gợi ý --}}
+												<p style="color: red;">{{ $monan->ten_monan }}</p>
+										        <img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
+									      	</div>
+									    </div>
+									    {{-- thông tin tham khảo thêm --}}
+										<div class="row" style="margin-top:5em;overflow: auto; ">
+											<div class="col-md-12">
+												<b>
+												– Không cho mì chính vào những món món ăn có nhiều vị chua. Vì mì chính khó hòa tan trong nước chua, đồng thời còn phát sinh ra một loại axít mới có hại cho sức khỏe.
+												– Không cho thêm nước lạnh khi đang hầm xương, thịt. Vì trong thịt, xương có chứa một hàm lượng lớn protein và lipid. Nếu cho thêm nước lạnh, nhiệt độ trong nồi hạ đột ngột, protein và lipid đông lại, món ăn không còn chất bố dưỡng nữa
+											    </b>
+											</div>
+										</div>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
+								        	Thoát
+								        </button>
+								      </div>
+								    </div>
+								  </div>
+							</div>
+							{{-- Hết modal khảo sát người dùng --}}
 						</div>
 				</div>
 			</div>

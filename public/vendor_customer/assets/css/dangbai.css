@@ -1,4 +1,27 @@
 /* phan header*/
+.login_modal_class {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+.signup_modal_class {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+.account_info_modal_class {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+.btn-signin_class {
+    border-radius: 4px;
+    background-color: #3e5b77;
+    opacity:0.8;
+}
 
 #usrname,
 #psw {

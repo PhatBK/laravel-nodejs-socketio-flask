@@ -8,4 +8,8 @@ class FeedBack extends Model
 {
     protected $table = "feedback";
 
+    public function user() {
+
+    }
+
 }

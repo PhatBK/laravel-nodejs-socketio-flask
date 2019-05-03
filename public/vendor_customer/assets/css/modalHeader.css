@@ -1,5 +1,35 @@
 /* phan header*/
-#usrname,#psw{
+.survey_form {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+#survey_title,#survey_content {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+/* #usrname,#psw{
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+} */
+.login_modal_class {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+.signup_modal_class {
+    border-radius: 4px;
+    background-color :#fff;
+    color: black;
+    width: 100%;
+}
+.account_info_modal_class {
     border-radius: 4px;
     background-color :#fff;
     color: black;
@@ -13,10 +43,15 @@
     width: 100%;
 }
 
-#btn-signin ,#btn-signup{
+#btn-signin_ ,#btn-signup{
 	border-radius: 4px;
 	background-color: #3e5b77;
 	opacity:0.8;
+}
+.btn-signin_class {
+    border-radius: 4px;
+    background-color: #3e5b77;
+    opacity:0.8;
 }
 
 #btn-signin-cancel {

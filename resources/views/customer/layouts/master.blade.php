@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('Ẩm thực quanh ta')</title>
     <base href="{{asset('')}}">
-    <link href="vendor_customer/assets/css/google_fonts.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="vendor_customer/assets/css/google_fonts.css"> 
     <link rel="stylesheet" href="vendor_customer/assets/css/skills/progressbar.css">
     <link rel="stylesheet" href="vendor_customer/assets/css/skills/style.css">
     <link rel="stylesheet" href="vendor_customer/assets/css/fonticons.css">
@@ -54,6 +54,7 @@
      @endif
 @yield('content')
 @include('customer.layouts.couter')
+@include('customer.layouts.contact')
 </section>
 <hr class="alert-warning" style="border: 5px;">
 <!-- START SCROLL TO TOP  -->

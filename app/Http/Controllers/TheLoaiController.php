@@ -61,6 +61,6 @@ class TheLoaiController extends Controller {
 		return redirect()->back()->with('thongbao', 'Xoá thành công !!!');
 	}
     public function rollBackAll() {
-        return response()->json(null);
+        return response()->json("null");
     }
 }

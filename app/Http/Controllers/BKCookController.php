@@ -581,4 +581,8 @@ class BKCookController extends Controller {
 
 
 	}
+	public function postFeedBack(Request $req) {
+		$user_id = Auth::user()->id;
+		
+	}
 }

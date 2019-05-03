@@ -308,6 +308,6 @@ class UserController extends Controller {
 		return redirect('admin/nhahang/danhsach')->with('thongbao', 'Success : xóa tài khoản nhà hàng liên kết thành công...');
 	}
     public function rollBackAll() {
-        return response()->json(null);
+        return response()->json("null");
     }
 }

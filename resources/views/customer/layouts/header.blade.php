@@ -85,13 +85,13 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}" />
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span> Tên Đăng Nhập</label>
-              <input type="text" class="form-control" id="usrname" name="username" required="" placeholder="Nhập Tài Khoản">
+              <input type="text" class="form-control login_modal_class" name="username" required="" placeholder="Nhập Tài Khoản">
             </div>
             <div class="form-group" >
               <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span> Mật Khẩu</label>
-              <input type="password" class="form-control" id="psw" name="password" required="" placeholder="Nhập Mật Khẩu">
+              <input type="password" class="form-control login_modal_class" name="password" required="" placeholder="Nhập Mật Khẩu">
             </div>
-            <button type="submit" class="btn btn-success btn-block" id="btn-signin"><span><i class="fa fa-power-off" aria-hidden="true"></i></span> Đăng Nhập</button>
+            <button type="submit" class="btn btn-success btn-block btn-signin_class"><span><i class="fa fa-power-off" aria-hidden="true"></i></span> Đăng Nhập</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -103,6 +103,7 @@
     </div>
   </div>
 <!--hết modal đăng nhập-->
+
 <!-- Modal đăng ký-->
 <div class="modal fade" id="modal-signup" role="dialog">
     <div class="modal-dialog">
@@ -117,15 +118,15 @@
             <input type="hidden" name="_token" value="{{csrf_token()}}" />
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Họ và Tên</label>
-              <input type="text" class="form-control" id="usrname" name="fullname" required="" placeholder="Nhập Họ Và Tên">
+              <input type="text" class="form-control signup_modal_class" name="fullname" required="" placeholder="Nhập Họ Và Tên">
             </div>
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Tuổi</label>
-              <input type="number" class="form-control" id="usrname" name="tuoi" placeholder="Nhập Tuổi Của Bạn">
+              <input type="number" class="form-control signup_modal_class" name="tuoi" placeholder="Nhập Tuổi Của Bạn">
             </div>
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Công Việc Hiện Tại</label>
-              <input type="text" class="form-control" id="usrname" name="congviec" placeholder="Công Việc Hiện Tại">
+              <input type="text" class="form-control signup_modal_class"  name="congviec" placeholder="Công Việc Hiện Tại">
             </div>
              <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Giới Tính:</label>
@@ -142,25 +143,25 @@
             </div>
             <div class="form-group" >
               <label for="psw" style="color: black"><span><i class="fa fa-envelope" aria-hidden="true"></i></span> Địa Chỉ Mail</label>
-              <input type="email" class="form-control" id="psw" name="email" required="" placeholder="Nhập Mail">
+              <input type="email" class="form-control signup_modal_class" name="email" required="" placeholder="Nhập Mail">
             </div>
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Tên Tài Khoản</label>
-              <input type="text" class="form-control" id="usrname" name="tentaikhoan" required="" placeholder="Nhập tên tài khoản">
+              <input type="text" class="form-control signup_modal_class" name="tentaikhoan" required="" placeholder="Nhập tên tài khoản">
             </div>
             <div class="form-group" >
               <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span>Mật Khẩu</label>
-              <input type="password" class="form-control" name="password" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title=":  Mật khẩu phải chứa ít nhất một ký tự thường,một ký tự hoa,một chứ số và mật khẩu phải dài hơn 8 ký tự" required="" placeholder="Nhập Mật Khẩu">
+              <input type="password" class="form-control signup_modal_class" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title=":  Mật khẩu phải chứa ít nhất một ký tự thường,một ký tự hoa,một chứ số và mật khẩu phải dài hơn 8 ký tự" required="" placeholder="Nhập Mật Khẩu">
             </div>
             <div class="form-group" >
               <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span> Xác Nhận Mật Khẩu</label>
-              <input type="password" class="form-control" name="passwordAgain" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" title="Mật khẩu xác nhận không đúng..." required="" placeholder="Nhập Lại Mật Khẩu">
+              <input type="password" class="form-control signup_modal_class" name="passwordAgain" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" title="Mật khẩu xác nhận không đúng..." required="" placeholder="Nhập Lại Mật Khẩu">
             </div>
             <div class="form-group">
               <label for="usrname" style="color: black"><span><i class="fa fa-picture-o" aria-hidden="true"></i></span>Ảnh Đại Diện</label>
               <input type="file" id="usrname-4" name="anh" placeholder="Chọn Ảnh" required="">
             </div>
-              <button type="submit" class="btn btn-success btn-block" id="btn-signin"><span><i class="fa fa-power-off" aria-hidden="true"></i></span> Đăng Ký</button>
+              <button type="submit" class="btn btn-success btn-block btn-signin_class"><span><i class="fa fa-power-off" aria-hidden="true"></i></span> Đăng Ký</button>
           </form>
         </div>
       </div>
@@ -188,15 +189,15 @@
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Họ và Tên</label>
-                <input type="text" class="form-control sua" id="usrname-00" name="fullname" required="" value="{{Auth::user()->hovaten}}" disabled="">
+                <input type="text" class="form-control sua account_info_modal_class" name="fullname" required="" value="{{Auth::user()->hovaten}}" disabled="">
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Tuổi</label>
-                <input type="number" class="form-control sua" id="usrname-01" name="tuoi" value="{{Auth::user()->tuoi}}" disabled="">
+                <input type="number" class="form-control sua account_info_modal_class" name="tuoi" value="{{Auth::user()->tuoi}}" disabled="">
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Công Việc Hiện Tại</label>
-                <input type="text" class="form-control sua" id="usrname-02" name="congviec" value="{{Auth::user()->congviec}}" disabled="">
+                <input type="text" class="form-control sua account_info_modal_class" name="congviec" value="{{Auth::user()->congviec}}" disabled="">
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Giới Tính:</label>
@@ -213,11 +214,11 @@
               </div>
               <div class="form-group" >
                 <label for="psw" style="color: black"><span><i class="fa fa-envelope" aria-hidden="true"></i></span> Địa Chỉ Mail</label>
-                <input type="email" class="form-control" id="psw-01" name="email"  value="{{Auth::user()->email}}" disabled="">
+                <input type="email" class="form-control account_info_modal_class" name="email"  value="{{Auth::user()->email}}" disabled="">
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span>Tên Tài Khoản</label>
-                <input type="text" class="form-control sua" id="usrname" name="tentaikhoan" value="{{Auth::user()->tentaikhoan}}" disabled="">
+                <input type="text" class="form-control sua account_info_modal_class" name="tentaikhoan" value="{{Auth::user()->tentaikhoan}}" disabled="">
               </div>
               <div class="form-group">
                <input type="checkbox" name="changePass" id="changePass">
@@ -225,11 +226,11 @@
               </div>
               <div class="form-group" >
                 <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span>Mật Khẩu</label>
-                <input type="password" class="form-control suap" name="password" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title=":  Mật khẩu phải chứa ít nhất một ký tự thường,một ký tự hoa,một chứ số và mật khẩu phải dài hơn 8 ký tự" required="" placeholder="Nhập Mật Khẩu Mới" disabled="">
+                <input type="password" class="form-control suap account_info_modal_class" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title=":  Mật khẩu phải chứa ít nhất một ký tự thường,một ký tự hoa,một chứ số và mật khẩu phải dài hơn 8 ký tự" required="" placeholder="Nhập Mật Khẩu Mới" disabled="">
               </div>
               <div class="form-group">
                 <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span> Xác Nhận Mật Khẩu</label>
-                <input type="password" class="form-control suap" name="passwordAgain" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" title="Mật khẩu xác nhận không đúng..." required="" placeholder="Nhập Lại Mật Khẩu Mới" disabled="">
+                <input type="password" class="form-control suap account_info_modal_class" name="passwordAgain" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');" title="Mật khẩu xác nhận không đúng..." required="" placeholder="Nhập Lại Mật Khẩu Mới" disabled="">
               </div>
               <div class="form-group">
                 <label for="usrname" style="color: black"><span><i class="fa fa-picture-o" aria-hidden="true"></i></span>Ảnh Đại Diện</label>
@@ -239,7 +240,7 @@
                 <label for="usrname" style="color: black"><span><i class="fa fa-picture-o" aria-hidden="true"></i></span>Ảnh Đại Diện</label>
                 <input type="file" class="sua" id="usrname-03" name="anh" placeholder="Chọn Ảnh" disabled="">
               </div>
-              <button type="submit" class="btn btn-success btn-block" id="btn-signin"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Sửa Thông Tin</button>
+              <button type="submit" class="btn btn-success btn-block btn-signin_class"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Sửa Thông Tin</button>
               <br>
               <br>
               <button type="submit" class="btn btn-danger btn-block" id="btn-signin-cancel" data-dismiss="modal"><span ><i class="fa fa-times" aria-hidden="true"></i></span> Thoát</button>

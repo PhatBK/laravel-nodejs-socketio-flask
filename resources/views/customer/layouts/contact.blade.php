@@ -5,47 +5,66 @@
                 <div class="row">
                     <div class="col-sm-3  col-xs-12">
                         <div class="single_widget wow fadeIn" data-wow-duration="800ms">
-                            <h4 class="footer_title">CONTACT</h4>
+                            <h4 class="footer_title">Liên Hệ</h4>
                             <div class="separator4"></div>
                             <ul>
-                                <li><a href=""><i class="fa fa-envelope"></i> info@guitarchoose.com</a></li>
-                                <li><a href=""><i class="fa fa-phone"></i> 0123 456 789 0112</a></li>
-                                <li><a href=""><i class="fa fa-map-marker"></i> Greenplatz Ben 29, Germany 60435</a>
+                                <li><a href="https://accounts.google.com/ServiceLogin?hl=vi&passive=true&continue=https://www.google.com/search%3Fq%3Dmail%26oq%3Dmail%26aqs%3Dchrome.0.69i59j69i57j69i65j69i60j69i65j69i60.1207j0j4%26sourceid%3Dchrome%26ie%3DUTF-8" target="_blank"><i class="fa fa-envelope"></i>Phatnh96@gmail.com</a></li>
+                                <li><a href=""><i class="fa fa-phone"></i> 0328846219</a></li>
+                                <li><a href=""><i class="fa fa-map-marker"></i>Tòa nhà CIT, 15/78 Duy Tân, Hà Nội</a>
                                 </li>
-                                <li><a href=""><i class="fa fa-fax"></i> (0012) 654 356 445</a></li>
+                                <li><a href=""><i class="fa fa-fax"></i> 0242 113 311 115</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-xs-12">
-                        <div class="single_widget wow fadeIn" data-wow-duration="800ms">
-                            <h4 class="footer_title">LATEST NEWS</h4>
-                            <div class="separator4"></div>
-                            <div class="footer_gellary">
-                                <img src="vendor_customer/assets/images/fg1.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg2.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg3.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg4.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg5.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg6.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg7.jpg" alt=""/>
-                                <img src="vendor_customer/assets/images/fg8.jpg" alt=""/>
+                    @if(Auth::user())
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="single_widget wow fadeIn" data-wow-duration="800ms">
+                                <h4 class="footer_title">Phản Hồi Hệ Thống</h4>
+                                <div class="separator4"></div>
+                                <div class="footer_gellary">
+                                  <form role="form">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                                    <div class="form-group">
+                                      <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span> Tiêu Đề</label>
+                                      <input type="text" class="form-control" id="survey_title" name="username" required="" placeholder="Tiêu đề">
+                                    </div>
+                                    <div class="form-group" >
+                                      <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span>Nội Dung</label>
+                                      <textarea type="text" class="form-control" id="survey_content" name="password" required="" placeholder="Nội dung"></textarea>
+                                    </div>
+                                    <a class="btn btn-success btn-block" style="color: black;"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Gửi</a>
+                                  </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3 col-xs-12">
-                        <div class="single_widget wow fadeIn" data-wow-duration="800ms">
-                            <div class="footer_logo">
-                                <img src="vendor_customer/assets/images/footerlogo.png" alt=""/>
+                    @endif
+                    @if(!Auth::user())
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="single_widget wow fadeIn signin" data-wow-duration="800ms">
+                                <h4 class="footer_title">Phản Hồi Hệ Thống</h4>
+                                <div class="separator4"></div>
+                                <div class="footer_gellary">
+                                  <form role="form">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                                    <div class="form-group">
+                                      <label for="usrname" style="color: black"><span><i class="fa fa-user" aria-hidden="true"></i></span> Tiêu Đề</label>
+                                      <input type="text" class="form-control" id="survey_title" name="title" required="" placeholder="Tiêu đề" disabled="">
+                                    </div>
+                                    <div class="form-group" >
+                                      <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span>Nội Dung</label>
+                                      <textarea type="text" class="form-control" id="survey_content" name="content" required="" placeholder="Nội dung" disabled=""></textarea>
+                                    </div>
+                                    <a class="btn btn-success btn-block signin" style="color: black;"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Gửi</a>
+                                  </form>
+                                </div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in egestas lectus.
-                                Etiam tempor odio tellus, at bibendum neque faucibus quis. Sed vel facilisis elit. </p>
-                            <p>Nullam fringilla pharetra diam non accumsan. Morbi eget aliquam mauris.
-                                Etiam vehicula efficitur mi.</p>
-                            <a class="weblink" href="https://bootstrapthemes.co">https://bootstrapthemes.co</a>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    
+</script>
