@@ -32,7 +32,7 @@
                                       <label for="psw" style="color: black"><span><i class="fa fa-eye" aria-hidden="true"></i></span>Nội Dung</label>
                                       <textarea type="text" class="form-control" id="survey_content" name="password" required="" placeholder="Nội dung"></textarea>
                                     </div>
-                                    <a class="btn btn-success btn-block" style="color: black;"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Gửi</a>
+                                    <a onclick="sendFeedBack()" class="btn btn-success btn-block" style="color: black;"><span><i class="fa fa-power-off" aria-hidden="true"></i></span>Gửi</a>
                                   </form>
                                 </div>
                             </div>
@@ -66,5 +66,32 @@
     </div>
 </section>
 <script>
-    
+    function sendFeedBack() {
+        var title = "";
+        var content = "";
+        var confirm_ = confirm("Bạn Chắc Chắn Muốn Gửi Chứ?");
+
+        if (confirm_) {
+            console.log(confirm_);
+            $.ajaxSetup({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url: '',
+                data:{
+                    'title': title,
+                    'content': content,
+                },
+                success:function(response){
+                    console.log(response);
+                },
+                error:function( err) {
+                    console.log(err);
+                }
+            });
+        }
+    }
 </script>

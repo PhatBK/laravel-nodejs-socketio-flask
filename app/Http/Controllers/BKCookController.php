@@ -26,12 +26,14 @@ class BKCookController extends Controller {
 	public $lipit;
 	public $gluxit;
 	
-	public function __construct() {
+	function __construct() {
+
 		$foods = count(MonAn::all());
 		$users = count(User::all());
 		$nhahangs = count(NhaHang::all());
 		$videos = count(Video::all());
 		$baiviets = count(UserPost::all());
+
 		view()->share('foods', $foods);
 		view()->share('users', $users);
 		view()->share('nhahangs', $nhahangs);
@@ -189,6 +191,8 @@ class BKCookController extends Controller {
 	}
 	// chi tiết món ăn hệ thống
 	public function View_chitietmonan($id) {
+		$timeout_request_recommend = 1 * 60 * 1000; // 1 phút
+		$timeout_survey = 1 * 60 * 1000; // 1 phút
 		if (isset($id)) {
 			$monan = MonAn::find($id);
 			if (!(Session::get('id') == $id)) {
@@ -196,6 +200,8 @@ class BKCookController extends Controller {
 				$monan->save();
 				Session::put('id', $id);
 			}
+
+			$loaimons = LoaiMon::all();
 
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
 			$monan_lienquan = [];
@@ -235,6 +241,7 @@ class BKCookController extends Controller {
 			}
             return view('customer.chitietmonan',
                 compact(
+					'loaimons',
                     'monan',
                     'monan_lienquan',
                     'cacbuocnau',
@@ -242,11 +249,13 @@ class BKCookController extends Controller {
                     'comments',
                     'trungbinh',
                     'popularest_foods',
-                    'new_last_foods'
+					'new_last_foods',
+					'timeout_survey',
+					'timeout_request_recommend'
                 )
             );
 		} else {
-			return view('customer.chitietmucdich');
+			return view('customer.trangchu');
 		}
 	}
 	// chitiết món ăn nhà hàng
@@ -393,26 +402,40 @@ class BKCookController extends Controller {
 
 		if (Auth::attempt(['tentaikhoan' => $request->username,
 			'password' => $request->password])) {
-//			$tb = "alert(`Đăng nhập thành công.. ahihi`);";
+			// $tb = "alert(`Đăng nhập thành công.. ahihi`);";
 			$tb = "Đăng nhập thành công.. ahihi";
 			return redirect()->back()->with('thongbao', $tb);
 		} elseif (auth()->guard('nhahang')->attempt(['username' => $request->username, 'password' => $request->password])) {
-//			$tb = "alert(`Đăng nhập thành công.. ahihi`);";
+			// $tb = "alert(`Đăng nhập thành công.. ahihi`);";
 			$tb = "Đăng nhập thành công.. ahihi";
 			return redirect()->back()->with('thongbao', $tb);
 		} else {
-//			$tb = "alert(`Đăng nhập thất bại...ahihi`);";
+			// $tb = "alert(`Đăng nhập thất bại...ahihi`);";
 			$tb = "Đăng nhập thất bại...ahihi";
 			return redirect()->back()->withErrors("Đăng nhập thất bại..(sai username hoạc pass)");
 		}
 	}
 	// đăng xuất cho tất cả
 	public function getDangXuat() {
-		Auth::logout();
-		Auth::guard('nhahang')->logout();
-//		$tb = "alert(`Đăng xuất thành công.. ahihi`);";
-		$tb = "Đăng xuất thành công.. ahihi";
-		return redirect()->back()->with('thongbao', $tb);
+		if (Auth::guard('nhahang')->user()) {
+			Auth::guard('nhahang')->logout();
+			Session::flush();
+			$tb = "Đăng xuất thành công.. ahihi";
+			// return redirect()->back()->with('thongbao', $tb);
+			return redirect()->back();
+		}
+		if (Auth::user()) {
+			Auth::logout();
+			Session::flush();
+			$tb = "Đăng xuất thành công.. ahihi";
+			// return redirect()->back()->with('thongbao', $tb);
+			return redirect()->back();
+		}
+		// Auth::logout();
+		// Auth::guard('nhahang')->logout();
+        // $tb = "alert(`Đăng xuất thành công.. ahihi`);";
+		// $tb = "Đăng xuất thành công.. ahihi";
+		// return redirect()->back()->with('thongbao', $tb);
 	}
 	//tim kiem monan
 	public function timkiem_monan(Request $req) {
@@ -507,51 +530,34 @@ class BKCookController extends Controller {
 	// đánh giá món ăn
 	// 
 	public function danhgia_monan(Request $request) {
+		$monan = MonAn::find($request->moni);
+		$count_old = count($monan->danhgiamonan);
 
         $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
         $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
+		$id_monan = $request->moni;
+		$id_user = $request->useri;
+		$sosao = $request->saoi;
+		$danhgia = new DanhGiaMonAn;
+		$danhgia->id_user = $id_user;
+		$danhgia->id_monan = $id_monan;
+		$danhgia->danhgia = $sosao;
+		$danhgia->save();
 
-//         if (count((array)$danh_gia_olded) != 0) {
-//             $sosao = $request->saoi;
-//             DB::table('danhgiamonan')
-//                 ->where($contrain)
-//                 ->update(['danhgia' => $sosao]);
-
-// //	        $danh_gia_olded->update([
-// //	            'danhgia' => $sosao
-// //            ]);
-
-// //            $danh_gia_olded->save();
-
-//             $data = $danh_gia_olded;
-//             return response()->json($data);
-
-//         } else {
-            $id_monan = $request->moni;
-            $id_user = $request->useri;
-            $sosao = $request->saoi;
-            $danhgia = new DanhGiaMonAn;
-            $danhgia->id_user = $id_user;
-            $danhgia->id_monan = $id_monan;
-            $danhgia->danhgia = $sosao;
-            $danhgia->save();
-            $data = $danhgia;
-            return response()->json($data);
-        // }
-
-
-//		$id_monan = $request->moni;
-//		$id_user = $request->useri;
-//		$sosao = $request->saoi;
-//		$danhgia = new DanhGiaMonAn;
-//		$danhgia->id_user = $id_user;
-//		$danhgia->id_monan = $id_monan;
-//		$danhgia->danhgia = $sosao;
-//		$danhgia->save();
-//		$data = $danhgia;
-//		return response()->json($data);
-
-//      return response()->json( $danh_gia_olded);
+		$total = 0;
+		$monan_ = MonAn::find($request->moni);
+		$all_danhgias = $monan_->danhgiamonan;
+		$count_dg = count($all_danhgias);
+		foreach($all_danhgias as $dg) {
+			$total += $dg->danhgia;
+		}
+		$responses = [
+			'total' => $total,
+			'count_dg' => $count_dg,
+			'count_old' => $count_old,
+			'current' => $sosao
+		];
+        return response()->json($responses);
 	}
 	//like món ăn
 	public function like_monan(Request $request) {
@@ -568,21 +574,16 @@ class BKCookController extends Controller {
 				array_push($report_comment_posts, $comment->reportcommentpost);
 			}
 		}
-
 	}
 	public function postUserSurvey(Request $req) {
 		$response = null;
 		$finish = false;
 		$user_id = Auth::user()->id;
-
 		$response = $finish ? "Success" : "Unsuccess" ;
-
 		return response()->json($response);
-
-
 	}
 	public function postFeedBack(Request $req) {
 		$user_id = Auth::user()->id;
-		
+		return response()->json("Success");
 	}
 }

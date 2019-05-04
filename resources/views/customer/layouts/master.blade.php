@@ -62,6 +62,7 @@
     <a href="#"><i class="fa fa-chevron-up"></i></a>
 </div>
 {{-- Thư viện sử dụng --}}
+{{-- <script src="vendor_customer/assets/js/vendor/popper.min.js"></script> --}}
 <script src="vendor_customer/assets/js/vendor/bootstrap.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.easypiechart.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.mixitup.min.js"></script>
@@ -72,7 +73,11 @@
 <script src="vendor_customer/assets/js/modalHeader.js"></script>
 <script src="vendor_customer/assets/js/plugins.js"></script>
 <script src="vendor_customer/assets/js/main.js"></script>
-
+{{-- <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+    });
+</script> --}}
 @yield('script')
 </body>
 </html>

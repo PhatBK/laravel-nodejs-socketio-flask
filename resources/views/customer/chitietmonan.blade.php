@@ -18,8 +18,7 @@
 							<span  class="fa fa-star-o" data-rating="6" id="o6" ></span>
 							<span  class="fa fa-star-o" data-rating="7" id="o7" ></span>
 							<input type="hidden" name="whatever1" class="rating-value" value="{{$trungbinh}}">
-                        <span style="font-size: 14px;" id="lx">Trung Bình: <b
-                                    style="color:red; font-size: 15pt;">{{$trungbinh}}</b></span>
+                       		<span style="font-size: 14px;" id="lx">Trung Bình: <b id="avg_rated" style="color:red; font-size: 15pt;">{{$trungbinh}}</b></span>
 							<br>
 							<span style="font-size: 14px; color: blue;" id="lx">Lượt Xem:<b style="color:orangered;">{{$monan->so_luot_xem}}</b></span>
                         <script>
@@ -93,32 +92,13 @@
 										@endforeach
 								@endif
                                 @php $flag_rate = false; @endphp
-                                {{--								@if(Auth::user())--}}
-                                {{--								&nbsp;&nbsp;<b style="color: gray; font-size: 11pt;">rated:--}}
-                                {{--										@if ($monan->danhgiamonan)--}}
-                                {{--											@foreach ($monan->danhgiamonan as $dg)--}}
-                                {{--												@if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))--}}
-                                {{--													<i style="color: blue; font-size: 15pt;">{{$dg->danhgia }}</i>--}}
-                                {{--												    {{$flag_rate = true}}--}}
-                                {{--													@break--}}
-                                {{--												@endif--}}
-                                {{--											@endforeach--}}
-                                {{--											--}}
-                                {{--										@endif--}}
-                                {{--										@if ($flag_rate)--}}
-                                {{--										<b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>--}}
-                                {{--										@endif--}}
-
-                                {{--									</b>--}}
-                                {{--								@endif--}}
 								@if(Auth::user())
                                     &nbsp;&nbsp;
                                     @if ($monan->danhgiamonan)
                                         @foreach ($monan->danhgiamonan as $dg)
                                             @if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))
                                                 <b style="color: gray; font-size: 11pt;">rated:<i
-                                                            style="color: blue; font-size: 15pt;">{{$dg->danhgia }}</i></b>
-                                                {{--													{{$flag_rate = true}}--}}
+                                                            style="color: blue; font-size: 15pt;">{{ $dg->danhgia }}</i></b>
                                                 @php $flag_rate = true; @endphp
                                                 @break
                                             @endif
@@ -133,8 +113,7 @@
                             </div>
                         </div>
 						@endif
-                    {{--					   <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>--}}
-						
+                 	
 				<div id="mota">
 					<p>{{$monan->gioithieu}}</p>
 				</div>
@@ -208,60 +187,6 @@
 							</div>
 							{{-- hết modal gợi ý món ăn --}}
 						</div>
-						{{-- Khảo sát người dùng --}}
-						<div>
-							<!-- Modal khảo sát thị yếu của người dùng -->
-							<div id="modal-survey" class="modal fade" role="dialog">
-								  <div class="modal-dialog">
-								    <!-- Modal content-->
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal">&times;</button>
-								        <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
-								      </div>
-								      <div class="modal-body">
-								      	<div class="row">
-									      	<div class="col-md-3">
-										      	{{-- món đang xem --}}
-										      	<a href="" title="Xem chi tiết món ăn:{{$monan->ten_monan}}" target="_blank">
-										      	<p style="color: red;">{{ $monan->ten_monan }}</p>
-										      	<img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
-										      	<br><br>
-										      	<u>Xem chi tiết</u> 
-										        </a>
-
-										    </div>
-										    <div class="col-md-3">
-												{{-- Các món được gợi ý --}}
-												<p style="color: red;">{{ $monan->ten_monan }}</p>
-										        <img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
-									      	</div>
-									      	<div class="col-md-3">
-												{{-- Các món được gợi ý --}}
-												<p style="color: red;">{{ $monan->ten_monan }}</p>
-										        <img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
-									      	</div>
-									    </div>
-									    {{-- thông tin tham khảo thêm --}}
-										<div class="row" style="margin-top:5em;overflow: auto; ">
-											<div class="col-md-12">
-												<b>
-												– Không cho mì chính vào những món món ăn có nhiều vị chua. Vì mì chính khó hòa tan trong nước chua, đồng thời còn phát sinh ra một loại axít mới có hại cho sức khỏe.
-												– Không cho thêm nước lạnh khi đang hầm xương, thịt. Vì trong thịt, xương có chứa một hàm lượng lớn protein và lipid. Nếu cho thêm nước lạnh, nhiệt độ trong nồi hạ đột ngột, protein và lipid đông lại, món ăn không còn chất bố dưỡng nữa
-											    </b>
-											</div>
-										</div>
-								      </div>
-								      <div class="modal-footer">
-								        <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
-								        	Thoát
-								        </button>
-								      </div>
-								    </div>
-								  </div>
-							</div>
-							{{-- Hết modal khảo sát người dùng --}}
-						</div>
 				</div>
 			</div>
 				@if($monan->video)
@@ -273,9 +198,9 @@
 										<h4 class="modal-title" id="myModalLabel">{{$monan->ten_monan}}</h4>
 									</div>
 									<div class="modal-body">
-											<video id="video" width="700" controls>
-											  <source id="svideo" src="uploads\video\{{$monan->video->ten}}" type="video/mp4">
-											</video>
+										<video id="video" width="700" controls>
+											<source id="svideo" src="uploads\video\{{$monan->video->ten}}" type="video/mp4">
+										</video>
 									</div>
 									<div class="modal-footer">
 
@@ -291,29 +216,19 @@
 				@foreach($popularest_foods as $m_popul)
 				<div id="baiviet">
 					<img src="uploads/monan/{{$m_popul->anh_monan}}">
-					<p><a href="chitietmonan/{{$m_popul->id}}">{{$m_popul->ten_monan}}</a></p>
+					<p><a href="chitietmonan/{{$m_popul->id}}">{{$m_popul->ten_monan}}</a>(<i style="color: blue;">{{$m_popul->so_luot_xem}}</i>)</p>
 				</div>
 				@endforeach
 				<hr style="color: cornsilk">
 				<h5 style="text-align: center; color: orangered;">Mới Nhất</h5>
 				@foreach($new_last_foods as $m_new_last)
-					<div id="baiviet_">
+					<div id="baiviet_" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:18px;'>{{$m_new_last->created_at}}</b>">
 						<img src="uploads/monan/{{$m_new_last->anh_monan}}">
 						<p><a href="chitietmonan/{{$m_new_last->id}}">{{$m_new_last->ten_monan}}</a></p>
 					</div>
 				@endforeach
 			</div>
 			
-			{{-- Món ăn liên quan 2019-04-22
-			<div id="monanlienquan" class="col-md-3">
-				<h5 style="text-align: center;">Món Ăn Liên Quan</h5>
-				@foreach($monan_lienquan as $md)
-				<div id="baiviet">
-					<img src="uploads/monan/{{$md->anh_monan}}">
-					<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>
-				</div>
-				@endforeach
-			</div> --}}
 		</div>
  		<!-- id="nguyenlieu-monanlienquan"  -->
 		<div  class="row" >
@@ -350,15 +265,6 @@
 				</div>
 				@endforeach
 			</div>
-
-			{{-- Món ăn cùng nguyên liệu 2019-04-22
-			<div id="thamkhaothem" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
-				<h5 style="text-align: center;">Cùng Nguyên Liệu</h5>
-				<div id="baiviet">
-					
-				</div>
-			</div> --}}
-	
 		</div>
 		<br>
 		<div class="row">
@@ -499,6 +405,49 @@
 		</div>
 	</div>
 	<!-- </div> -->
+	{{-- Khảo sát người dùng --}}
+	<div>
+		<!-- Modal khảo sát thị yếu của người dùng -->
+		<div id="modal-survey" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="row">
+				      	<div class="col-md-3">
+					      
+					    </div>
+					    <div class="col-md-3">
+						
+				      	</div>
+				      	<div class="col-md-3">
+					
+				      	</div>
+				    </div>
+				    {{-- thông tin tham khảo thêm --}}
+					<div class="row" style="margin-top:5em;overflow: auto; ">
+						<div class="col-md-12">
+						
+						</div>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			      	<button onclick="confirm('XN')" type="button" class="btn btn-success" data-dismiss="modal" style="background: green;">
+			        	Gửi
+			        </button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
+			        	Thoát
+			        </button>
+			      </div>
+			    </div>
+			  </div>
+		</div>
+		{{-- Hết modal khảo sát người dùng --}}
+	</div>
 </section>
 
 {{-- Phần Ajax sử lý việc lấy dữ liệu tiềm ẩn của người dùng --}}
@@ -610,20 +559,24 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		});
 	};
 </script>
-
+{{-- nhúng thư viện socket để bình luận real-time cho người dùng --}}
 <script src="vendor_customer/vendor/js/socket.io.js"></script>
 
 {{-- Sử lý tắt video khi tắt Modal  --}}
 @if($monan->video)
 	<script>
-		console.log('modal turn off');
+		var video = document.getElementById('video');
+		var old_src = document.getElementById('svideo').src;
 		$('#yourModal{{$monan->video->id}}').on('hidden.bs.modal', function (e) {
-			// $('#yourModal{{$monan->video->id}}')[0].pause();
-			$('#yourModal{{$monan->video->id}} svideo').attr("src", $("#yourModal{{$monan->video->id}}  svideo").attr("src"));
-			console.log(`'ID video :' + {{$monan->video->id}}`);
-			e.preventDefault();
-		    $('.videoplayer').children('iframe').attr('src', '');
-		    $('.modal-background').fadeOut();
+			document.getElementById('svideo').src = "";
+			video.load();
+		});
+		$("#yourModal{{$monan->video->id}}").on('show.bs.modal', function (e) {
+			console.log(document.getElementById('svideo').src);
+			if (document.getElementById('svideo').src == "http://127.0.0.1/DATN-20182/public/") {
+				document.getElementById('svideo').src =  old_src;
+				video.load();
+			}
 		});
 	</script>
 @endif
@@ -699,7 +652,6 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
     	$(".commentList").append(element);
     });
 </script>
-
 {{-- Phần Ajax sử lý đánh giá --}}
 @if(Auth::user())
 	<script type="text/javascript">
@@ -731,6 +683,23 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
                             for (i = 1; i <= saoi; i++) {
                                 document.getElementById(i).classList.remove('fa-star-o');
                                 document.getElementById(i).classList.add('fa-star');
+							}
+							var new_rated = response.total / response.count_dg;
+							document.getElementById("avg_rated").innerHTML = new_rated.toFixed(1);
+
+							var decimal_ = new_rated - Math.floor(new_rated);
+                            var number_started_ = (decimal_ < 0.5) ? Math.floor(new_rated) : Math.ceil(new_rated);
+
+                            for (i = 1; i <= number_started; i++) {
+                                started_id = "o" + i;
+                                // document.getElementById(started_id).classList.remove('fa-star-o');
+								document.getElementById(started_id).classList.remove('fa-star');
+                                document.getElementById(started_id).classList.add('fa-star-o');
+                            }
+							for (i = 1; i <= number_started_; i++) {
+                                started_id = "o" + i;
+                                document.getElementById(started_id).classList.remove('fa-star-o');
+                                document.getElementById(started_id).classList.add('fa-star');
                             }
                         },
                         error: function (error) {
@@ -744,34 +713,9 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	    });
 	</script>
 @endif
-<script>
-	// var count = 0;
-	// var timeout = 15000;
-	// setInterval(function() {
-	// 	$.ajaxSetup({
-	// 			headers: {
-	// 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 				}
-	// 		});
-	// 		$.ajax({
-	// 			type:'post',
-	// 			url: 'user/api/request/start-recommend',
-	// 			data:{
-	// 				flag: true
-	// 			},
-	// 			success:function(response){
-	// 				console.log(response);
-	// 				count++;
-	// 			},
-	// 			error:function( err) {
-	// 				console.log(err);
-	// 			}
-	// 		});
-	// 		if (count == 2) {
-	// 			timeout = 30000;
-	// 		}
-	// }, timeout);
 
+{{--  call api request recommender  --}}
+<script>
 	setTimeout(function() {
 		$.ajaxSetup({
 			headers: {
@@ -791,7 +735,30 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 				console.log(err);
 			}
 		});
-	}, 15000);
-	</script>
+	}, {{ $timeout_request_recommend }});
+	console.log({{  $timeout_request_recommend }});
+</script>
+{{--  auto hiển thị khảo sát người dùng  --}}
+@if(Auth::user())
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+      setTimeout(function(){
+	    $("#modal-survey").modal();
+	  }, {{$timeout_survey}} / 3);
+	});
+</script>
+@endif
+@if(!Auth::user())
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+      setInterval(function(){
+	    $("#modal-survey").modal();
+	  }, {{ $timeout_survey }});
+	});
+</script>
+@endif
+
 @endsection
 

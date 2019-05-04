@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="vendor_customer/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendor_customer/assets/css/bootstrap.min.css">
     <!--For Plugins external css-->
-    <link rel="stylesheet" type="text/css" href="vendor_customer/assets/css/modalHeader.css">
+    {{-- <link rel="stylesheet" type="text/css" href="vendor_customer/assets/css/modalHeader.css"> --}}
     <link rel="stylesheet" href="vendor_customer/assets/css/teamslide.css"/>
     <link rel="stylesheet" href="vendor_customer/assets/css/plugins.css"/>
     <!--Theme custom css -->
