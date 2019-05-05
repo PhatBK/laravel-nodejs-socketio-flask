@@ -59,8 +59,7 @@
                                     <span class="fa fa-star-o" data-rating="7" id="7"></span>
                                     <input type="hidden" name="whatever1" class="rating-value" value="">
                                     <span style="font-size: 14px;" id="lx"></span>&nbsp;&nbsp;
-                                    <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated"
-                                                                                      style="color: blue; font-size: 15pt;"></i></b>
+                                    <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>
 								</div>
 							</div>
 						@endif
@@ -97,8 +96,7 @@
                                     @if ($monan->danhgiamonan)
                                         @foreach ($monan->danhgiamonan as $dg)
                                             @if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))
-                                                <b style="color: gray; font-size: 11pt;">rated:<i
-                                                            style="color: blue; font-size: 15pt;">{{ $dg->danhgia }}</i></b>
+                                                <b style="color: gray; font-size: 11pt;">rated:<i style="color: blue; font-size: 15pt;">{{ $dg->danhgia }}</i></b>
                                                 @php $flag_rate = true; @endphp
                                                 @break
                                             @endif
@@ -106,8 +104,7 @@
 
                                     @endif
                                     @if (!$flag_rate)
-                                        <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated"
-                                                                                          style="color: blue; font-size: 15pt;"></i></b>
+                                        <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>
                                     @endif
 								@endif
                             </div>
@@ -286,7 +283,7 @@
 				                @endif
 				                @if(!$monan->video)
 				                	<li role="presentation">
-					                	<a href="#video" aria-controls="video" role="tab" data-toggle="modal" data-target="">Chưa Có Video</a>
+					                	<a href="#no-videos" aria-controls="no-videos" role="tab" data-toggle="tab">Chưa Có Video</a>
 					                </li>
 				                @endif
 				            </ul>
@@ -306,6 +303,9 @@
 	                        <div role="tabpanel" class="tab-pane" id="hinhanh">
 	                        	<h4>Hình ảnh món ăn</h4><hr>
 	                        </div>
+							<div role="tabpanel" class="tab-pane" id="no-videos">
+								<h4>Hiện Tại Chúng Tôi Chưa Tạo Được Video Cho Món Ăn,</h4><hr>
+							</div>
 	                        <div role="tabpanel" class="tab-pane" id="video">
 	                        	<h4>Video món ăn</h4><hr>
 	                        	@if($monan->video)
@@ -618,12 +618,13 @@
 	        $("span").click(function() {
 	            var sao = $(this).attr("id");
 	            var moni = `{{$monan->id}}`;
+
 	            var useri = `{{Auth::user()->id}}`;
                 if ((sao == "1") || (sao == "2") || (sao == "3") || (sao == "4") || (sao == "5") || (sao == "6") || (sao == "7")) {
                     var saoi = parseInt(sao);
-                    document.getElementById('ajax_rated').innerHTML = "" + saoi;
+                    console.log(saoi);
                     var url = "{{route('danhgia_monan')}}";
-                    var op = '';
+					document.getElementById('ajax_rated').innerHTML = saoi;
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -633,25 +634,25 @@
                             'saoi': saoi
                         },
                         success: function (response) {
-                            console.log(response);
-                            for (i = 1; i <= saoi; i++) {
+							// document.getElementById('ajax_rated').innerHTML = "" + saoi;
+                            for (var i = 1; i <= saoi; i++) {
                                 document.getElementById(i).classList.remove('fa-star-o');
                                 document.getElementById(i).classList.add('fa-star');
 							}
+
+
 							var new_rated = response.total / response.count_dg;
 							document.getElementById("avg_rated").innerHTML = new_rated.toFixed(1);
-
 							var decimal_ = new_rated - Math.floor(new_rated);
                             var number_started_ = (decimal_ < 0.5) ? Math.floor(new_rated) : Math.ceil(new_rated);
 
-                            for (i = 1; i <= number_started; i++) {
-                                started_id = "o" + i;
-                                // document.getElementById(started_id).classList.remove('fa-star-o');
+                            for (var j = 1; j <= number_started; j++) {
+                                started_id = "o" + j;
 								document.getElementById(started_id).classList.remove('fa-star');
                                 document.getElementById(started_id).classList.add('fa-star-o');
                             }
-							for (i = 1; i <= number_started_; i++) {
-                                started_id = "o" + i;
+							for (var k = 1; k <= number_started_; k++) {
+                                started_id = "o" + k;
                                 document.getElementById(started_id).classList.remove('fa-star-o');
                                 document.getElementById(started_id).classList.add('fa-star');
                             }

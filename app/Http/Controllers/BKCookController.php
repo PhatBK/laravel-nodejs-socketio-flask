@@ -25,9 +25,10 @@ class BKCookController extends Controller {
 	public $protein;
 	public $lipit;
 	public $gluxit;
+	public $count_survey = 0;
 
 	function __construct() {
-
+        $this->count_survey += 1;
 		$foods = count(MonAn::all());
 		$users = count(User::all());
 		$nhahangs = count(NhaHang::all());
@@ -35,7 +36,7 @@ class BKCookController extends Controller {
 		$baiviets = count(UserPost::all());
         $loaimons = LoaiMon::all();
 
-        $timeout_survey = 1 * 60 * 1000; // 1 phút
+        $timeout_survey = 0.5 * 60 * 1000; // 30 giây
 
 		view()->share('foods', $foods);
 		view()->share('users', $users);
@@ -44,12 +45,15 @@ class BKCookController extends Controller {
 		view()->share('baiviets', $baiviets);
         view()->share('loaimons', $loaimons);
         view()->share('timeout_survey', $timeout_survey);
+        view()->share('count_survey', $this->count_survey);
 
 	}
 	public function setCalos(){
 
 	}
 	public function trangchu() {
+        $this->count_survey += 1;
+
 		$monan = MonAn::take(12)->get();
 		$nhahang = NhaHang::take(3)->get();
 		$topthanhvien = User::orderBy('noibat', 'desc')->take(5)->get();
@@ -57,6 +61,7 @@ class BKCookController extends Controller {
 	}
 	// món ăn
 	public function getMonAn() {
+        $this->count_survey += 1;
 		$monans = MonAn::paginate(8);
 		return view('customer.monan', ['monans' => $monans]);
 	}
@@ -72,10 +77,12 @@ class BKCookController extends Controller {
 	}
 	//thể loại
 	public function View_theloai() {
+        $this->count_survey += 1;
 		return view('customer.chitiettheloai');
 	}
 	//chi tiet loaimon
 	public function View_loaimon() {
+        $this->count_survey += 1;
 		$theloai = TheLoai::all();
 		$loaimon = LoaiMon::all();
 		$monan = MonAn::take(8)->get();
@@ -102,6 +109,7 @@ class BKCookController extends Controller {
 
 	//chi tiet congdung
 	public function View_congdung() {
+        $this->count_survey += 1;
 		$congdung = CongDung::all();
 		$monan = MonAn::take(8)->get();
 		return view('customer.chitietcongdung', compact('congdung', 'monan'));
@@ -126,6 +134,7 @@ class BKCookController extends Controller {
 
 	//chi tiet vungmien
 	public function View_vungmien() {
+        $this->count_survey += 1;
 		$vungmien = VungMien::all();
 		$monan = MonAn::take(8)->get();
 		return view('customer.chitietvungmien', compact('vungmien', 'monan'));
@@ -173,6 +182,7 @@ class BKCookController extends Controller {
 	}
 	//chi tiet muc dich
 	public function View_mucdich() {
+        $this->count_survey += 1;
 		$mucdich = MucDich::all();
 		$monan = MonAn::take(8)->get();
 		return view('customer.chitietmucdich', compact('mucdich', 'monan'));
@@ -196,6 +206,7 @@ class BKCookController extends Controller {
 	}
 	// chi tiết món ăn hệ thống
 	public function View_chitietmonan($id) {
+        $this->count_survey += 1;
 		$timeout_request_recommend = 1 * 60 * 1000; // 1 phút
 		if (isset($id)) {
 			$monan = MonAn::find($id);
@@ -402,15 +413,12 @@ class BKCookController extends Controller {
 
 		if (Auth::attempt(['tentaikhoan' => $request->username,
 			'password' => $request->password])) {
-			// $tb = "alert(`Đăng nhập thành công.. ahihi`);";
 			$tb = "Đăng nhập thành công.. ahihi";
-			return redirect()->back()->with('thongbao', $tb);
+			return redirect()->back()->with('thongbao_login_true', $tb);
 		} elseif (auth()->guard('nhahang')->attempt(['username' => $request->username, 'password' => $request->password])) {
-			// $tb = "alert(`Đăng nhập thành công.. ahihi`);";
 			$tb = "Đăng nhập thành công.. ahihi";
 			return redirect()->back()->with('thongbao', $tb);
 		} else {
-			// $tb = "alert(`Đăng nhập thất bại...ahihi`);";
 			$tb = "Đăng nhập thất bại...ahihi";
 			return redirect()->back()->withErrors("Đăng nhập thất bại..(sai username hoạc pass)");
 		}
@@ -421,27 +429,20 @@ class BKCookController extends Controller {
 			Auth::guard('nhahang')->logout();
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
-			// return redirect()->back()->with('thongbao', $tb);
             $request->session()->flush();
             $request->session()->regenerate();
 
-			return redirect()->back();
+			return redirect()->back()->with('thongbao_logout_true', $tb);
 		}
 		if (Auth::user()) {
 			Auth::logout();
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
-			// return redirect()->back()->with('thongbao', $tb);
             $request->session()->flush();
             $request->session()->regenerate();
 
-			return redirect()->back();
+			return redirect()->back()->with('thongbao_logout_true', $tb);;
 		}
-		// Auth::logout();
-		// Auth::guard('nhahang')->logout();
-        // $tb = "alert(`Đăng xuất thành công.. ahihi`);";
-		// $tb = "Đăng xuất thành công.. ahihi";
-		// return redirect()->back()->with('thongbao', $tb);
 	}
 	//tim kiem monan
 	public function timkiem_monan(Request $req) {

@@ -268,7 +268,6 @@
     </div>
 </div>
 {{--hết form tìm kiếm--}}
-{{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
 {{-- Thông báo cho người dùng --}}
 <div>
     <div id="modal-notification" class="modal fade" role="dialog">
@@ -296,54 +295,103 @@
     </div>
 </div>
 {{--    Hết modal thông báo cho người dùng  --}}
-    {{-- Khảo sát người dùng --}}
-    {{--  Modal khảo sát thị yếu của người dùng --}}
-    <div id="modal-survey" class="modal fade" role="dialog">
+<!-- Modal thông báo chung cho tát cả-->
+<div class="modal fade" id="modal-notification-common" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thông Báo</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{-- Thông báo chung cho người dùng --}}
+<div>
+    <div id="modal-notification-common" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
+                    <h4 class="modal-title" style="color: #da7908">Thông Báo</h4>
                 </div>
-                <div class="modal-body">
-                    @php
-                        $i = 0;
-                    @endphp
+                <div class="modal-body" id="notification-body-common">
                     <div class="row">
-                        @foreach ($loaimons as $lm )
-                            @php
-                                $i++;
-                            @endphp
-                            <div class="col-md-4">
-                                <p>
-                                    <input type="checkbox" name="checkbox_survey" value="{{$lm->id}}" id="{{$lm->id}}">
-                                    <label for="{{$lm->id}}">{{$lm->ten}}</label>
-                                </p>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="row" style="margin-top:5em;overflow: auto; ">
-                        <div class="col-md-12">
+                        <div class="col-md-12" id="notifi-content-common">
 
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="sendUserSurvey()" type="button" class="btn btn-success" data-dismiss="modal"
-                            style="background: green;">
-                        Gửi
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="background: orange;">
                         Thoát
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    {{-- Hết modal khảo sát người dùng --}}
+</div>
+{{-- Khảo sát người dùng --}}
+{{--  Modal khảo sát thị yếu của người dùng --}}
+<div id="modal-survey" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
+            </div>
+            <div class="modal-body">
+                @php
+                    $i = 0;
+                @endphp
+                <div class="row">
+                    @foreach ($loaimons as $lm )
+                        @php
+                            $i++;
+                        @endphp
+                        <div class="col-md-4">
+                            <p>
+                                <input type="checkbox" name="checkbox_survey" value="{{$lm->id}}">
+                                <label for="{{$lm->id}}">{{$lm->ten}}</label>
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="row" style="margin-top:5em;overflow: auto; ">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="sendUserSurvey()" type="button" class="btn btn-success" data-dismiss="modal"
+                        style="background: green;">
+                    Gửi
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
+                    Thoát
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Hết modal khảo sát người dùng --}}
 </header>
-    {{-- Xử lý cookie--}}
+<!--End of header -->
+
+{{-- Xử lý cookie--}}
 <script>
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -451,7 +499,7 @@
         });
     }
 </script>
-<!--End of header -->
+{{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
 {{-- Phan search --}}
 <script>
         $.ajaxSetup({
@@ -540,15 +588,17 @@
             });
         });
 </script>
-@if(Auth::user())
-    <script>
-        $(document).ready(function () {
-            setTimeout(function () {
-                $("#modal-survey").modal();
-            }, `{{$timeout_survey}}` / 5);
-        });
-    </script>
-@endif
+
+{{--@if(Auth::user())--}}
+{{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            setTimeout(function () {--}}
+{{--                $("#modal-survey").modal();--}}
+{{--            }, `{{$timeout_survey}}`);--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endif--}}
+
 <script>
     var user_id = -1;
     @if (Auth::user())
@@ -583,4 +633,7 @@
             }
         });
     }
+</script>
+<script>
+    console.log(`{{ $count_survey }}`);
 </script>

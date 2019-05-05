@@ -29,26 +29,34 @@
     <!-- <link rel="stylesheet" type="text/css" href="vendor_customer/vendor/css/mycss.css"> -->
     <script src="vendor_customer/assets/js/vendor/jquery-1.11.2.min.js"></script>
     <script src="vendor_customer/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="vendor_customer/assets/js/vendor/bootstrap.min.js"></script>
 </head>
 <body data-spy="scroll" data-target="#main_menu" data-offset="160">
-
 @include("customer.layouts.header")
 
 <section id="content" class="content container-fluid">
-@if (session('thongbao'))
+@if (session('thongbao_login_true'))
 <script>
-    {{--       {{session('thongbao')}}--}}
+    // $("#modal-notification-common").modal();
+    // $("#modal-demo").modal();
+    @if(Auth::user())
+        $("#modal-survey").modal();
+    @endif
+</script>
+@endif
+@if (session('thongbao_logout_true'))
+<script>
+    $("#modal-notification-common").modal();
 </script>
 @endif
 @if (session('thongbaoloi'))
-<script>
-    {{--       {{session('thongbaoloi')}}--}}
-</script>
+
 @endif
 @if(count($errors) > 0)
 @foreach ($errors->all() as $err)
 <script>
-    alert("{{$err}}");
+    {{--alert("{{$err}}");--}}
+    $("#modal-notification-common").modal();
 </script>
  @endforeach
 @endif
@@ -63,7 +71,7 @@
 </div>
 {{-- Thư viện sử dụng --}}
 
-<script src="vendor_customer/assets/js/vendor/bootstrap.min.js"></script>
+{{--<script src="vendor_customer/assets/js/vendor/bootstrap.min.js"></script>--}}
 <script src="vendor_customer/assets/js/jquery.easypiechart.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.mixitup.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.easing.1.3.js"></script>
