@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -371,13 +372,11 @@ Route::get('crawler','NangCapHeThongController@getCrawler');
 Route::get('bmr/{cannang}/{chieucao}/{tuoi}/{gioitinh}','NangCapHeThongController@tinhBMR');
 Route::get('users','NangCapHeThongController@get_firebase');
 
-// Route::get('user/logs/data/survey', 'RecommenderCoreController@getUserServeyView');
-// Route::post('user/logs/data/survey', 'RecommenderCoreController@postUserServeyView');
-// Route::post('user/logs/data/key-search', 'RecommenderCoreController@postUserKeySearch');
-// Route::post('user/logs/data/page-time', 'RecommenderCoreController@postUserPageTime');
+// feedback của người dùng
+Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
 
 // Collector data from user
-Route::post('user/data/survey', 'BKCookController@postUserSurvey');
+Route::post('user/data/survey/v1', 'BKCookController@postUserSurvey');
 Route::post('user/logs/data/survey', 'RecommenderCoreController@postUserServeyView');
 Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');

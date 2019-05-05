@@ -113,7 +113,7 @@
                             </div>
                         </div>
 						@endif
-                 	
+
 				<div id="mota">
 					<p>{{$monan->gioithieu}}</p>
 				</div>
@@ -152,7 +152,7 @@
 										      	<p style="color: red;">{{ $monan->ten_monan }}</p>
 										      	<img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
 										      	<br><br>
-										      	<u>Xem chi tiết</u> 
+										      	<u>Xem chi tiết</u>
 										        </a>
 
 										    </div>
@@ -228,7 +228,7 @@
 					</div>
 				@endforeach
 			</div>
-			
+
 		</div>
  		<!-- id="nguyenlieu-monanlienquan"  -->
 		<div  class="row" >
@@ -330,7 +330,7 @@
 				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
 					<h5 style="text-align: center;">Mọi Người Hay Xem Cùng</h5>
 					<div id="baiviet">
-						
+
 					</div>
 				</div>
 
@@ -338,7 +338,7 @@
 				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
 					<h5 style="text-align: center;">Cùng Nguyên Liệu</h5>
 					<div id="baiviet">
-						
+
 					</div>
 				</div>
 				<div id="baivietlienquan" class="col-md-12">
@@ -404,55 +404,10 @@
 			</div>
 		</div>
 	</div>
-	<!-- </div> -->
-	{{-- Khảo sát người dùng --}}
-	<div>
-		<!-- Modal khảo sát thị yếu của người dùng -->
-		<div id="modal-survey" class="modal fade" role="dialog">
-			  <div class="modal-dialog">
-			    <!-- Modal content-->
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
-			      </div>
-			      <div class="modal-body">
-			      	<div class="row">
-				      	<div class="col-md-3">
-					      
-					    </div>
-					    <div class="col-md-3">
-						
-				      	</div>
-				      	<div class="col-md-3">
-					
-				      	</div>
-				    </div>
-				    {{-- thông tin tham khảo thêm --}}
-					<div class="row" style="margin-top:5em;overflow: auto; ">
-						<div class="col-md-12">
-						
-						</div>
-					</div>
-			      </div>
-			      <div class="modal-footer">
-			      	<button onclick="confirm('XN')" type="button" class="btn btn-success" data-dismiss="modal" style="background: green;">
-			        	Gửi
-			        </button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
-			        	Thoát
-			        </button>
-			      </div>
-			    </div>
-			  </div>
-		</div>
-		{{-- Hết modal khảo sát người dùng --}}
-	</div>
 </section>
 
-{{-- Phần Ajax sử lý việc lấy dữ liệu tiềm ẩn của người dùng --}}
-{{-- 
-Dữ liệu tiềm ẩn: implicts data bao gồm:
+{{-- Phần Ajax sử lý việc lấy dữ liệu tiềm ẩn của người dùng
+    Dữ liệu tiềm ẩn: implicts data bao gồm:
 	1/ Trang tham chiếu tới tran hiện tại : page referrer
 	2/ số lần click trên trang hiện tại
 	3/ có xem video trên trang hiện tại hay không
@@ -463,7 +418,6 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	8/ chia xẻ bài viết về loại gì
 	9/ thời gian user hay ghe thăm món ăn đó
 --}}
-	{{----}}
 @if(Auth::user())
 	<script>
 		var user_id = `{{ Auth::user()->id }}`;
@@ -497,8 +451,8 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		}
 	}
 	function normal_date(time) {
-		let normal = time.getFullYear() + "-" 
-                + (time.getMonth()+1) + "-" 
+		let normal = time.getFullYear() + "-"
+                + (time.getMonth()+1) + "-"
                 + time.getDate();
         return normal;
 	};
@@ -520,7 +474,7 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		date_visit = normal_date(date);
 		time_visit_start = normal_time(date);
 	});
-	
+
 	window.onbeforeunload = function(event) {
 		console.log("Before unload event");
 		var time = Date.now() - start;
@@ -739,26 +693,9 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 	console.log({{  $timeout_request_recommend }});
 </script>
 {{--  auto hiển thị khảo sát người dùng  --}}
-@if(Auth::user())
 <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
-      setTimeout(function(){
-	    $("#modal-survey").modal();
-	  }, {{$timeout_survey}} / 3);
 	});
 </script>
-@endif
-@if(!Auth::user())
-<script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-      setInterval(function(){
-	    $("#modal-survey").modal();
-	  }, {{ $timeout_survey }});
-	});
-</script>
-@endif
-
 @endsection
-

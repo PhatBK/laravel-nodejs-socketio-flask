@@ -97,7 +97,8 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" id="btn-signin-cancel" data-dismiss="modal"><span ><i class="fa fa-times" aria-hidden="true"></i></span> Thoát</button>
           <button style="margin-left: 21px;height: 34px;background-color: #cbc042;padding-top: 4px;border-radius: 6px;" type="submit" class="btn-default pull-left"><a href="{{route('google.login')}}"> Login with Google <i style="color: red;" class="fa fa-google-plus" aria-hidden="true"></i></a></button>
-          <p><u>Chưa Có Tài Khoản ? </u><a href="javascript:void(0)" class="signup" id="a-signup"> Đăng Ký</a></p>
+            <p><u>Chưa Có Tài Khoản ? </u><a href="javascript:void(0)" class="signup" id="a-signup" style="color:blue">
+                    Đăng Ký</a></p>
         </div>
       </div>
     </div>
@@ -254,20 +255,93 @@
 <!-- Form Tìm Kiếm-->
 <div class="modal fade" id="modal-search" role="dialog">
     <div class="modal-dialog">
-             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <div class="form-group">
-              <input name="key" type="search" {{-- oninput="search()" --}} onkeyup="search()" class="form-control" id="key" required="" placeholder="Tìm Kiếm ?">
-            </div>
-            {{-- <ul class="list-group" id="ketqua">
-            </ul> --}}
-            <div class="modal-content" style="overflow: auto; height:35em ">
-              <ul class="list-group" id="ketqua">
-              </ul>
-            </div>
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <div class="form-group">
+          <input name="key" type="search" {{-- oninput="search()" --}} onkeyup="search()" class="form-control" id="key" required="" placeholder="Tìm Kiếm ?">
+        </div>
+        {{-- <ul class="list-group" id="ketqua">
+        </ul> --}}
+        <div class="modal-content" style="overflow: auto; height:35em ">
+          <ul class="list-group" id="ketqua">
+          </ul>
+        </div>
     </div>
 </div>
-    {{--hết form tìm kiếm--}}
-    {{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
+{{--hết form tìm kiếm--}}
+{{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
+{{-- Thông báo cho người dùng --}}
+<div>
+    <div id="modal-notification" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color: #da7908">Thông Báo</h4>
+                </div>
+                <div class="modal-body" id="notification-body">
+                    <div class="row">
+                        <div class="col-md-12" id="notifi-content">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="background: orange;">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{--    Hết modal thông báo cho người dùng  --}}
+    {{-- Khảo sát người dùng --}}
+    {{--  Modal khảo sát thị yếu của người dùng --}}
+    <div id="modal-survey" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
+                </div>
+                <div class="modal-body">
+                    @php
+                        $i = 0;
+                    @endphp
+                    <div class="row">
+                        @foreach ($loaimons as $lm )
+                            @php
+                                $i++;
+                            @endphp
+                            <div class="col-md-4">
+                                <p>
+                                    <input type="checkbox" name="checkbox_survey" value="{{$lm->id}}" id="{{$lm->id}}">
+                                    <label for="{{$lm->id}}">{{$lm->ten}}</label>
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="row" style="margin-top:5em;overflow: auto; ">
+                        <div class="col-md-12">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="sendUserSurvey()" type="button" class="btn btn-success" data-dismiss="modal"
+                            style="background: green;">
+                        Gửi
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background: black;">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Hết modal khảo sát người dùng --}}
 </header>
     {{-- Xử lý cookie--}}
 <script>
@@ -466,17 +540,47 @@
             });
         });
 </script>
-{{-- Logerror --}}
+@if(Auth::user())
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#modal-survey").modal();
+            }, `{{$timeout_survey}}` / 5);
+        });
+    </script>
+@endif
 <script>
-  function logDK(){
-    console.log("đăng ký..");
-  }
-  function logDN(){
-    console.log("đăng nhập..");
-  }
-  function logTT(){
-    console.log("thông tin..");
-  }
-</script>
+    var user_id = -1;
+    @if (Auth::user())
+        user_id = `{{ Auth::user()->id }}`;
 
-{{-- Login with Ajax --}}
+    @endif
+    function sendUserSurvey() {
+        var loaimons_checked = [];
+        $("input:checkbox[name=checkbox_survey]:checked").each(function () {
+            loaimons_checked.push($(this).val());
+        });
+        console.log(loaimons_checked);
+        console.log(user_id);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: 'user/data/survey/v1',
+            data: {
+                'user_id': user_id,
+                'loaimons_checked': loaimons_checked,
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+</script>

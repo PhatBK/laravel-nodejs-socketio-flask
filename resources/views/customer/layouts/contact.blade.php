@@ -67,11 +67,14 @@
 </section>
 <script>
     function sendFeedBack() {
-        var title = "";
-        var content = "";
+        var title = document.getElementById('survey_title').value;
+        var content = document.getElementById('survey_content').value;
+        var user_id = null;
+        @if (Auth::user())
+            user_id = `{{Auth::user()->id}}`;
+                @endif
         var confirm_ = confirm("Bạn Chắc Chắn Muốn Gửi Chứ?");
-
-        if (confirm_) {
+        if (confirm_ && (title != null && content != null && title != "" && content != "" && title != undefined && content != undefined)) {
             console.log(confirm_);
             $.ajaxSetup({
             headers: {
@@ -80,18 +83,27 @@
             });
             $.ajax({
                 type:'POST',
-                url: '',
+                url: 'user/data/feedback/v1',
                 data:{
+                    'user_id': user_id,
                     'title': title,
-                    'content': content,
+                    'content_': content,
                 },
                 success:function(response){
                     console.log(response);
+                    document.getElementById('notifi-content').innerHTML = response;
+                    document.getElementById('notification-body').setAttribute("style", "background-color: #84eda4; text-align:center;");
+                    $("#modal-notification").modal();
+                    document.getElementById('survey_title').value = '';
+                    document.getElementById('survey_content').value = '';
                 },
                 error:function( err) {
                     console.log(err);
                 }
             });
+        }
+        if (title == null || content == null || title == "" || content == "" || title == undefined || content == undefined) {
+            alert("Không được để trống: title hoặc content");
         }
     }
 </script>

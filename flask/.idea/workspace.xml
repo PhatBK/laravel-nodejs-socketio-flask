@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e03de36-31e7-4e90-8efd-3bb6b0218d9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.phpintel/0877c788533590175d5fa9b28b9cdc56" beforeDir="false" afterPath="$PROJECT_DIR$/../.phpintel/0877c788533590175d5fa9b28b9cdc56" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.phpintel/639cdf2c7f748d2603561fcbd14a33b7" beforeDir="false" afterPath="$PROJECT_DIR$/../.phpintel/639cdf2c7f748d2603561fcbd14a33b7" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.phpintel/b3374466cf3b70e3575b1c70318c2e97" beforeDir="false" afterPath="$PROJECT_DIR$/../.phpintel/b3374466cf3b70e3575b1c70318c2e97" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.phpintel/index" beforeDir="false" afterPath="$PROJECT_DIR$/../.phpintel/index" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.conf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/contact.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/header.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +17,7 @@
     <SUITE FILE_PATH="coverage/flask$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1556524314865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -67,6 +59,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -89,7 +82,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -183,16 +175,17 @@
       <workItem from="1556198963429" duration="1404000" />
       <workItem from="1556385641504" duration="159000" />
       <workItem from="1556520038250" duration="7035000" />
+      <workItem from="1557040074488" duration="592000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13944000" />
+    <option name="totallyTimeSpent" value="14536000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21406959" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21709532" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
