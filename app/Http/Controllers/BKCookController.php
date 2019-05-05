@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\CacBuocNau;
 use App\Models\CongDung;
 use App\Models\DanhGiaMonAn;
-use App\Models\FeedBack;
 use App\Models\LoaiMon;
 use App\Models\MonAn;
 use App\Models\MucDich;
@@ -18,6 +17,7 @@ use App\Models\Video;
 use App\Models\VungMien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 
@@ -25,7 +25,7 @@ class BKCookController extends Controller {
 	public $protein;
 	public $lipit;
 	public $gluxit;
-
+	
 	function __construct() {
 
 		$foods = count(MonAn::all());
@@ -33,17 +33,12 @@ class BKCookController extends Controller {
 		$nhahangs = count(NhaHang::all());
 		$videos = count(Video::all());
 		$baiviets = count(UserPost::all());
-        $loaimons = LoaiMon::all();
-
-        $timeout_survey = 1 * 60 * 1000; // 1 phút
 
 		view()->share('foods', $foods);
 		view()->share('users', $users);
 		view()->share('nhahangs', $nhahangs);
 		view()->share('videos', $videos);
 		view()->share('baiviets', $baiviets);
-        view()->share('loaimons', $loaimons);
-        view()->share('timeout_survey', $timeout_survey);
 
 	}
 	public function setCalos(){
@@ -197,6 +192,7 @@ class BKCookController extends Controller {
 	// chi tiết món ăn hệ thống
 	public function View_chitietmonan($id) {
 		$timeout_request_recommend = 1 * 60 * 1000; // 1 phút
+		$timeout_survey = 1 * 60 * 1000; // 1 phút
 		if (isset($id)) {
 			$monan = MonAn::find($id);
 			if (!(Session::get('id') == $id)) {
@@ -204,6 +200,8 @@ class BKCookController extends Controller {
 				$monan->save();
 				Session::put('id', $id);
 			}
+
+			$loaimons = LoaiMon::all();
 
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
 			$monan_lienquan = [];
@@ -225,7 +223,7 @@ class BKCookController extends Controller {
                 }
 			}
 			$monan_lienquan = collect($monan_lienquan)->unique();
-
+			
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
 
             $comments = $monan->comment;
@@ -243,6 +241,7 @@ class BKCookController extends Controller {
 			}
             return view('customer.chitietmonan',
                 compact(
+					'loaimons',
                     'monan',
                     'monan_lienquan',
                     'cacbuocnau',
@@ -251,6 +250,7 @@ class BKCookController extends Controller {
                     'trungbinh',
                     'popularest_foods',
 					'new_last_foods',
+					'timeout_survey',
 					'timeout_request_recommend'
                 )
             );
@@ -416,15 +416,12 @@ class BKCookController extends Controller {
 		}
 	}
 	// đăng xuất cho tất cả
-	public function getDangXuat(Request $request) {
+	public function getDangXuat() {
 		if (Auth::guard('nhahang')->user()) {
 			Auth::guard('nhahang')->logout();
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
 			// return redirect()->back()->with('thongbao', $tb);
-            $request->session()->flush();
-            $request->session()->regenerate();
-
 			return redirect()->back();
 		}
 		if (Auth::user()) {
@@ -432,9 +429,6 @@ class BKCookController extends Controller {
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
 			// return redirect()->back()->with('thongbao', $tb);
-            $request->session()->flush();
-            $request->session()->regenerate();
-
 			return redirect()->back();
 		}
 		// Auth::logout();
@@ -534,13 +528,13 @@ class BKCookController extends Controller {
 		}
 	}
 	// đánh giá món ăn
+	// 
 	public function danhgia_monan(Request $request) {
 		$monan = MonAn::find($request->moni);
 		$count_old = count($monan->danhgiamonan);
 
         $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
         $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
-
 		$id_monan = $request->moni;
 		$id_user = $request->useri;
 		$sosao = $request->saoi;
@@ -589,31 +583,7 @@ class BKCookController extends Controller {
 		return response()->json($response);
 	}
 	public function postFeedBack(Request $req) {
-//        htmlspecialchars("", ENT_QUOTES);
-//        $req->validate([
-//            'title' => 'required|max:255',
-//            'content_' => 'required',
-//        ]);
-        $feedback = new FeedBack();
-        $user_id_ = $req->user_id;
-        if (Auth::user()) {
-            $user_id_ = Auth::user()->id;
-        } else {
-            $user_id_ = $req->user_id;
-        }
-        $feedback->id_user = $user_id_;
-        $feedback->title = $req->title;
-        $feedback->content = $req->content_;
-        $feedback->save();
-		return response()->json(
-            "<p style='color: orangered; font-size: 18px;'>Phản hồi của bạn đã được ghi lại</p>
-                   <p style='color: orangered; font-size: 18px;'>Bộ phận quản trị hệ thống sẽ tiếp nhận phản hồi</p>
-                   <p style='color: orangered; font-size: 18px;'>Chúc bạn một ngày vui vẻ...</p>
-                   "
-        );
+		$user_id = Auth::user()->id;
+		return response()->json("Success");
 	}
-	public function postUserViewedList() {
-	    $viewedlist = "";
-	    return response()->json("");
-    }
 }
