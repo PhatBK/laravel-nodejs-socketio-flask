@@ -1,1 +1,0 @@
-<center><img src="uploads/errors/loi-500.jpg" style="padding-top: 100px;"></center>
