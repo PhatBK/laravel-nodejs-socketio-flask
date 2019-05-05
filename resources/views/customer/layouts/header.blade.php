@@ -254,20 +254,47 @@
 <!-- Form Tìm Kiếm-->
 <div class="modal fade" id="modal-search" role="dialog">
     <div class="modal-dialog">
-             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <div class="form-group">
-              <input name="key" type="search" {{-- oninput="search()" --}} onkeyup="search()" class="form-control" id="key" required="" placeholder="Tìm Kiếm ?">
-            </div>
-            {{-- <ul class="list-group" id="ketqua">
-            </ul> --}}
-            <div class="modal-content" style="overflow: auto; height:35em ">
-              <ul class="list-group" id="ketqua">
-              </ul>
-            </div>
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <div class="form-group">
+          <input name="key" type="search" {{-- oninput="search()" --}} onkeyup="search()" class="form-control" id="key" required="" placeholder="Tìm Kiếm ?">
+        </div>
+        {{-- <ul class="list-group" id="ketqua">
+        </ul> --}}
+        <div class="modal-content" style="overflow: auto; height:35em ">
+          <ul class="list-group" id="ketqua">
+          </ul>
+        </div>
     </div>
 </div>
-    {{--hết form tìm kiếm--}}
-    {{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
+{{--hết form tìm kiếm--}}
+{{-- Phần xử lý gửi dữ liệu tìm kiếm lên server--}}
+{{-- Thông báo cho người dùng --}}
+<div>
+    <div id="modal-notification" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color: #da7908">Thông Báo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="notifi-content">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="background: black;">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{--    Hết modal thông báo cho người dùng  --}}
 </header>
     {{-- Xử lý cookie--}}
 <script>

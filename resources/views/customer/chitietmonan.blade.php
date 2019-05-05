@@ -113,7 +113,7 @@
                             </div>
                         </div>
 						@endif
-                 	
+
 				<div id="mota">
 					<p>{{$monan->gioithieu}}</p>
 				</div>
@@ -152,7 +152,7 @@
 										      	<p style="color: red;">{{ $monan->ten_monan }}</p>
 										      	<img src="uploads/monan/{{$monan->anh_monan}}" alt="kết nối kém.." width="100px" height="120px">
 										      	<br><br>
-										      	<u>Xem chi tiết</u> 
+										      	<u>Xem chi tiết</u>
 										        </a>
 
 										    </div>
@@ -228,7 +228,7 @@
 					</div>
 				@endforeach
 			</div>
-			
+
 		</div>
  		<!-- id="nguyenlieu-monanlienquan"  -->
 		<div  class="row" >
@@ -330,7 +330,7 @@
 				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
 					<h5 style="text-align: center;">Mọi Người Hay Xem Cùng</h5>
 					<div id="baiviet">
-						
+
 					</div>
 				</div>
 
@@ -338,7 +338,7 @@
 				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
 					<h5 style="text-align: center;">Cùng Nguyên Liệu</h5>
 					<div id="baiviet">
-						
+
 					</div>
 				</div>
 				<div id="baivietlienquan" class="col-md-12">
@@ -417,21 +417,30 @@
 			        <h4 class="modal-title">Bạn Quan Tâm Tới Những Loại Món Ăn Nào?</h4>
 			      </div>
 			      <div class="modal-body">
-			      	<div class="row">
-				      	<div class="col-md-3">
-					      
-					    </div>
-					    <div class="col-md-3">
-						
-				      	</div>
-				      	<div class="col-md-3">
-					
-				      	</div>
+					@php
+						$i = 0;
+					@endphp
+					<div class="row">
+						@foreach ($loaimons as $lm )
+						@php
+							$i++;
+						@endphp
+							{{--  <div class="col-md-3">
+								<img src="">
+								<p><a href="">{{$lm->ten}}</a></p>
+							</div>  --}}
+							<div class="col-md-4">
+								<p>
+								<input type="checkbox" name="checkbox_survey" value="{{$lm->id}}" id="{{$md->id}}">
+								<label for="{{$lm->id}}" >{{$lm->ten}}</label>
+								</p>
+							</div>
+						@endforeach
 				    </div>
 				    {{-- thông tin tham khảo thêm --}}
 					<div class="row" style="margin-top:5em;overflow: auto; ">
 						<div class="col-md-12">
-						
+
 						</div>
 					</div>
 			      </div>
@@ -451,7 +460,7 @@
 </section>
 
 {{-- Phần Ajax sử lý việc lấy dữ liệu tiềm ẩn của người dùng --}}
-{{-- 
+{{--
 Dữ liệu tiềm ẩn: implicts data bao gồm:
 	1/ Trang tham chiếu tới tran hiện tại : page referrer
 	2/ số lần click trên trang hiện tại
@@ -497,8 +506,8 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		}
 	}
 	function normal_date(time) {
-		let normal = time.getFullYear() + "-" 
-                + (time.getMonth()+1) + "-" 
+		let normal = time.getFullYear() + "-"
+                + (time.getMonth()+1) + "-"
                 + time.getDate();
         return normal;
 	};
@@ -520,7 +529,7 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 		date_visit = normal_date(date);
 		time_visit_start = normal_time(date);
 	});
-	
+
 	window.onbeforeunload = function(event) {
 		console.log("Before unload event");
 		var time = Date.now() - start;
@@ -761,4 +770,3 @@ Dữ liệu tiềm ẩn: implicts data bao gồm:
 @endif
 
 @endsection
-

@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\UserPost;
 use App\Models\Video;
 use App\Models\VungMien;
+use App\Models\FeedBack;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class BKCookController extends Controller {
 	public $protein;
 	public $lipit;
 	public $gluxit;
-	
+
 	function __construct() {
 
 		$foods = count(MonAn::all());
@@ -223,7 +224,7 @@ class BKCookController extends Controller {
                 }
 			}
 			$monan_lienquan = collect($monan_lienquan)->unique();
-			
+
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
 
             $comments = $monan->comment;
@@ -416,12 +417,16 @@ class BKCookController extends Controller {
 		}
 	}
 	// đăng xuất cho tất cả
-	public function getDangXuat() {
+	public function getDangXuat(Request $request) {
 		if (Auth::guard('nhahang')->user()) {
 			Auth::guard('nhahang')->logout();
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
 			// return redirect()->back()->with('thongbao', $tb);
+            $this->guard()->logout();
+            $request->session()->flush();
+            $request->session()->regenerate();
+
 			return redirect()->back();
 		}
 		if (Auth::user()) {
@@ -429,6 +434,10 @@ class BKCookController extends Controller {
 			Session::flush();
 			$tb = "Đăng xuất thành công.. ahihi";
 			// return redirect()->back()->with('thongbao', $tb);
+            $this->guard()->logout();
+            $request->session()->flush();
+            $request->session()->regenerate();
+
 			return redirect()->back();
 		}
 		// Auth::logout();
@@ -528,13 +537,13 @@ class BKCookController extends Controller {
 		}
 	}
 	// đánh giá món ăn
-	// 
 	public function danhgia_monan(Request $request) {
 		$monan = MonAn::find($request->moni);
 		$count_old = count($monan->danhgiamonan);
 
         $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
         $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
+
 		$id_monan = $request->moni;
 		$id_user = $request->useri;
 		$sosao = $request->saoi;
@@ -584,6 +593,15 @@ class BKCookController extends Controller {
 	}
 	public function postFeedBack(Request $req) {
 		$user_id = Auth::user()->id;
-		return response()->json("Success");
+		return response()->json(
+		    "<p>Phản hồi của bạn đã được ghi lại</p>
+                   <p>Bộ phận quản trị hệ thống sẽ tiếp nhận phản hồi</p>
+                   <p>Chúc bạn một ngày vui vẻ...</p>
+                   "
+        );
 	}
+	public function postUserViewedList() {
+	    $viewedlist = "";
+	    return response()->json("");
+    }
 }

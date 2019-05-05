@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('Ẩm thực quanh ta')</title>
+    <title>@yield('Ẩm Thực Quanh Ta')</title>
     <base href="{{asset('')}}">
     <link rel="stylesheet" href="vendor_customer/assets/css/google_fonts.css"> 
     <link rel="stylesheet" href="vendor_customer/assets/css/skills/progressbar.css">
@@ -35,23 +35,23 @@
 @include("customer.layouts.header")
 
 <section id="content" class="content container-fluid">
- @if (session('thongbao'))
-    <script>
-        {{--       {{session('thongbao')}}--}}
-    </script>
-    @endif
-    @if (session('thongbaoloi'))
-    <script>
-        {{--       {{session('thongbaoloi')}}--}}
-    </script>
-    @endif
-    @if(count($errors) > 0)
-        @foreach ($errors->all() as $err)
-        <script>
-            alert("{{$err}}");
-        </script>
-         @endforeach
-     @endif
+@if (session('thongbao'))
+<script>
+    {{--       {{session('thongbao')}}--}}
+</script>
+@endif
+@if (session('thongbaoloi'))
+<script>
+    {{--       {{session('thongbaoloi')}}--}}
+</script>
+@endif
+@if(count($errors) > 0)
+@foreach ($errors->all() as $err)
+<script>
+    alert("{{$err}}");
+</script>
+ @endforeach
+@endif
 @yield('content')
 @include('customer.layouts.couter')
 @include('customer.layouts.contact')
@@ -62,7 +62,7 @@
     <a href="#"><i class="fa fa-chevron-up"></i></a>
 </div>
 {{-- Thư viện sử dụng --}}
-{{-- <script src="vendor_customer/assets/js/vendor/popper.min.js"></script> --}}
+
 <script src="vendor_customer/assets/js/vendor/bootstrap.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.easypiechart.min.js"></script>
 <script src="vendor_customer/assets/js/jquery.mixitup.min.js"></script>
@@ -73,11 +73,7 @@
 <script src="vendor_customer/assets/js/modalHeader.js"></script>
 <script src="vendor_customer/assets/js/plugins.js"></script>
 <script src="vendor_customer/assets/js/main.js"></script>
-{{-- <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip(); 
-    });
-</script> --}}
+
 @yield('script')
 </body>
 </html>
