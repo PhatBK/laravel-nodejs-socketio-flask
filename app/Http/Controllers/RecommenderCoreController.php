@@ -84,7 +84,10 @@ class RecommenderCoreController extends Controller
          * Lấy dữ liệu chuyển thành dạng json
          * Dữ liệu được lấy từ bảng: user_implicts_data
          */
+        $json_user_implicts_datas = [];
 
+        $results = DB::select( DB::raw("SELECT id, user_id, mon_an_id,COUNT(user_id) as count_user,COUNT(mon_an_id) as count_mon, SUM(visited_time) as total_visit FROM `user_implicts_data` WHERE 1 GROUP BY user_id, mon_an_id") );
+        dd($results);
         /**
          * Lấy dữ liệu chuyển thành dạng json
          * Dữ liệu được lấy từ bảng: likepost
@@ -105,8 +108,8 @@ class RecommenderCoreController extends Controller
         $all_datas['user_likeposts'] = $json_user_likeposts;
 
 
-        dd($all_datas);
-        dd(json_encode($all_datas));
+//        dd($all_datas);
+//        dd(json_encode($all_datas));
     }
     public function getFlaskResultRecommender() {
         return "Success";
