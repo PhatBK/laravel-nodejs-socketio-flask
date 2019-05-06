@@ -55,7 +55,6 @@ class RecommenderCoreController extends Controller
             $tmp[] = $rate_monan->danhgia;
 
             $data_rate_monans[] = $tmp;
-
         }
         $like_posts = LikePost::all();
 
@@ -100,5 +99,14 @@ class RecommenderCoreController extends Controller
     }
     public function aprioriRuleAssociation($data) {
         return response()->json("null");
+    }
+    public function getAllRatedArray() {
+
+    }
+    public  function getAllUserSearchKeyArray() {
+
+    }
+    public  function getAllUserImplictDataArray() {
+
     }
 }

@@ -298,7 +298,6 @@
 <!-- Modal thông báo chung cho tát cả-->
 <div class="modal fade" id="modal-notification-common" role="dialog">
     <div class="modal-dialog modal-sm">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -312,10 +311,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
             </div>
         </div>
-
     </div>
 </div>
-
 {{-- Thông báo chung cho người dùng --}}
 <div>
     <div id="modal-notification-common" class="modal fade" role="dialog">
@@ -390,7 +387,6 @@
 {{-- Hết modal khảo sát người dùng --}}
 </header>
 <!--End of header -->
-
 {{-- Xử lý cookie--}}
 <script>
     function setCookie(cname, cvalue, exdays) {
@@ -448,7 +444,7 @@
         var user_loged = false;
     </script>
 @endif
-
+{{--Phần xử lý ghi lại lịch xử search của người dùng--}}
 <script>
     var referer = document.referrer;
     var mon_an_id_referrer = 0;
@@ -465,7 +461,7 @@
         }
     }
 </script>
-
+{{--gửi dữ liệu search lên server--}}
 <script>
     function sendKeySearch(data) {
         $.ajaxSetup({
@@ -588,17 +584,7 @@
             });
         });
 </script>
-
-{{--@if(Auth::user())--}}
-{{--    <script>--}}
-{{--        $(document).ready(function () {--}}
-{{--            setTimeout(function () {--}}
-{{--                $("#modal-survey").modal();--}}
-{{--            }, `{{$timeout_survey}}`);--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endif--}}
-
+{{--Phần sử lý gửi khảo sát của người dùng lên server--}}
 <script>
     var user_id = -1;
     @if (Auth::user())

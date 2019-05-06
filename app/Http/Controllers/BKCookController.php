@@ -16,6 +16,8 @@ use App\Models\User;
 use App\Models\UserPost;
 use App\Models\Video;
 use App\Models\VungMien;
+use App\Models\UserServey;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -583,18 +585,21 @@ class BKCookController extends Controller {
 		}
 	}
 	public function postUserSurvey(Request $req) {
-		$response = null;
-		$finish = false;
-		$user_id = Auth::user()->id;
-		$response = $finish ? "Success" : "Unsuccess" ;
+	    $user_survey = new UserServey();
+        $user_survey->user_id = Auth::user()->id;
+        $lists = '';
+        foreach ($req->loaimons_checked as $lm_checked) {
+            $lists .= strval($lm_checked);
+            $lists .= "|";
+        }
+        $user_survey->loaimon_lists = $lists;
+        $user_survey->save();
+
+
+		$response = UserServey::where('user_id', Auth::user()->id)->get();
 		return response()->json($response);
 	}
 	public function postFeedBack(Request $req) {
-//        htmlspecialchars("", ENT_QUOTES);
-//        $req->validate([
-//            'title' => 'required|max:255',
-//            'content_' => 'required',
-//        ]);
         $feedback = new FeedBack();
         $user_id_ = $req->user_id;
         if (Auth::user()) {

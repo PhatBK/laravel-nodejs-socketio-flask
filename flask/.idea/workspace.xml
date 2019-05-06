@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e03de36-31e7-4e90-8efd-3bb6b0218d9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/contact.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/customer/2019-05-03-dangbai.blade.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +56,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -82,6 +78,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -176,16 +173,17 @@
       <workItem from="1556385641504" duration="159000" />
       <workItem from="1556520038250" duration="7035000" />
       <workItem from="1557040074488" duration="592000" />
+      <workItem from="1557112759370" duration="597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14536000" />
+    <option name="totallyTimeSpent" value="15133000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21709532" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22012103" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
