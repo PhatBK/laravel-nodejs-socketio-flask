@@ -568,11 +568,11 @@ class BKCookController extends Controller {
 		];
         return response()->json($responses);
 	}
-	//like món ăn
+//	like món ăn
 	public function like_monan(Request $request) {
 
 	}
-	//test
+//	lấy comment của bài đăng
 	public function getCommentPost() {
 		$posts = UserPost::all();
 		$commentposts = [];
@@ -584,19 +584,25 @@ class BKCookController extends Controller {
 			}
 		}
 	}
+//	hoàn thành lưu lại khảo sát của người dùng
 	public function postUserSurvey(Request $req) {
 	    $user_survey = new UserServey();
         $user_survey->user_id = Auth::user()->id;
         $lists = '';
+        $i = 0;
+        $length_list = count($req->loaimons_checked);
         foreach ($req->loaimons_checked as $lm_checked) {
+            $i++;
             $lists .= strval($lm_checked);
-            $lists .= "|";
+            if ($i < $length_list) {
+                $lists .= "|";
+            }
         }
         $user_survey->loaimon_lists = $lists;
         $user_survey->save();
 
+		$response = explode("|", UserServey::where('user_id', Auth::user()->id)->get()[0]->loaimon_lists);
 
-		$response = UserServey::where('user_id', Auth::user()->id)->get();
 		return response()->json($response);
 	}
 	public function postFeedBack(Request $req) {

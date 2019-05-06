@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e03de36-31e7-4e90-8efd-3bb6b0218d9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/2019-05-03-dangbai.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../public/vendor_customer/assets/css/chitietmonan.css" beforeDir="false" afterPath="$PROJECT_DIR$/../public/vendor_customer/assets/css/chitietmonan.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +18,38 @@
     <SUITE FILE_PATH="coverage/flask$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1556524314865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#37#60#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/collaborative_filtering.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/recommendation_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1139">
+              <caret line="67" column="36" lean-forward="true" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -62,17 +97,6 @@
             <path>
               <item name="flask" type="b2602c69:ProjectViewProjectNode" />
               <item name="flask" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="flask" type="b2602c69:ProjectViewProjectNode" />
-              <item name="flask" type="462c0819:PsiDirectoryNode" />
-              <item name="moviegeek-master" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="flask" type="b2602c69:ProjectViewProjectNode" />
-              <item name="flask" type="462c0819:PsiDirectoryNode" />
-              <item name="moviegeek-master" type="462c0819:PsiDirectoryNode" />
-              <item name="recommender" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -174,16 +198,18 @@
       <workItem from="1556520038250" duration="7035000" />
       <workItem from="1557040074488" duration="592000" />
       <workItem from="1557112759370" duration="597000" />
+      <workItem from="1557126196084" duration="1226000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15133000" />
+    <option name="totallyTimeSpent" value="16359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22012103" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22314675" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -218,30 +244,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/recommendation_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="36" lean-forward="true" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#37#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/collaborative_filtering.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1462">
-          <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/moviegeek-master/recommender/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -267,6 +269,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/moviegeek-master/recommender/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#37#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/collaborative_filtering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/recommendation_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="67" column="36" lean-forward="true" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

@@ -12,5 +12,8 @@ class DanhGiaMonAn extends Model {
 	public function user() {
 		return $this->belongsTo('App\Models\User', 'id_user', 'id');
 	}
+	public function group_user() {
+
+    }
 
 }

@@ -377,7 +377,6 @@ Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
 
 // Collector data from user
 Route::post('user/data/survey/v1', 'BKCookController@postUserSurvey');
-Route::post('user/logs/data/survey', 'RecommenderCoreController@postUserServeyView');
 Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
 
@@ -394,6 +393,9 @@ Route::get('/api/send/flask', 'RecommenderCoreController@sendFlaskAPI');
 Route::post('/api/call/flask', 'RecommenderCoreController@postFlaskAPI');
 Route::get('/api/recommender/get-all/data', 'RecommenderCoreController@apiRecommenderShareData');
 Route::post('/api/recommender/post-all/data', 'RecommenderCoreController@apiRecommenderGetData');
+
+
+Route::get('/api/data/normal/v1', 'RecommenderCoreController@getAllDataUserArray');
 
 
 

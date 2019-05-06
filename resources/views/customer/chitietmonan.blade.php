@@ -97,6 +97,15 @@
                                         @foreach ($monan->danhgiamonan as $dg)
                                             @if(($dg->id_monan == $monan->id) && ($dg->id_user == Auth::user()->id))
                                                 <b style="color: gray; font-size: 11pt;">rated:<i style="color: blue; font-size: 15pt;">{{ $dg->danhgia }}</i></b>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)">
+													<b data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
+														<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+													</b>
+												</a>
                                                 @php $flag_rate = true; @endphp
                                                 @break
                                             @endif
@@ -105,6 +114,15 @@
                                     @endif
                                     @if (!$flag_rate)
                                         <b style="color: gray; font-size: 11pt;">rated:<i id="ajax_rated" style="color: blue; font-size: 15pt;"></i></b>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)">
+											<b data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
+												<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+											</b>
+										</a>
                                     @endif
 								@endif
                             </div>
@@ -219,7 +237,7 @@
 				<hr style="color: cornsilk">
 				<h5 style="text-align: center; color: orangered;">Mới Nhất</h5>
 				@foreach($new_last_foods as $m_new_last)
-					<div id="baiviet_" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:18px;'>{{$m_new_last->created_at}}</b>">
+					<div id="baiviet_" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>{{$m_new_last->created_at}}</b>">
 						<img src="uploads/monan/{{$m_new_last->anh_monan}}">
 						<p><a href="chitietmonan/{{$m_new_last->id}}">{{$m_new_last->ten_monan}}</a></p>
 					</div>
@@ -512,6 +530,11 @@
 			}
 		});
 	};
+</script>
+<script>
+	function sendUserFavoriteFood(food_id) {
+		console.log(food_id);
+	}
 </script>
 {{-- nhúng thư viện socket để bình luận real-time cho người dùng --}}
 <script src="vendor_customer/vendor/js/socket.io.js"></script>
