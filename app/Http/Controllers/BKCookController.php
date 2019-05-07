@@ -600,9 +600,7 @@ class BKCookController extends Controller {
         }
         $user_survey->loaimon_lists = $lists;
         $user_survey->save();
-
 		$response = explode("|", UserServey::where('user_id', Auth::user()->id)->get()[0]->loaimon_lists);
-
 		return response()->json($response);
 	}
 	public function postFeedBack(Request $req) {

@@ -85,9 +85,20 @@ class RecommenderCoreController extends Controller
          * Dữ liệu được lấy từ bảng: user_implicts_data
          */
         $json_user_implicts_datas = [];
+        $query =
+            " 
+            SELECT id, user_id, mon_an_id, COUNT(user_id) as count_user, COUNT(mon_an_id) as count_mon, SUM(visited_time) as total_visit 
+            FROM `user_implicts_data` 
+            WHERE 1 
+            GROUP BY user_id, mon_an_id
+            ";
+        $implict_datas = DB::select(DB::raw($query));
 
-        $results = DB::select( DB::raw("SELECT id, user_id, mon_an_id,COUNT(user_id) as count_user,COUNT(mon_an_id) as count_mon, SUM(visited_time) as total_visit FROM `user_implicts_data` WHERE 1 GROUP BY user_id, mon_an_id") );
-        dd($results);
+        foreach ($implict_datas as $implict_data) {
+
+        }
+
+        dd($implict_datas);
         /**
          * Lấy dữ liệu chuyển thành dạng json
          * Dữ liệu được lấy từ bảng: likepost

@@ -101,8 +101,8 @@
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)">
-													<b data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
+												<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
+													<b>
 														<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 													</b>
 												</a>
