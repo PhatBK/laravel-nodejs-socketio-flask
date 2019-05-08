@@ -379,6 +379,7 @@ Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
 Route::post('user/data/survey/v1', 'BKCookController@postUserSurvey');
 Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
+Route::post('user/data/like-monan/v1', 'BKCookController@postUserLikeMonAn');
 
 // community with Flask
 Route::post('user/api/request/start-recommend', 'RecommenderCoreController@postStartRecommender');

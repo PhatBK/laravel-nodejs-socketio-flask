@@ -6,6 +6,7 @@ use App\Models\CacBuocNau;
 use App\Models\CongDung;
 use App\Models\DanhGiaMonAn;
 use App\Models\FeedBack;
+use App\Models\LikeMonAn;
 use App\Models\LoaiMon;
 use App\Models\MonAn;
 use App\Models\MucDich;
@@ -625,5 +626,16 @@ class BKCookController extends Controller {
 	public function postUserViewedList() {
 	    $viewedlist = "";
 	    return response()->json("");
+    }
+    public function postUserLikeMonAn(Request $req) {
+        if ($req->id_mon && $req->id_user) {
+            $like_mon = new LikeMonAn();
+            $like_mon->id_user = $req->id_user;
+            $like_mon->id_monan = $req->id_mon;
+            $like_mon->save();
+            return response()->json("Success save user like monan");
+        } else {
+            return response()->json("Data not validate...");
+        }
     }
 }

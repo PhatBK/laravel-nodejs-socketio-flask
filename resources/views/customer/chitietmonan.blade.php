@@ -101,7 +101,7 @@
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
+												<a onclick="sendUserFavoriteFood({{$monan->id}}, {{ Auth::user()->id }})" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
 													<b>
 														<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 													</b>
@@ -118,7 +118,7 @@
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<a onclick="sendUserFavoriteFood(`{{$monan->id}}`)">
+										<a onclick="sendUserFavoriteFood({{$monan->id}}, {{ Auth::user()->id }})">
 											<b data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
 												<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 											</b>
@@ -532,8 +532,27 @@
 	};
 </script>
 <script>
-	function sendUserFavoriteFood(food_id) {
-		console.log(food_id);
+	function sendUserFavoriteFood(food_id, user_id) {
+		console.log(food_id + ':' + user_id);
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			type:'post',
+			url: 'user/data/like-monan/v1',
+			data:{
+				'id_mon': food_id,
+				'id_user': user_id
+			},
+			success:function(response){
+				console.log(response);
+			},
+			error:function( err) {
+				console.log(err);
+			}
+		});
 	}
 </script>
 {{-- nhúng thư viện socket để bình luận real-time cho người dùng --}}
@@ -691,7 +710,6 @@
 	    });
 	</script>
 @endif
-
 {{--  call api request recommender  --}}
 <script>
 	setTimeout(function() {
