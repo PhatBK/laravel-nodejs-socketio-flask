@@ -103,7 +103,7 @@
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												<a onclick="sendUserFavoriteFood({{$monan->id}}, {{ Auth::user()->id }})" data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
 													<b>
-														<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+														<i id="save_food_1" class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 													</b>
 												</a>
                                                 @php $flag_rate = true; @endphp
@@ -120,7 +120,7 @@
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<a onclick="sendUserFavoriteFood({{$monan->id}}, {{ Auth::user()->id }})">
 											<b data-toggle="tooltip" data-html="true" data-placement="top" title="<b style='font-size:16px; color:black;'>Lưu Vào Danh Sách Yêu Thích</b>">
-												<i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+												<i id="save_food_2" class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
 											</b>
 										</a>
                                     @endif
@@ -548,9 +548,20 @@
 			},
 			success:function(response){
 				console.log(response);
+
+				if (document.getElementById('save_food_1')) {
+					document.getElementById('save_food_1').setAttribute("style", "color: green;");
+				}
+				if (document.getElementById('save_food_2')) {
+					document.getElementById('save_food_2').setAttribute("style", "color: green;");
+				}
+				document.getElementById('notification-content').innerHTML = "<b style='color: green; font-size: 16px;'>Lưu Thành Công...</b>";
+				$("#modal-notification-common").modal();
 			},
 			error:function( err) {
 				console.log(err);
+				document.getElementById('notification-content').innerHTML = "<b style='color: orange; font-size: 16px;'>Món Ăn Đã Được Lưu Trước Đó...</b>";
+				$("#modal-notification-common").modal();
 			}
 		});
 	}
@@ -592,7 +603,7 @@
 			str+="</ul>";
 			document.getElementById(id).innerHTML= str;
 		}else{
-
+			console.log("Error split nguyen lieu...");
 		}
 	}
 	var data=[

@@ -542,8 +542,8 @@ class BKCookController extends Controller {
 		$monan = MonAn::find($request->moni);
 		$count_old = count($monan->danhgiamonan);
 
-        $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
-        $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
+//        $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
+//        $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
 
 		$id_monan = $request->moni;
 		$id_user = $request->useri;
@@ -629,11 +629,21 @@ class BKCookController extends Controller {
     }
     public function postUserLikeMonAn(Request $req) {
         if ($req->id_mon && $req->id_user) {
+//            $like_monan = LikeMonAn::firstOrCreate(['id_user' => $req->id_user, 'id_monan' => $req->id_mon]);
             $like_mon = new LikeMonAn();
             $like_mon->id_user = $req->id_user;
             $like_mon->id_monan = $req->id_mon;
             $like_mon->save();
-            return response()->json("Success save user like monan");
+            if ( $like_mon->save()) {
+                return response()->json("Success save user like monan");
+            } else {
+                return response()->json("Unsuccess save data, Unique data");
+            }
+//            if ($like_monan) {
+//                return response()->json("Success save user like monan");
+//            } else {
+//                return response()->json("Unsuccess save user like monan");
+//            }
         } else {
             return response()->json("Data not validate...");
         }

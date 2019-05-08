@@ -1,4 +1,7 @@
 /* phatnh css old 2018 */
+.fa-floppy-o-liked {
+    color: green;
+}
 .tooltip > .tooltip-inner  {
     background: #19fe02;
 }
