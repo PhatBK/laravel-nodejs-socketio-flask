@@ -55,7 +55,7 @@
                                     @endif
                                     @if(Auth::user())
                                       @if(Auth::user()->level == 2)
-                                          <li><a href="javascript:void(0)" class="info" onclick="logTT()"><b style="color: red;">Tài Khoản</b></a></li>
+                                          <li><a href="javascript:void(0)" class="info"><b style="color: red;">Tài Khoản</b></a></li>
                                       @endif
                                     @endif
                                     @if(Auth::user())
@@ -619,7 +619,4 @@
             }
         });
     }
-</script>
-<script>
-    console.log(`{{ $count_survey }}`);
 </script>

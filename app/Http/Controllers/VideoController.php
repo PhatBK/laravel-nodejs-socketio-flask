@@ -8,12 +8,12 @@ use File;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller {
+
 	public function getViewThemVideo($id) {
 		$monan = MonAn::find($id);
 		$video = Video::where('id_monan', $id)->first();
 		return view('admin.monan.themvideo', compact('monan', 'video'));
 	}
-
 	public function themVideo(Request $req, $id) {
 		$monan = MonAn::find($id);
 		$video = new Video();
@@ -35,12 +35,10 @@ class VideoController extends Controller {
 		$video->save();
 		return redirect()->route('themVideo', $monan->id)->with('themvideothanhcong', 'Đã thêm Video thành công');
 	}
-
 	public function getViewSuaVideo($id_monan, $id_video) {
 		$video = Video::where('id', $id_video)->where('id_monan', $id_monan)->first();
 		return view('admin.monan.suavideo', compact('video'));
 	}
-
 	public function suaVideo(Request $req, $id_monan, $id_video) {
 		$monan = MonAn::where('id', $id_monan)->first();
 		$video = Video::where('id', $id_video)->where('id_monan', $id_monan)->first();
@@ -60,7 +58,6 @@ class VideoController extends Controller {
 		$video->save();
 		return redirect()->route('themVideo', $monan->id)->with('suavideothanhcong', 'Đã sửa video thành công');
 	}
-
 	public function xoaVideo($id_monan, $id_video) {
 		$monan = MonAn::find($id_monan);
 		$vd = 'uploads/video/' . Video::where('id', $id_video)->value('ten');
@@ -68,6 +65,7 @@ class VideoController extends Controller {
 		$video = Video::where('id', $id_video)->where('id_monan', $id_monan)->delete();
 		return redirect()->route('themVideo', $monan->id)->with('xoavideothanhcong', 'Đã xóa video thành công');
 	}
+
     public function rollBackAll() {
         return response()->json(null);
     }

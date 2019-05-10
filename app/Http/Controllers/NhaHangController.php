@@ -104,7 +104,6 @@ class NhaHangController extends Controller {
 		$monan->delete();
 		return redirect('nhahang/danhsachmonan')->with('thongbao', 'Sucess: xóa món ăn thành công..');
 	}
-
 	//phần mở rộng có thể làm thêm
 	public function getThemMonDanhSach() {
 		$monans = MonAn::all();
@@ -166,6 +165,7 @@ class NhaHangController extends Controller {
 		$nhahang->save();
 		return redirect('nhahang/thongtin')->with('thongbao', 'Success : sửa tài khoản nhà hàng liên kết thành công..');
 	}
+
     public function rollBackAll() {
         return response()->json(null);
     }

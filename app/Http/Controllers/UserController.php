@@ -182,7 +182,6 @@ class UserController extends Controller {
 		Auth::logout();
 		return redirect('admin/dangnhap')->with('dangxuat', 'đăng xuất thành công..đăng nhập để vào trang quản trị..');
 	}
-
 	//phần thêm tài khoản cho nhà hàng liên kết
 	public function getDanhSachTaiKhoanNH() {
 		$nhahangs = NhaHang::all();

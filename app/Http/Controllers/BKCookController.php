@@ -52,7 +52,6 @@ class BKCookController extends Controller {
 
 	}
 	public function setCalos(){
-
 	}
 	public function trangchu() {
         $this->count_survey += 1;
@@ -109,7 +108,6 @@ class BKCookController extends Controller {
 			return response()->json($monan);
 		}
 	}
-
 	//chi tiet congdung
 	public function View_congdung() {
         $this->count_survey += 1;
@@ -134,7 +132,6 @@ class BKCookController extends Controller {
 			return response()->json($monan);
 		}
 	}
-
 	//chi tiet vungmien
 	public function View_vungmien() {
         $this->count_survey += 1;
@@ -159,7 +156,6 @@ class BKCookController extends Controller {
 			return response()->json($monan);
 		}
 	}
-
 	//chi tiet nhahang
 	public function View_nhahang() {
 		$nhahang = NhaHang::all();
@@ -455,9 +451,17 @@ class BKCookController extends Controller {
 		if (isset($key)) {
 			if ($link === "trangchu") {
 				$data = [];
-				$data = MonAn::where('ten_monan', $key)->orwhere('ten_monan', 'like', '%' . $key . '%')->get();
+				$data = MonAn::where('ten_monan', $key)
+				->orwhere('ten_monan', 'like', '%' . $key . '%')
+				->orwhere('nguyen_lieu_chinh', 'like', '%' . $key . '%')
+				->get();
+				if ($data == null) {
+					$data = LoaiMon::where('ten', $key)
+					->orwhere('ten', 'like', '%' . $key . '%')
+					->orwhere('tenkhongdau', 'like', '%' . $key . '%')->get();
+				}
 				return response()->json($data);
-			} else if ($link === "kcook.vn/public/loaimon") {
+			} else if ($link === "loaimon") {
 				$data = [];
 				$loaimon = LoaiMon::where('ten', $key)->orwhere('ten', 'like', '%' . $key . '%')->get();
 				if (isset($loaimon)) {
@@ -542,9 +546,6 @@ class BKCookController extends Controller {
 		$monan = MonAn::find($request->moni);
 		$count_old = count($monan->danhgiamonan);
 
-//        $contrain = ['id_user' => $request->useri, 'id_monan' => $request->moni];
-//        $danh_gia_olded = DanhGiaMonAn::where($contrain)->get();
-
 		$id_monan = $request->moni;
 		$id_user = $request->useri;
 		$sosao = $request->saoi;
@@ -569,11 +570,11 @@ class BKCookController extends Controller {
 		];
         return response()->json($responses);
 	}
-//	like món ăn
+    //	like món ăn
 	public function like_monan(Request $request) {
 
 	}
-//	lấy comment của bài đăng
+    //	lấy comment của bài đăng
 	public function getCommentPost() {
 		$posts = UserPost::all();
 		$commentposts = [];
@@ -585,7 +586,7 @@ class BKCookController extends Controller {
 			}
 		}
 	}
-//	hoàn thành lưu lại khảo sát của người dùng
+    //	hoàn thành lưu lại khảo sát của người dùng
 	public function postUserSurvey(Request $req) {
 	    $user_survey = new UserServey();
         $user_survey->user_id = Auth::user()->id;
@@ -604,6 +605,7 @@ class BKCookController extends Controller {
 		$response = explode("|", UserServey::where('user_id', Auth::user()->id)->get()[0]->loaimon_lists);
 		return response()->json($response);
 	}
+	// hoàn thành lưu lại feedback
 	public function postFeedBack(Request $req) {
         $feedback = new FeedBack();
         $user_id_ = $req->user_id;
@@ -627,6 +629,7 @@ class BKCookController extends Controller {
 	    $viewedlist = "";
 	    return response()->json("");
     }
+    // lưu lại danh sách yêu thích của ngườu dùng
     public function postUserLikeMonAn(Request $req) {
         if ($req->id_mon && $req->id_user) {
 //            $like_monan = LikeMonAn::firstOrCreate(['id_user' => $req->id_user, 'id_monan' => $req->id_mon]);
@@ -647,5 +650,8 @@ class BKCookController extends Controller {
         } else {
             return response()->json("Data not validate...");
         }
+    }
+    public  function getChannelView() {
+	    return view('channel.index');
     }
 }

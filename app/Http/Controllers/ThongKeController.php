@@ -89,6 +89,7 @@ class ThongKeController extends Controller {
 		$thongke->delete();
 		return redirect('admin/thongke/lichsu')->with('thongbao', 'Sucess : xoá lịch sử thống kê thành công..');
 	}
+
     public function rollBackAll() {
         return response()->json(null);
     }

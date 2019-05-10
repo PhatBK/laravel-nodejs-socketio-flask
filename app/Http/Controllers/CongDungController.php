@@ -9,6 +9,7 @@ class CongDungController extends Controller {
 	public function __construct() {
 		$this->congdung = CongDung::all();
 	}
+
 	public function getDanhSach() {
 		$congdung = CongDung::all();
 		return view('admin.congdung.danhsach', compact('congdung'));
@@ -60,6 +61,7 @@ class CongDungController extends Controller {
 		$congdung = CongDung::where('id', $id)->delete();
 		return redirect()->back()->with('thongbao', 'Xoá thành công !!!');
 	}
+
 	public  function rollBackAll() {
         return response()->json(null);
     }

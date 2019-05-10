@@ -19,7 +19,6 @@ class DangBaiController extends Controller {
 		$ma = MonAn::where('id', $id_monan)->first();
 		return view('admin.monan.baivietlienquan', compact('bv_lienquan', 'ma'));
 	}
-
 	public function xoaBaiVietLienQuan($id, $id_monan) {
 		$monan = MonAn::where('id', $id_monan)->first();
 		$bv_lienquan = UserPost::find($id);
@@ -55,7 +54,6 @@ class DangBaiController extends Controller {
 		$comment->delete();
 		return redirect('admin/baiviet/xemchitiet/' . $idb)->with('thongbao', 'Sucess : xóa comment bài viết thành công');
 	}
-
 	public function loadDangBai() {
 		$food_category = TheLoai::all();
 		$user_posts = UserPost::orderBy('created_at', 'desc')->limit(10)->get();
@@ -63,7 +61,6 @@ class DangBaiController extends Controller {
 
 		return view('customer.dangbai', compact('food_category', 'user_posts', 'top10_users'));
 	}
-
 	public function findLoaiMon(Request $request) {
 		$data = LoaiMon::select('id', 'ten')->where('id_theloai', $request->id)->take(100)->get();
 		return response()->json($data);
@@ -71,7 +68,6 @@ class DangBaiController extends Controller {
 	public function checklike(Request $request) {
 //		$baiviet = UserPost::find($id);
 	}
-
 	public function loadthembaiviet(Request $request) {
 		$offset = $request->offset;
 		$userposts = UserPost::orderBy('created_at', 'desc')->offset($offset)->limit(10)->get();
@@ -104,14 +100,12 @@ class DangBaiController extends Controller {
 		}
 		return response()->json($arr_result);
 	}
-
 	public function baidangchitiet($id) {
 		$user_post = UserPost::find($id);
         $top10_users = DB::table('users')->orderBy('noibat', 'desc')->limit(5)->get();
 		return view('customer.baidangchitiet', compact('user_post', 'top10_users'));
 	}
-
+    // backupdata
 	public function rollBackAll() {
-
     }
 }

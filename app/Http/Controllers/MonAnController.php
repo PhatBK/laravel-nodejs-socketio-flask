@@ -142,6 +142,7 @@ class MonAnController extends Controller {
 		$vungmien = VungMien::where('id', $monan -> id_vungmien) -> first();
 		return view('admin.monan.xemchitiet', compact('monan', 'mucdich', 'loaimon', 'congdung', 'vungmien'));
 	}
+
     public function rollBackAll() {
         return response()->json(null);
     }

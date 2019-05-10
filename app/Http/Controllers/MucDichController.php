@@ -9,8 +9,8 @@ use File;
 class MucDichController extends Controller
 {
     public function __construct(){
-            $this->mucdich=MucDich::all();
-        }
+//            $this->mucdich=MucDich::all();
+    }
     public function getDanhSach(){
             $mucdich=MucDich::all();
             return view('admin.mucdich.danhsach',compact('mucdich'));
@@ -19,7 +19,7 @@ class MucDichController extends Controller
             $mucdich=MucDich::where('id',$id)->first();
             return view('admin.mucdich.sua',compact('mucdich'));
         }
-        public function postSuaMucDich($id,Request $req){
+    public function postSuaMucDich($id,Request $req){
             $mucdich=MucDich::find($id);
             $anh=$mucdich->anh;
             if ($req->file('anh')) {
@@ -62,6 +62,7 @@ class MucDichController extends Controller
             $mucdich= MucDich::where('id',$id)->delete();
             return redirect()->back()->with('thongbao','Xoá thành công !!!');
     }
+
     public function rollBackAll() {
         return response()->json(null);
     }

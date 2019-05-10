@@ -181,6 +181,7 @@ class ApiController extends Controller {
 		$list_detail['id'] = Auth::user()->id;
 		return response()->json($list_detail);
 	}
+
 	public  function getAllPostUser() {
 	    return response()->json(null);
     }

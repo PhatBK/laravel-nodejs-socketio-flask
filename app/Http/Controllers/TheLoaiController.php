@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use File;
 class TheLoaiController extends Controller {
 	public function __construct() {
-		$this->theloai = TheLoai::all();
+//		$this->theloai = TheLoai::all();
 	}
 	public function getDanhSach() {
 		$theloai = theloai::all();
@@ -60,6 +60,7 @@ class TheLoaiController extends Controller {
 		$theloai = theloai::where('id', $id)->delete();
 		return redirect()->back()->with('thongbao', 'Xoá thành công !!!');
 	}
+
     public function rollBackAll() {
         return response()->json("null");
     }

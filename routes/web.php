@@ -318,69 +318,55 @@ Route::get('commentpost', 'BKCookController@getCommentPost');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider')->name('google.login');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 
-
-
-/**
- * Hết phần tương tác với các hệ thống khác
-*/
-
-
-
-/**
-* Phần call API từ hệ thốn Recommend
-*/
-
-
-
-/**
-* Phần trả ra api cho bên thứ 3
-*/
-
-
 /**
  * Route phần nâng cấp hệ thống
  * route phần giao tiếp với server flask cho chức năng recommend viết trên Python 2.7
  */
-Route::get('flask/api-get','RecommendController@get_api');
-Route::get('flask/api-post','RecommendController@post_api');
-Route::get('flask/api-get/users','RecommendController@get_api_data_user');
-Route::get('flask/api-get/monans','RecommendController@get_api_data_monan');
-Route::get('flask/api-get/buaans','RecommendController@get_api_data_buaan');
+//Route::get('flask/api-get','RecommendController@get_api');
+//Route::get('flask/api-post','RecommendController@post_api');
+//Route::get('flask/api-get/users','RecommendController@get_api_data_user');
+//Route::get('flask/api-get/monans','RecommendController@get_api_data_monan');
+//Route::get('flask/api-get/buaans','RecommendController@get_api_data_buaan');
+///**
+// * Route phần lấy dữ liệu người dùng: thông tin thiết bị, luồng click, thời gian ghé thăm,
+// * thời gian đọc bài viết, các behavior của người dùng
+// */
+//Route::get( 'detect/user/behavior','UserBehaviorController@get_user_behavior');
+//Route::get( 'detect/user/device','UserBehaviorController@get_user_device');
+//Route::post('detect/user/behavior','UserBehaviorController@post_user_behavior');
+//Route::post('detect/user/device','UserBehaviorController@post_user_device');
+///**
+// * Route phần các hoạt động nâng cao của người dùng
+// */
+//Route::get('excel','NangCapHeThongController@fast_excel');
+//Route::get('trangcanhan/{id}','NangCapHeThongController@getTrangCaNhan');
+//Route::get('test/{id}','NangCapHeThongController@testHasManyThrough');
+//Route::get('xem-mot-mon/{id}','NangCapHeThongController@getMonAn');
+//Route::get('api','NangCapHeThongController@getAPI');
+//
+//Route::get('channel','NangCapHeThongController@getChannel');
+//Route::get('nguyenlieu/{id}','NangCapHeThongController@getNguyenLieu');
+//Route::get('goi-y/{id}','NangCapHeThongController@goiYBuaAn');
+//Route::get('crawl','NangCapHeThongController@crawlerAction');
+//Route::get('crawler','NangCapHeThongController@getCrawler');
+//Route::get('bmr/{cannang}/{chieucao}/{tuoi}/{gioitinh}','NangCapHeThongController@tinhBMR');
+//Route::get('users','NangCapHeThongController@get_firebase');
+
+
+Route::get('channel', 'BKCookController@getChannelView');
 /**
- * Route phần lấy dữ liệu người dùng: thông tin thiết bị, luồng click, thời gian ghé thăm,
- * thời gian đọc bài viết, các behavior của người dùng
- */
-Route::get( 'detect/user/behavior','UserBehaviorController@get_user_behavior');
-Route::get( 'detect/user/device','UserBehaviorController@get_user_device');
-Route::post('detect/user/behavior','UserBehaviorController@post_user_behavior');
-Route::post('detect/user/device','UserBehaviorController@post_user_device');
-/**
- * Route phần các hoạt động nâng cao của người dùng
- */
-Route::get('excel','NangCapHeThongController@fast_excel');
-Route::get('trangcanhan/{id}','NangCapHeThongController@getTrangCaNhan');
-Route::get('test/{id}','NangCapHeThongController@testHasManyThrough');
-Route::get('xem-mot-mon/{id}','NangCapHeThongController@getMonAn');
-Route::get('api','NangCapHeThongController@getAPI');
-
-Route::get('channel','NangCapHeThongController@getChannel');
-
-Route::get('nguyenlieu/{id}','NangCapHeThongController@getNguyenLieu');
-Route::get('goi-y/{id}','NangCapHeThongController@goiYBuaAn');
-Route::get('crawl','NangCapHeThongController@crawlerAction');
-Route::get('crawler','NangCapHeThongController@getCrawler');
-Route::get('bmr/{cannang}/{chieucao}/{tuoi}/{gioitinh}','NangCapHeThongController@tinhBMR');
-Route::get('users','NangCapHeThongController@get_firebase');
-
+ * Phần hệ thống tương tác với recommender service
+ * Hệ thống lấy các dữ liệu thu thập được từ người dùng
+ * Đóng gói dưc liệu, gửi cho server chạy recommender service
+ * server chạy recommender tính toán, gửi lại kết quả cho web app
+*/
 // feedback của người dùng
 Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
-
 // Collector data from user
 Route::post('user/data/survey/v1', 'BKCookController@postUserSurvey');
 Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
 Route::post('user/data/like-monan/v1', 'BKCookController@postUserLikeMonAn');
-
 // community with Flask
 Route::post('user/api/request/start-recommend', 'RecommenderCoreController@postStartRecommender');
 

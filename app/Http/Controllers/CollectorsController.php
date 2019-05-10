@@ -81,7 +81,6 @@ class CollectorsController extends Controller
 
         return response()->json($results);
     }
-
     public  function postUserKeySearch(Request $req) {
         if ($req->id_mon_an) {
             $key_search = new UserSearchKey();

@@ -10,7 +10,6 @@ class CommentController extends Controller {
 		$comment = CommentMonAn::where('id_monan', $id_monan)->get();
 		return view('admin.monan.binhluan', compact('comment'));
 	}
-
 	public function xoaComment($id, $id_monan) {
 		$monan = MonAn::find($id_monan);
 		$comment = CommentMonAn::where('id', $id)->where('id_monan', $id_monan)->delete();

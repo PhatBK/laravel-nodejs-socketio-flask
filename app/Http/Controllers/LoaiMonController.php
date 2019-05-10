@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class LoaiMonController extends Controller {
 	public function __construct() {
-		$this->theloai = TheLoai::all();
-		$this->loaimon = LoaiMon::all();
+//		$this->theloai = TheLoai::all();
+//		$this->loaimon = LoaiMon::all();
 	}
 	public function getDanhSach() {
 		$loaimon = $this->loaimon;
@@ -72,6 +72,7 @@ class LoaiMonController extends Controller {
 		$loaimon = loaimon::where('id', $id)->delete();
 		return redirect()->back()->with('thongbao', 'Xoá thành công !!!');
 	}
+
 	public function rollBackAll() {
         return response()->json(null);
     }

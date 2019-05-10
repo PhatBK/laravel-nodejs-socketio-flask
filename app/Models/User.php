@@ -46,5 +46,8 @@ class User extends Authenticatable {
 	public function danhgiamonan() {
 		return $this->hasMany('App\Models\DanhGiaMonAn', 'id_user', 'id');
 	}
+	public function feedback() {
+	    return $this->hasMany('App\Models\FeedBack', 'id_user', 'id');
+    }
 
 }

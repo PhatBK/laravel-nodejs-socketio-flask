@@ -72,6 +72,7 @@ class CacBuocNauController extends Controller {
 		$buocnau = CacBuocNau::where('id', $id_buocnau)->where('id_monan', $id_monan)->delete();
 		return redirect()->route('themBuocNau', $monan->id)->with('xoabuocnauthanhcong', 'Đã xóa bước nấu thành công!');
 	}
+
 	public  function  rollBackAll() {
         return response()->json(null);
     }
