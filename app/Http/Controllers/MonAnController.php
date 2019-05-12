@@ -86,18 +86,6 @@ class MonAnController extends Controller {
 			$file->move($destinationPath, $filename);
 			$monan->anh_monan = $filename;
 		}
-
-		// $path = "uploads/monan/";
-		// $anh = $path . $monan->anh_monan;
-		// $monan->anh_monan = $req->tenAnh;
-		// rename($anh, "uploads/monan/" . $req->tenAnh);
-		// if ($req->hasFile('image')) {
-		// 	File::delete($anh);
-		// 	$file = $req->image;
-		// 	$filehinh = rand(1, 100000) . "_" . $file->getClientOriginalName();
-		// 	$file->move($path, $filehinh);
-		// 	$monan->anh_monan = $filehinh;
-		// }
 		
 		$monan->gioithieu = $req->gioiThieu;
 		$monan->thoigian = $req->thoiGian;

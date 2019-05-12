@@ -1028,7 +1028,7 @@
 
         {{-- load more--}}
 
-        // scroll
+        // scroll load more
         $(window).scroll(function () {
            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                sendData();
@@ -1350,6 +1350,11 @@
             });
         });
 </script>
+{{--  <script>
+    setInterval(function() {
+        socket.emit('phatnh channel demo', "Hello, I am Phat, client sending....");
+    }, 10000);
+</script>  --}}
 </body>
 </html>
 

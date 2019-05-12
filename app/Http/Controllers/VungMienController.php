@@ -9,7 +9,7 @@ use File;
 class VungMienController extends Controller
 {
    public function __construct(){
-//       $this->vungmien=VungMien::all();
+      $this->vungmien=VungMien::all();
    }
    public function getDanhSach(){
        $vungmien=VungMien::all();

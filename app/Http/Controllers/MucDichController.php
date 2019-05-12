@@ -9,7 +9,7 @@ use File;
 class MucDichController extends Controller
 {
     public function __construct(){
-//            $this->mucdich=MucDich::all();
+           $this->mucdich=MucDich::all();
     }
     public function getDanhSach(){
             $mucdich=MucDich::all();

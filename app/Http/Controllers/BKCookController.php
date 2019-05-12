@@ -217,24 +217,24 @@ class BKCookController extends Controller {
 
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
 			$monan_lienquan = [];
-			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(6)->get();
-			$monan_lienquan_congdung = MonAn::where('id_congdung', $monan->id_congdung)->orderBy('id', 'desc')->take(6)->get();
 
-            $new_last_foods = MonAn::orderBy('created_at', 'desc')->take(4)->get();
+			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(7)->get();
+			// $monan_lienquan_congdung = MonAn::where('id_congdung', $monan->id_congdung)->orderBy('id', 'desc')->take(6)->get();
+			// // Gộp hai mảng chứa kết quả
+			// for ($i = 0; $i < count($monan_lienquan_loaimon); $i++) {
+			// 	if (!$monan.equalTo($monan_lienquan_loaimon[$i])) {
+			// 	   $monan_lienquan[] = $monan_lienquan_loaimon[$i];
+            //     }
+			// }
+			// for ($j = 0; $j < count($monan_lienquan_congdung); $j++) {
+			//     if (!$monan.equalTo($monan_lienquan_congdung[$j])) {
+            //         $monan_lienquan[] = $monan_lienquan_congdung[$j];
+            //     }
+			// }
+			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(4)->get();
             $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(4)->get();
 
-			// Gộp hai mảng chứa kết quả
-			for ($i = 0; $i < count($monan_lienquan_loaimon); $i++) {
-				if (!$monan.equalTo($monan_lienquan_loaimon[$i])) {
-				   $monan_lienquan[] = $monan_lienquan_loaimon[$i];
-                }
-			}
-			for ($j = 0; $j < count($monan_lienquan_congdung); $j++) {
-			    if (!$monan.equalTo($monan_lienquan_congdung[$j])) {
-                    $monan_lienquan[] = $monan_lienquan_congdung[$j];
-                }
-			}
-			$monan_lienquan = collect($monan_lienquan)->unique();
+			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
 
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
 
