@@ -35,19 +35,25 @@ class CollectorsController extends Controller
             $anonymouse = false;
         }
         $is_play_video = false;
+        // if ($req->user_id == null) {
+        //     $req->user_id = $this->user_id_auth;
+        //     $anonymouse = true;
+        // }
+        // if (!$req->play_video) {
+        //     $is_play_video = false;
+        // } else {
+        //     $is_play_video = true;
+        // }
+        // if (!Auth::user() && !($req->user_id == null)) {
+        //     $anonymouse = true;
+        // }
+        $req->user_id = $req->user_id == null ?  $req->user_id = $this->user_id_auth : $req->user_id;
+        $anonymouse = $req->user_id == null ? true : false;
+        $is_play_video = $req->play_video ? true : false;
+        $anonymouse =  (!Auth::user() && !($req->user_id == null)) ? true : false;
+        $req->user_id = ($req->user_id == 0) ? 11081996 : $req->user_id;
+        $req->time = ($req->time / 1000 > 3600 * 24 ) ? (3600 * 6 * 1000) : $req->time;
 
-        if ($req->user_id == null) {
-            $req->user_id = $this->user_id_auth;
-            $anonymouse = true;
-        }
-        if (!$req->play_video) {
-            $is_play_video = false;
-        } else {
-            $is_play_video = true;
-        }
-        if (!Auth::user() && !($req->user_id == null)) {
-            $anonymouse = true;
-        }
         $time = $req->time / 1000;
         $user_id = $req->user_id;
         $id_mon_an = $req->id_mon_an;

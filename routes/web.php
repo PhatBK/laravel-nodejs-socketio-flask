@@ -298,6 +298,7 @@ Route::post('suataikhoan', ['as' => 'suataikhoan', 'uses' => 'BKCookController@p
 /**
  * Phần dành cho thành viên đang bài trên diễn đàn chia sẻ tin tức 
  */
+//TODO api for intergrate with nodejs server
 Route::get('api/savedatauserpost', 'ApiController@savedatauserpost');
 Route::get('api/savedatacommentpost', 'ApiController@savedatacommentpost');
 Route::get('api/savedatareplycommentpost', 'ApiController@savedatareplycommentpost');
@@ -322,35 +323,6 @@ Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback
  * Route phần nâng cấp hệ thống
  * route phần giao tiếp với server flask cho chức năng recommend viết trên Python 2.7
  */
-//Route::get('flask/api-get','RecommendController@get_api');
-//Route::get('flask/api-post','RecommendController@post_api');
-//Route::get('flask/api-get/users','RecommendController@get_api_data_user');
-//Route::get('flask/api-get/monans','RecommendController@get_api_data_monan');
-//Route::get('flask/api-get/buaans','RecommendController@get_api_data_buaan');
-///**
-// * Route phần lấy dữ liệu người dùng: thông tin thiết bị, luồng click, thời gian ghé thăm,
-// * thời gian đọc bài viết, các behavior của người dùng
-// */
-//Route::get( 'detect/user/behavior','UserBehaviorController@get_user_behavior');
-//Route::get( 'detect/user/device','UserBehaviorController@get_user_device');
-//Route::post('detect/user/behavior','UserBehaviorController@post_user_behavior');
-//Route::post('detect/user/device','UserBehaviorController@post_user_device');
-///**
-// * Route phần các hoạt động nâng cao của người dùng
-// */
-//Route::get('excel','NangCapHeThongController@fast_excel');
-//Route::get('trangcanhan/{id}','NangCapHeThongController@getTrangCaNhan');
-//Route::get('test/{id}','NangCapHeThongController@testHasManyThrough');
-//Route::get('xem-mot-mon/{id}','NangCapHeThongController@getMonAn');
-//Route::get('api','NangCapHeThongController@getAPI');
-//
-//Route::get('channel','NangCapHeThongController@getChannel');
-//Route::get('nguyenlieu/{id}','NangCapHeThongController@getNguyenLieu');
-//Route::get('goi-y/{id}','NangCapHeThongController@goiYBuaAn');
-//Route::get('crawl','NangCapHeThongController@crawlerAction');
-//Route::get('crawler','NangCapHeThongController@getCrawler');
-//Route::get('bmr/{cannang}/{chieucao}/{tuoi}/{gioitinh}','NangCapHeThongController@tinhBMR');
-//Route::get('users','NangCapHeThongController@get_firebase');
 
 
 Route::get('channel', 'BKCookController@getChannelView');
@@ -360,6 +332,7 @@ Route::get('channel', 'BKCookController@getChannelView');
  * Đóng gói dưc liệu, gửi cho server chạy recommender service
  * server chạy recommender tính toán, gửi lại kết quả cho web app
 */
+//TODO router for collector data of client
 // feedback của người dùng
 Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
 // Collector data from user
@@ -367,22 +340,26 @@ Route::post('user/data/survey/v1', 'BKCookController@postUserSurvey');
 Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch');
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
 Route::post('user/data/like-monan/v1', 'BKCookController@postUserLikeMonAn');
+
 // community with Flask
 Route::post('user/api/request/start-recommend', 'RecommenderCoreController@postStartRecommender');
-
 Route::get('api/recommender/flask/get/results', 'RecommenderCoreController@getFlaskResultRecommender');
-
 Route::post('api/recommender/flask/post/results', 'RecommenderCoreController@postFlaskResultRecommender');
 Route::post('api/recommender/flask/post/results/save', 'RecommenderCoreController@postFlaskResultRecommenderSave');
-
 Route::get('/api/call/flask', 'RecommenderCoreController@getFlaskAPI');
 Route::get('/api/send/flask', 'RecommenderCoreController@sendFlaskAPI');
 Route::post('/api/call/flask', 'RecommenderCoreController@postFlaskAPI');
 Route::get('/api/recommender/get-all/data', 'RecommenderCoreController@apiRecommenderShareData');
 Route::post('/api/recommender/post-all/data', 'RecommenderCoreController@apiRecommenderGetData');
 
-
+//TODO route for intergrate with flask server
 Route::get('/api/data/normal/v1', 'RecommenderCoreController@getAllDataUserArray');
+
+Route::get('/api/data/rate/v1', 'RecommenderCoreController@getDataRate');
+Route::get('/api/data/like/v1', 'RecommenderCoreController@getDataLike');
+Route::get('/api/data/survey/v1', 'RecommenderCoreController@getDataSurvey');
+Route::get('/api/data/implict/v1','RecommenderCoreController@getDataImplict');
+Route::get('/api/data/search/v1', 'RecommenderCoreController@getSearchKey');
 
 
 

@@ -51,8 +51,6 @@ class BKCookController extends Controller {
         view()->share('count_survey', $this->count_survey);
 
 	}
-	public function setCalos(){
-	}
 	public function trangchu() {
         $this->count_survey += 1;
 
@@ -642,11 +640,6 @@ class BKCookController extends Controller {
             } else {
                 return response()->json("Unsuccess save data, Unique data");
             }
-//            if ($like_monan) {
-//                return response()->json("Success save user like monan");
-//            } else {
-//                return response()->json("Unsuccess save user like monan");
-//            }
         } else {
             return response()->json("Data not validate...");
         }

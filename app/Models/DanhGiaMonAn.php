@@ -13,7 +13,7 @@ class DanhGiaMonAn extends Model {
 		return $this->belongsTo('App\Models\User', 'id_user', 'id');
 	}
 	public function group_user() {
-
+	
     }
 
 }

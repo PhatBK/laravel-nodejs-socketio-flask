@@ -21,10 +21,15 @@ class MonAnController extends Controller {
 	}
 
 	public function getViewThemMonAn() {
-		$mucdich = MucDich::all();
-		$loaimon = LoaiMon::all();
-		$congdung = CongDung::all();
-		$vungmien = VungMien::all();
+		// $mucdich = MucDich::all();
+		$mucdich = MucDich::orderBy('ten', 'asc')->get();
+		// $loaimon = LoaiMon::all();
+		$loaimon = LoaiMon::orderBy('ten', 'asc')->get();
+		// $congdung = CongDung::all();
+		$congdung = CongDung::orderBy('ten', 'asc')->get();
+		// $vungmien = VungMien::all();
+		$vungmien = VungMien::orderBy('ten', 'asc')->get();
+		
 		return view('admin.monan.them', compact('mucdich', 'loaimon', 'congdung', 'vungmien'));
 	}
 
