@@ -343,8 +343,7 @@ class BKCookController extends Controller {
 		$user->noibat = 0;
 		$user->level = 2;
 		$user->save();
-		$tb = "alert(`SUCCESS : Đăng ký tài khoản thành công.. ahihi`);";
-		return redirect()->back()->with('thongbao', $tb);
+		return redirect()->back()->with('thongbao_register', "Đăng ký tài khoản thành công...");
 	}
 	//post sửa tài khoản
 	public function postSuaTaiKhoan(Request $request) {

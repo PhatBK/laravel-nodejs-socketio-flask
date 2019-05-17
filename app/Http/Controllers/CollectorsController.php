@@ -11,6 +11,7 @@ use App\Models\LoaiMon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client as GuzzleClient;
+use Session;
 
 class CollectorsController extends Controller
 {
@@ -28,13 +29,13 @@ class CollectorsController extends Controller
         }
     }
     public function postUserPageTime(Request $req) {
-        $user_agent = $req->header('user-agent');
-        $anonymouse = false;
-        if (Auth::user()) {
-            $this->user_id_auth = Auth::user()->id;
-            $anonymouse = false;
-        }
-        $is_play_video = false;
+        // check session
+        // if (Session::get('id') == $req->id_mon_an) {
+        //     return response()->json("Session already....");
+        // } else {
+        //     Session::put('id', $req->id_mon_an);
+        // }
+        
         // if ($req->user_id == null) {
         //     $req->user_id = $this->user_id_auth;
         //     $anonymouse = true;
@@ -47,6 +48,15 @@ class CollectorsController extends Controller
         // if (!Auth::user() && !($req->user_id == null)) {
         //     $anonymouse = true;
         // }
+        
+        $user_agent = $req->header('user-agent');
+        $anonymouse = false;
+        if (Auth::user()) {
+            $this->user_id_auth = Auth::user()->id;
+            $anonymouse = false;
+        }
+        $is_play_video = false;
+       
         $req->user_id = $req->user_id == null ?  $req->user_id = $this->user_id_auth : $req->user_id;
         $anonymouse = $req->user_id == null ? true : false;
         $is_play_video = $req->play_video ? true : false;
@@ -84,6 +94,7 @@ class CollectorsController extends Controller
         $user_data_saved->time_visit_start = date("H:i:s");
 
         $user_data_saved->save();
+
 
         return response()->json($results);
     }

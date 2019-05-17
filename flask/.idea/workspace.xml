@@ -3,9 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="7e03de36-31e7-4e90-8efd-3bb6b0218d9e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/CollectorsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/CollectorsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../public/vendor_customer/assets/css/chitietmonan.css" beforeDir="false" afterPath="$PROJECT_DIR$/../public/vendor_customer/assets/css/chitietmonan.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Models/UserImplictsData.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Models/UserImplictsData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collaborative_filtering.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommendation_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/similarity_class.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/similarity_measures.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,36 +23,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/flask$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1556524314865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/flask$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1557842017699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="119">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#37#60#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/collaborative_filtering.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/recommendation_data.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1139">
-              <caret line="67" column="36" lean-forward="true" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -71,9 +61,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/recommendation_data.py" />
         <option value="$PROJECT_DIR$/collaborative_filtering.py" />
+        <option value="$PROJECT_DIR$/app.py" />
       </list>
     </option>
   </component>
@@ -145,6 +135,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="collaborative_filtering" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/collaborative_filtering.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Flask (app.py)" type="Python.FlaskServer" factoryName="Flask server" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
@@ -178,6 +190,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Flask server.Flask (app.py)" />
+        <item itemvalue="Python.collaborative_filtering" />
       </list>
     </recent_temporary>
   </component>
@@ -199,22 +212,26 @@
       <workItem from="1557040074488" duration="592000" />
       <workItem from="1557112759370" duration="597000" />
       <workItem from="1557126196084" duration="1226000" />
+      <workItem from="1557839995233" duration="2130000" />
+      <workItem from="1557922940381" duration="591000" />
+      <workItem from="1558045351755" duration="587000" />
+      <workItem from="1558080455075" duration="886000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16359000" />
+    <option name="totallyTimeSpent" value="20553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22314675" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23676248" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27332243" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43698853" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -270,27 +287,15 @@
     <entry file="file://$PROJECT_DIR$/moviegeek-master/recommender/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/collaborative_filtering.py" />
+    <entry file="file://$PROJECT_DIR$/recommendation_data.py" />
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="119">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#37#60#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/collaborative_filtering.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/recommendation_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="36" lean-forward="true" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
         </state>
       </provider>
     </entry>

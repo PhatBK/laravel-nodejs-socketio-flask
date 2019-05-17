@@ -104,7 +104,7 @@ def user_reommendations_knn(person, dataset, similarity_min, rate_threshold):
 		for item in dataset[other]:
 			# only score movies i haven't seen yet
 			if item not in dataset[person] or dataset[person][item] == 0:
-                if dataset[other][item] >= rate_threshold :
+                if dataset[other][item] > rate_threshold :
                     totals.setdefault(item,0)
                     totals[item] += dataset[other][item]* sim
                     # sum of similarities

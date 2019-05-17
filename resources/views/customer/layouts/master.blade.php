@@ -49,13 +49,14 @@
     $("#modal-notification-common").modal();
 </script>
 @endif
-@if (session('thongbaoloi'))
-
+@if (session('thongbao_register'))
+<script>
+    $("#modal-notification-common").modal();
+</script>
 @endif
 @if(count($errors) > 0)
 @foreach ($errors->all() as $err)
 <script>
-    {{--alert("{{$err}}");--}}
     $("#modal-notification-common").modal();
 </script>
  @endforeach

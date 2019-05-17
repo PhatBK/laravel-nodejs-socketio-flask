@@ -523,7 +523,8 @@
                 }
 				if (user_loged) {
                     deleteCookie("user_id");
-                }
+				}
+				//alert(response);
 			},
 			error:function( err) {
 				console.log(err);
@@ -677,7 +678,7 @@
                     var saoi = parseInt(sao);
                     console.log(saoi);
                     var url = "{{route('danhgia_monan')}}";
-					document.getElementById('ajax_rated').innerHTML = saoi;
+					// document.getElementById('ajax_rated').innerHTML = saoi;
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -687,7 +688,7 @@
                             'saoi': saoi
                         },
                         success: function (response) {
-							// document.getElementById('ajax_rated').innerHTML = "" + saoi;
+							document.getElementById('ajax_rated').innerHTML = "" + saoi;
                             for (var i = 1; i <= saoi; i++) {
                                 document.getElementById(i).classList.remove('fa-star-o');
                                 document.getElementById(i).classList.add('fa-star');
@@ -715,7 +716,7 @@
                         }
                     });
 	            }else{
-	            	console.log("đay không phải là sao..ahihi");
+	            	console.log("Error for rate monan");
 	            }
 	        });
 	    });

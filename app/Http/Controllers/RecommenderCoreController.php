@@ -10,13 +10,15 @@ use App\Models\LikePost;
 use App\Models\LikeMonAn;
 use App\Models\LoaiMon;
 use App\Models\UserPost;
+use App\Models\User;
+use App\Models\MonAn;
 
 
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+// use package of third
 use GuzzleHttp\Client as GuzzleClient;
 use Phpml\Association\Apriori;
 
@@ -24,6 +26,11 @@ use Phpml\Association\Apriori;
 class RecommenderCoreController extends Controller
 {
     protected $recommend_controller = null;
+    function __construct()
+    {
+        $this->user_all = User::all();
+        $this->monan_all = MonAn::all();
+    }
     //TODO start Flask run caculator recommender
     public function postStartRecommender(Request $req) {
        
@@ -52,7 +59,7 @@ class RecommenderCoreController extends Controller
             }
             $json_danhgia_news[strval($monan_unique_rating->id_monan)] = $tmp;
         }
-        dd($json_danhgia_news, json_encode($json_danhgia_news));
+        // dd($json_danhgia_news, json_encode($json_danhgia_news));
         /**
          * Lấy dữ liệu thành dạng json user->item
          * Dữu liệu từ bảng: danhgiamonan
@@ -328,30 +335,79 @@ class RecommenderCoreController extends Controller
 
         return response()->json($all_data_send);
     }
-    public function postFlaskAPI(Request $req) {
-        dd($req);
-        return response()->json("Success");
+    // matrix rate
+    public function getAllRateToMatrix(){
+        $data = [];
+        $allMonAn = $this->monan_all;
+        $allUser = $this->user_all;
+        foreach ($allMonAn as $monan) {
+            $tmp = [];
+            foreach ($allUser as $user) {
+                $query = "select * from danhgiamonan where id_user = " .$user->id. " and id_monan = ".$monan->id;
+                $rate = DB::select(DB::raw($query));
+                if($rate) {
+                    $tmp[strval($user->id)] = $rate[0]->danhgia;
+                } else {
+                    $tmp[strval($user->id)] = null;
+                }
+            }
+            $data[strval($monan->id)] = $tmp;
+        }
+        return response()->json($data);
     }
-    public function apiRecommenderShareData() {
-        $all_user_data_implicts = UserImplictsData::all();
-        return response()->json($all_user_data_implicts);
+    // matrix like
+    public function getAllLikeToMatrix() {
+        dd($this->monan_all);
+        $data = [];
+        $allMonAn = $this->monan_all;
+        $allUser = $this->user_all;
+        foreach ($allMonAn as $monan) {
+            $tmp = [];
+            foreach ($allUser as $user) {
+                $query = "select * from likemonan where id_user = " .$user->id. " and id_monan = ".$monan->id;
+                $like = DB::select(DB::raw($query));
+                if($like) {
+                    $tmp[strval($user->id)] = 1;
+                } else {
+                    $tmp[strval($user->id)] = 0;
+                }
+            }
+            $data[strval($monan->id)] = $tmp;
+        }
+        return response()->json($data);
     }
-    public function apiRecommenderGetData(Request $req) {
-        return response()->json("null");
-    }
-    public function getFlaskApiResult() {
-        return response()->json("null");
-    }
-    public function aprioriRuleAssociation($data) {
-        return response()->json("null");
-    }
-    public function getAllRatedArray() {
+    public function getAllSearchKeyMatrix() {
 
     }
-    public  function getAllUserSearchKeyArray() {
+    public function getAllImplictToMatrix() {
+        $data = [];
+        $allMonAn = $this->monan_all;
+        $allUser = $this->user_all;
+
+        foreach ($allMonAn as $monan) {
+            $tmp = [];
+            foreach ($allUser as $user) {
+                $query = "select * from user_implicts_data where user_id = " .$user->id. " and mon_an_id = ".$monan->id;
+                $implict = DB::select(DB::raw($query));
+                if($implict) {
+                    $total_time = 0;
+                    foreach ($implict as $impl) {
+                        $total_time += $impl->visited_time;
+                    }
+                    $tmp[strval($user->id)] = $total_time;
+                } else {
+                    $tmp[strval($user->id)] = 0;
+                }
+            }
+            $data[strval($monan->id)] = $tmp;
+        }
+//        dd($data);
+        return response()->json($data);
+    }
+    public function getDataModelFlask() {
 
     }
-    public  function getAllUserImplictDataArray() {
-
+    public function postDataModelFlask(Request $req) {
+        
     }
 }

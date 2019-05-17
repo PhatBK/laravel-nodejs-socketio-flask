@@ -341,25 +341,27 @@ Route::post('user/logs/data/key-search', 'CollectorsController@postUserKeySearch
 Route::post('user/logs/data/page-time', 'CollectorsController@postUserPageTime');
 Route::post('user/data/like-monan/v1', 'BKCookController@postUserLikeMonAn');
 
-// community with Flask
-Route::post('user/api/request/start-recommend', 'RecommenderCoreController@postStartRecommender');
-Route::get('api/recommender/flask/get/results', 'RecommenderCoreController@getFlaskResultRecommender');
-Route::post('api/recommender/flask/post/results', 'RecommenderCoreController@postFlaskResultRecommender');
-Route::post('api/recommender/flask/post/results/save', 'RecommenderCoreController@postFlaskResultRecommenderSave');
-Route::get('/api/call/flask', 'RecommenderCoreController@getFlaskAPI');
-Route::get('/api/send/flask', 'RecommenderCoreController@sendFlaskAPI');
-Route::post('/api/call/flask', 'RecommenderCoreController@postFlaskAPI');
-Route::get('/api/recommender/get-all/data', 'RecommenderCoreController@apiRecommenderShareData');
-Route::post('/api/recommender/post-all/data', 'RecommenderCoreController@apiRecommenderGetData');
-
 //TODO route for intergrate with flask server
 Route::get('/api/data/normal/v1', 'RecommenderCoreController@getAllDataUserArray');
 
+// Data of user and Item
 Route::get('/api/data/rate/v1', 'RecommenderCoreController@getDataRate');
 Route::get('/api/data/like/v1', 'RecommenderCoreController@getDataLike');
 Route::get('/api/data/survey/v1', 'RecommenderCoreController@getDataSurvey');
 Route::get('/api/data/implict/v1','RecommenderCoreController@getDataImplict');
 Route::get('/api/data/search/v1', 'RecommenderCoreController@getSearchKey');
 
+// normal data of all database to Itrm-Item Based
+Route::get('/api/data/rate/matrix/v1', 'RecommenderCoreController@getAllRateToMatrix');
+Route::get('/api/data/like/matrix/v1','RecommenderCoreController@getAllLikeToMatrix');
+Route::get('/api/data/search/matrix/v1', 'RecommenderCoreController@getAllSearchKeyMatrix');
+Route::get('/api/data/implict/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
 
+// TODO get and save model from flask
+Route::get('/api/get/data/model/v1', 'RecommenderCoreController@getDataModelFlask');
+Route::post('/api/post/data/model/v1', 'RecommenderCoreController@postDataModelFlask');
+
+
+// test
+Route::get('test','RecommenderCoreController@getDataModelFlask');
 
