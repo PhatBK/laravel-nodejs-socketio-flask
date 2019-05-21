@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e03de36-31e7-4e90-8efd-3bb6b0218d9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/BKCookController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/CollectorsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/CollectorsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/RecommenderCoreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Models/UserImplictsData.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Models/UserImplictsData.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collaborative_filtering.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recommendation_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/similarity_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/similarity_measures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/chitietmonan.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/views/customer/layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/views/customer/layouts/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="102">
+              <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
               <folding>
                 <element signature="e#37#60#0" expanded="true" />
               </folding>
@@ -96,7 +85,11 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -157,7 +150,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Flask (app.py)" type="Python.FlaskServer" factoryName="Flask server" temporary="true" nameIsGenerated="true">
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
@@ -172,7 +165,7 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="flask" type="Python.FlaskServer" factoryName="Flask server">
+    <configuration name="flask" type="Python.FlaskServer">
       <module name="flask" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
@@ -216,17 +209,21 @@
       <workItem from="1557922940381" duration="591000" />
       <workItem from="1558045351755" duration="587000" />
       <workItem from="1558080455075" duration="886000" />
+      <workItem from="1558105124755" duration="592000" />
+      <workItem from="1558250496709" duration="621000" />
+      <workItem from="1558255505797" duration="858000" />
+      <workItem from="1558265516974" duration="1184000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20553000" />
+    <option name="totallyTimeSpent" value="23808000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23676248" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25189108" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -291,8 +288,8 @@
     <entry file="file://$PROJECT_DIR$/recommendation_data.py" />
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="102">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
           <folding>
             <element signature="e#37#60#0" expanded="true" />
           </folding>

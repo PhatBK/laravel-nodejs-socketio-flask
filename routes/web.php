@@ -356,6 +356,8 @@ Route::get('/api/data/rate/matrix/v1', 'RecommenderCoreController@getAllRateToMa
 Route::get('/api/data/like/matrix/v1','RecommenderCoreController@getAllLikeToMatrix');
 Route::get('/api/data/search/matrix/v1', 'RecommenderCoreController@getAllSearchKeyMatrix');
 Route::get('/api/data/implict/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
+Route::get('/api/data/survey/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
+
 
 // TODO get and save model from flask
 Route::get('/api/get/data/model/v1', 'RecommenderCoreController@getDataModelFlask');

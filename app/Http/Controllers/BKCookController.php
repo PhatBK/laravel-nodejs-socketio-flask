@@ -201,10 +201,11 @@ class BKCookController extends Controller {
 			return response()->json($monan);
 		}
 	}
-	// chi tiết món ăn hệ thống
+	// xem chi tiết một món ăn hệ thống
 	public function View_chitietmonan($id) {
         $this->count_survey += 1;
 		$timeout_request_recommend = 1 * 60 * 1000; // 1 phút
+
 		if (isset($id)) {
 			$monan = MonAn::find($id);
 			if (!(Session::get('id') == $id)) {
@@ -212,32 +213,36 @@ class BKCookController extends Controller {
 				$monan->save();
 				Session::put('id', $id);
 			}
-
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
-			$monan_lienquan = [];
-
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(7)->get();
-			// $monan_lienquan_congdung = MonAn::where('id_congdung', $monan->id_congdung)->orderBy('id', 'desc')->take(6)->get();
-			// // Gộp hai mảng chứa kết quả
-			// for ($i = 0; $i < count($monan_lienquan_loaimon); $i++) {
-			// 	if (!$monan.equalTo($monan_lienquan_loaimon[$i])) {
-			// 	   $monan_lienquan[] = $monan_lienquan_loaimon[$i];
-            //     }
-			// }
-			// for ($j = 0; $j < count($monan_lienquan_congdung); $j++) {
-			//     if (!$monan.equalTo($monan_lienquan_congdung[$j])) {
-            //         $monan_lienquan[] = $monan_lienquan_congdung[$j];
-            //     }
-			// }
-			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(4)->get();
-            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(4)->get();
 
+            $loai_mon_surveys = [];
+            $monan_loai_mon_surveys = [];
+//            if (Auth::user()) {
+//                $surveys = explode("|", UserServey::where('user_id', Auth::user()->id)->get()[0]->loaimon_lists);
+//                if (count($surveys) >= 2) {
+//                    $index =  rand(0, count($surveys));
+//                    $index1 = rand(0, count($surveys));
+//                    while (true) {
+//                        if ($index == $index1) {
+//                            $index1 = rand(0, count($surveys));
+//                        } else {
+//                            break;
+//                        }
+//                    };
+//                    $loai_mon_surveys[] = $surveys[$index];
+//                    $loai_mon_surveys[] = $surveys[$index1];
+//
+//                    $monan_loai_mon_surveys[] = MonAn::where('id_loaimon', $loai_mon_surveys[0])->orderBy('id', 'desc')->take(5)->get();
+//                    $monan_loai_mon_surveys[] = MonAn::where('id_loaimon', $loai_mon_surveys[1])->orderBy('id', 'asc')->take(5)->get();
+//                }
+//            }
+            // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
+			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(5)->get();
+            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(5)->get();
 			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
-
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
-
             $comments = $monan->comment;
-
             $danhgias = $monan->danhgiamonan;
 			$diem = 0;
 			$trungbinh = 0;
@@ -249,6 +254,8 @@ class BKCookController extends Controller {
 			} else {
 				$trungbinh = 0;
 			}
+			// Lấy dữ liệu món ăn được gợi ý từ recommendation engine
+            $recommendation_list = [];
             return view('customer.chitietmonan',
                 compact(
                     'monan',

@@ -15,8 +15,8 @@ use App\Models\MonAn;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 // use package of third
 use GuzzleHttp\Client as GuzzleClient;
@@ -168,9 +168,8 @@ class RecommenderCoreController extends Controller
 //        dd(json_encode($json_likes));
 
         $all_datas['likes'] = $json_danhgias;
-    }
-    public function getFlaskResultRecommender() {
-        return "Success";
+
+        return response()->json($all_datas);
     }
     public function postFlaskResultRecommender(Request $req) {
         return response()->json(json_decode($req->data, true));
@@ -183,45 +182,7 @@ class RecommenderCoreController extends Controller
         dd($res);
     }
 
-    //TODO api send data for recommender engine
-    public function getDataRate() {
-        /**
-         * Lấy dữ liệu thành dạng json item->user
-         * Dữu liệu từ bảng: danhgiamonan
-         */
-        $json_danhgia_news = [];
-        $monan_unique_ratings = DB::table('danhgiamonan')
-            ->select(DB::raw('count(id_monan) as monan_count, id_monan'))
-            ->groupBy('id_monan')
-            ->get();
-        foreach ($monan_unique_ratings as $monan_unique_rating) {
-            $tmp = [];
-            $monan_un_rates = DanhGiaMonAn::where('id_monan', $monan_unique_rating->id_monan)->get();
-            foreach ($monan_un_rates as $monan_rate) {
-                $tmp[strval($monan_rate->id_user)] = $monan_rate->danhgia;
-            }
-            $json_danhgia_news[strval($monan_unique_rating->id_monan)] = $tmp;
-        }
-        /**
-         * Lấy dữ liệu thành dạng json user->item
-         * Dữu liệu từ bảng: danhgiamonan
-         */
-        $json_danhgias = [];
-        $user_unique_ratings = DB::table('danhgiamonan')
-            ->select(DB::raw('count(id_user) as user_count, id_user'))
-            ->groupBy('id_user')
-            ->get();
-        foreach ($user_unique_ratings as $unr) {
-            $score_danhgias = [];
-            $user_unique_rated = DanhGiaMonAn::where('id_user', $unr->id_user)->get();
-            foreach ($user_unique_rated as $rated) {
-                $score_danhgias[strval($rated->id_monan)] = $rated->danhgia;
-            }
-            $json_danhgias[strval($unr->id_user)] = $score_danhgias;
-        }
-//        return rescue()->json($json_danhgias);
-        return response()->json($json_danhgia_news);
-    }
+    //TODO api send data for recommender engine to Json
     public function getDataLike() {
         /**
          * Lấy dữ liệu thành dạng json
@@ -299,42 +260,10 @@ class RecommenderCoreController extends Controller
         return response()->json($json_user_search_keys);
     }
     // Done to get and send data
+
+
+
     // TODO request from flask
-
-    // TODO send data to flask
-    public function sendFlaskAPI() {
-        $all_data_send = [];
-        $data_rate_monans = [];
-        $data_like_posts = [];
-
-        $rate_monans = DanhGiaMonAn::all();
-        foreach ($rate_monans as $rate_monan) {
-            $tmp = [];
-            $tmp[] = $rate_monan->id_user;
-            $tmp[] = $rate_monan->id_monan;
-            $tmp[] = $rate_monan->danhgia;
-
-            $data_rate_monans[] = $tmp;
-        }
-        $like_posts = LikePost::all();
-
-        foreach ($like_posts as $like_post) {
-
-            $tmp = [];
-            $user_id = $like_post->id_user;
-            $id_loaimon = $like_post->userpost->id_loaimon;
-            // $loai_mon = LoaiMon::find($id_loaimon)->ten;
-            $tmp[] = $user_id;
-            $tmp[] = $id_loaimon;
-            // $tmp[] = $loai_mon;
-            $tmp[] = 5;
-            $data_like_posts[] = $tmp;
-        }
-        $all_data_send["like_post"] = $data_like_posts;
-        $all_data_send["rate_monan"] = $data_rate_monans;
-
-        return response()->json($all_data_send);
-    }
     // matrix rate
     public function getAllRateToMatrix(){
         $data = [];
@@ -357,7 +286,6 @@ class RecommenderCoreController extends Controller
     }
     // matrix like
     public function getAllLikeToMatrix() {
-        dd($this->monan_all);
         $data = [];
         $allMonAn = $this->monan_all;
         $allUser = $this->user_all;
@@ -376,9 +304,28 @@ class RecommenderCoreController extends Controller
         }
         return response()->json($data);
     }
+    // matrix  search key
     public function getAllSearchKeyMatrix() {
+        $data = [];
+        $allMonAn = $this->monan_all;
+        $allUser = $this->user_all;
+        foreach ($allMonAn as $monan) {
+            $tmp = [];
+            foreach ($allUser as $user) {
+                $query = "select * from user_search_key where user_id = " .$user->id. " and mon_an_id = ".$monan->id;
+                $search = DB::select(DB::raw($query));
+                if($search) {
+                    $tmp[strval($user->id)] = count($search);
+                } else {
+                    $tmp[strval($user->id)] = 0;
+                }
+            }
+            $data[strval($monan->id)] = $tmp;
+        }
 
+        return response()->json($data);
     }
+    // maxtix implict data
     public function getAllImplictToMatrix() {
         $data = [];
         $allMonAn = $this->monan_all;
@@ -401,13 +348,12 @@ class RecommenderCoreController extends Controller
             }
             $data[strval($monan->id)] = $tmp;
         }
-//        dd($data);
         return response()->json($data);
     }
-    public function getDataModelFlask() {
 
+    // thực hiện ấy mô hình đẫ được xây dựng tại recommendation system
+    public function getDataModelFlask() {
     }
     public function postDataModelFlask(Request $req) {
-        
     }
 }
