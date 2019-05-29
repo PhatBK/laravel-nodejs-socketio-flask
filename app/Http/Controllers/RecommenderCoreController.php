@@ -28,8 +28,12 @@ class RecommenderCoreController extends Controller
     protected $recommend_controller = null;
     function __construct()
     {
-        $this->user_all = User::all();
-        $this->monan_all = MonAn::all();
+        // $this->user_all = User::all();
+        // $this->monan_all = MonAn::all();
+
+        $this->user_all = User::orderBy('id', 'ASC')->get();
+        $this->monan_all = MonAn::orderBy('id', 'ASC')->get();
+
     }
     //TODO start Flask run caculator recommender
     public function postStartRecommender(Request $req) {
@@ -232,10 +236,6 @@ class RecommenderCoreController extends Controller
             $monan2users[strval($element->mon_an_id)][$element->user_id] = $element->total_visit;
             $user2monans[strval($element->user_id)][$element->mon_an_id] = $element->total_visit;
         }
-        //dd($user2monans);
-        //dd($monan2users);
-        //dd($implict_datas);
-        //return response()->json($user2monans);
         return response()->json($monan2users);
     }
     public function getSearchKey() {
@@ -277,7 +277,7 @@ class RecommenderCoreController extends Controller
                 if($rate) {
                     $tmp[strval($user->id)] = $rate[0]->danhgia;
                 } else {
-                    $tmp[strval($user->id)] = null;
+                    $tmp[strval($user->id)] = 0;
                 }
             }
             $data[strval($monan->id)] = $tmp;

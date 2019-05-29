@@ -203,6 +203,9 @@ class BKCookController extends Controller {
 	}
 	// xem chi tiết một món ăn hệ thống
 	public function View_chitietmonan($id) {
+		if (!MonAn::find($id)) {
+			return view('errors.404');
+		}
         $this->count_survey += 1;
 		$timeout_request_recommend = 1 * 60 * 1000; // 1 phút
 
