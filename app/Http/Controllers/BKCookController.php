@@ -221,25 +221,7 @@ class BKCookController extends Controller {
 
             $loai_mon_surveys = [];
             $monan_loai_mon_surveys = [];
-//            if (Auth::user()) {
-//                $surveys = explode("|", UserServey::where('user_id', Auth::user()->id)->get()[0]->loaimon_lists);
-//                if (count($surveys) >= 2) {
-//                    $index =  rand(0, count($surveys));
-//                    $index1 = rand(0, count($surveys));
-//                    while (true) {
-//                        if ($index == $index1) {
-//                            $index1 = rand(0, count($surveys));
-//                        } else {
-//                            break;
-//                        }
-//                    };
-//                    $loai_mon_surveys[] = $surveys[$index];
-//                    $loai_mon_surveys[] = $surveys[$index1];
-//
-//                    $monan_loai_mon_surveys[] = MonAn::where('id_loaimon', $loai_mon_surveys[0])->orderBy('id', 'desc')->take(5)->get();
-//                    $monan_loai_mon_surveys[] = MonAn::where('id_loaimon', $loai_mon_surveys[1])->orderBy('id', 'asc')->take(5)->get();
-//                }
-//            }
+
             // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
 			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(5)->get();
             $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(5)->get();
@@ -450,6 +432,7 @@ class BKCookController extends Controller {
 			return redirect()->back()->with('thongbao_logout_true', $tb);;
 		}
 	}
+	// TODO tim kiem theo tu 2019-06-29
 	//tim kiem monan
 	public function timkiem_monan(Request $req) {
 		$link = $req->link;

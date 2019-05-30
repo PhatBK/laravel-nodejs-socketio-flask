@@ -277,7 +277,8 @@ class RecommenderCoreController extends Controller
                 if($rate) {
                     $tmp[strval($user->id)] = $rate[0]->danhgia;
                 } else {
-                    $tmp[strval($user->id)] = 0;
+                    // $tmp[strval($user->id)] = 0;
+                    $tmp[strval($user->id)] = null;
                 }
             }
             $data[strval($monan->id)] = $tmp;
@@ -297,7 +298,8 @@ class RecommenderCoreController extends Controller
                 if($like) {
                     $tmp[strval($user->id)] = 1;
                 } else {
-                    $tmp[strval($user->id)] = 0;
+                    // $tmp[strval($user->id)] = 0;
+                    $tmp[strval($user->id)] = null;
                 }
             }
             $data[strval($monan->id)] = $tmp;
@@ -317,7 +319,8 @@ class RecommenderCoreController extends Controller
                 if($search) {
                     $tmp[strval($user->id)] = count($search);
                 } else {
-                    $tmp[strval($user->id)] = 0;
+                    // $tmp[strval($user->id)] = 0;
+                    $tmp[strval($user->id)] = null;
                 }
             }
             $data[strval($monan->id)] = $tmp;
@@ -343,7 +346,8 @@ class RecommenderCoreController extends Controller
                     }
                     $tmp[strval($user->id)] = $total_time;
                 } else {
-                    $tmp[strval($user->id)] = 0;
+                    // $tmp[strval($user->id)] = 0;
+                    $tmp[strval($user->id)] = null;
                 }
             }
             $data[strval($monan->id)] = $tmp;

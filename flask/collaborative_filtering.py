@@ -63,7 +63,7 @@ def user_reommendations(person):
             continue
         sim = pearson_correlation(person, other)
 
-        if sim <= 0:
+        if sim <= 0.05:
             continue
         for item in dataset[other]:
 
