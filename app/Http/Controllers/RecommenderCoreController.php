@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserImplictsData;
 use App\Models\UserSearchKey;
 use App\Models\DanhGiaMonAn;
 use App\Models\UserServey;
 use App\Models\LikePost;
 use App\Models\LikeMonAn;
-use App\Models\LoaiMon;
-use App\Models\UserPost;
 use App\Models\User;
 use App\Models\MonAn;
+use App\Models\UserImplictsData;
+use App\Models\LoaiMon;
+use App\Models\UserPost;
+use App\Models\RecommendPredict;
 
 
 use Illuminate\Http\Request;
@@ -26,14 +27,11 @@ use Phpml\Association\Apriori;
 class RecommenderCoreController extends Controller
 {
     protected $recommend_controller = null;
+    
     function __construct()
     {
-        // $this->user_all = User::all();
-        // $this->monan_all = MonAn::all();
-
         $this->user_all = User::orderBy('id', 'ASC')->get();
         $this->monan_all = MonAn::orderBy('id', 'ASC')->get();
-
     }
     //TODO start Flask run caculator recommender
     public function postStartRecommender(Request $req) {
@@ -166,10 +164,6 @@ class RecommenderCoreController extends Controller
             }
             $json_likes[strval($uniliked->id_user)] = $tmp;
         }
-//        similar_text(implode(",",$json_likes[35]), implode(",",$json_likes[36]), $percent);
-//        similar_text(implode(",",$json_likes[35]), implode(",",$json_likes[28]), $percent1);
-//        dd($percent, $percent1, json_encode($json_likes));
-//        dd(json_encode($json_likes));
 
         $all_datas['likes'] = $json_danhgias;
 
@@ -264,7 +258,7 @@ class RecommenderCoreController extends Controller
 
 
     // TODO request from flask
-    // matrix rate
+    // normal data for item-based recommendation
     public function getAllRateToMatrix(){
         $data = [];
         $allMonAn = $this->monan_all;
@@ -354,10 +348,49 @@ class RecommenderCoreController extends Controller
         }
         return response()->json($data);
     }
+    // normal data to matrix of user-itme for recommendation engine user-based
+    public function getRateMatrixUser() {
 
-    // thực hiện ấy mô hình đẫ được xây dựng tại recommendation system
-    public function getDataModelFlask() {
     }
-    public function postDataModelFlask(Request $req) {
+    public function getLikeMatrixUser() {
+
+    }
+    public function getSearchMatrixUser() {
+
+    }
+    public function getImplictMatrixUser() {
+        
+    }
+    public function postHandlerRecommendedResult(Request $req) {
+        global $request_glo ;
+        $request_glo = $req;
+        $id_monans = MonAn::where('id' ,'>' ,0)->get('id');
+        
+        $data = $req->text;
+        $test = ['id_monan' => $id_monans];
+      
+        return response()->json($data);
+    }
+    public function getHandlerRecommendedResult() {
+        return response()->json("Laravel Get handled result");
+    }
+    public function convertJsonToArray() {
+        // dd(json_decode($data, true));
+        $client = new GuzzleClient(['base_uri' => 'http://127.0.0.1:5000/']);
+        $res = $client->request('POST', '/api/response/data/recommended/post');
+        $recommended_items = json_decode($res->getBody()->getContents(), true);
+        $test = null;
+        foreach ($recommended_items as $id_monan => $list_recommended) {
+            break;
+        }
+        foreach ($recommended_items as $id_monan => $list_recommended) {
+            $test = $list_recommended;
+            $item_pre = new RecommendPredict();
+            $item_pre->id_monan = $id_monan;
+            $item_pre->list_recommended = $list_recommended;
+            $item_pre->save();
+        }
+//        dd($test,json_decode($test, true));
+        return "Success";
     }
 }

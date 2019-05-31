@@ -1,28 +1,32 @@
 #!/usr/bin/env python
 # coding=utf-8
+# libs
 from flask import Flask
 from flask import jsonify
+import numpy as np
+import schedule
+import time
+import matplotlib.pyplot as plt
 import requests
 import json
-import numpy as np
 import pandas as pd
 from datetime import date, datetime
-import matplotlib.pyplot as plt
+
+# my-code
 from recommendation_data import dataset
 from collaborative_filtering import user_reommendations
-
 
 app = Flask(__name__)
 app.config['TESTING'] = True
 
-items_recommended = {}
+items_recommended = None
 
 @app.route('/')
 def hello_world():
     return "Hello World, Welcome Flask API"
 
-@app.route('/data/get/all/v1')
-def get_all_data_web_app():
+@app.route('/api/caculator/recommend/CF_item_item/v1', methods=["GET", "POST"])
+def recommend_CF_item_item():
     today = date.today()
     now = datetime.now()
     path_simmilarity = 'simmilarity/' + \
@@ -44,11 +48,6 @@ def get_all_data_web_app():
     watched_matrix = pd.read_json(watched_json.text)
 
     # Caculator simmilarity of item-item for pearson
-    # rate_item_simmilarity = rate_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=-2)
-    # search_item_simmilarity = search_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=-2)
-    # watched_item_simmilarity = watched_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=-2)
-
-    # Caculator simmilarity of item-item for pearson
     rate_item_simmilarity = rate_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
     search_item_simmilarity = search_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
     watched_item_simmilarity = watched_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
@@ -56,9 +55,6 @@ def get_all_data_web_app():
     # Integrate matrixs item-item simmilarity
     # final_iteim_similarity = rate_item_simmilarity
     final_iteim_similarity = 1 / 7 * (4 * rate_item_simmilarity + watched_item_simmilarity + 2 * search_item_simmilarity)
-
-    # save matrix simmilarity to file .csv
-    # final_iteim_similarity.to_csv(path_simmilarity, sep=',', encoding='utf-8')
 
     number_column = len(final_iteim_similarity.index)
     i = 0
@@ -71,23 +67,43 @@ def get_all_data_web_app():
         # print(_item_simmilarity.to_json())
         # arr = _item_simmilarity.values
         # print(_item_simmilarity.where(_item_simmilarity > 0))
-        k_NN_items = _item_simmilarity.loc[_item_simmilarity > 0]
         # print(k_NN_items)
         # print(k_NN_items.index)
         # print(k_NN_items.values)
-        print(np.asarray(k_NN_items.index))
-        response_data[str(col)] = str(np.asarray(k_NN_items.index))
+        # print(np.asarray(k_NN_items.index))
+        # response_data[str(col)] = str(np.asarray(k_NN_items.index))
         # print(_item_simmilarity.where(_item_simmilarity > 0).to_json())
-        print('-----------------------------------------------')
 
-    return jsonify(response_data)
+        k_NN_items = _item_simmilarity.loc[_item_simmilarity > 0]
+        response_data[str(col)] = str(k_NN_items.index.tolist())
+        # response_data[str(col)] = k_NN_items.index.tolist()
 
+    # Send data recommended to Web-app
+    # headers = {'content-type': 'application/json'}
+    # res_handler = requests.post('http://127.0.0.1/DATN-20182/public/api/handler/recommended/result/v1', data=json.dumps(response_data), headers=headers)
+    # print(res_handler.text)
 
-@app.route('/api/response/data/recommended/post')
-def post_data_recommended():
+    # save matrix simmilarity to file .csv
+    final_iteim_similarity.to_csv(path_simmilarity, sep=',', encoding='utf-8')
+    # return "Finish Caculator Recommendation"
+    items_recommended = response_data
+    with open('api/data.json', 'w') as json_file:
+        json.dump(json.dumps(response_data), json_file)
+    return json.dumps(response_data)
+
+@app.route('/api/caculator/recommend/CF_user_user/v1')
+def recommend_CF_user_user():
     return "Success"
-# get_all_data_web_app()
 
+@app.route('/api/response/data/recommended/post',  methods=["POST"])
+def post_data_recommended():
+    items_recommended = None
+    with open('api/data.json') as json_file:
+        data = json.load(json_file)
+        items_recommended = data
+    print(items_recommended)
+    # return json.dumps(items_recommended)
+    return items_recommended
 
 @app.route('/api/response/data/recommended')
 def get_data_api():
@@ -96,8 +112,6 @@ def get_data_api():
         result[predict] = user_reommendations(predict)
     print(result)
     return "SuccessFully"
-
-# get_data_api()
 
 if __name__ == '__main__':
     app.run()

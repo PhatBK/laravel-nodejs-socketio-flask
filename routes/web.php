@@ -359,11 +359,10 @@ Route::get('/api/data/implict/matrix/v1','RecommenderCoreController@getAllImplic
 Route::get('/api/data/survey/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
 
 
-// TODO get and save model from flask
-Route::get('/api/get/data/model/v1', 'RecommenderCoreController@getDataModelFlask');
-Route::post('/api/post/data/model/v1', 'RecommenderCoreController@postDataModelFlask');
-
-
 // test
-Route::get('test','RecommenderCoreController@getDataModelFlask');
+Route::get('test/convert/json', 'RecommenderCoreController@convertJsonToArray');
+
+// handler result recommendation system
+Route::post('/api/handler/recommended/result/v1', 'RecommenderCoreController@postHandlerRecommendedResult');
+Route::get('/api/handler/recommended/result/v1', 'RecommenderCoreController@getHandlerRecommendedResult');
 

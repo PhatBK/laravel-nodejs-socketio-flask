@@ -610,9 +610,9 @@ class BKCookController extends Controller {
         $feedback->save();
 		return response()->json(
             "<p style='color: orangered; font-size: 18px;'>Phản hồi của bạn đã được ghi lại</p>
-                   <p style='color: orangered; font-size: 18px;'>Bộ phận quản trị hệ thống sẽ tiếp nhận phản hồi</p>
-                   <p style='color: orangered; font-size: 18px;'>Chúc bạn một ngày vui vẻ...</p>
-                   "
+            <p style='color: orangered; font-size: 18px;'>Bộ phận quản trị hệ thống sẽ tiếp nhận phản hồi</p>
+            <p style='color: orangered; font-size: 18px;'>Chúc bạn một ngày vui vẻ...</p>
+            "
         );
 	}
 	public function postUserViewedList() {
@@ -622,7 +622,6 @@ class BKCookController extends Controller {
     // lưu lại danh sách yêu thích của ngườu dùng
     public function postUserLikeMonAn(Request $req) {
         if ($req->id_mon && $req->id_user) {
-//            $like_monan = LikeMonAn::firstOrCreate(['id_user' => $req->id_user, 'id_monan' => $req->id_mon]);
             $like_mon = new LikeMonAn();
             $like_mon->id_user = $req->id_user;
             $like_mon->id_monan = $req->id_mon;

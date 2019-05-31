@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/api/recommender/flask/post/results',
+        'api/handler/recommended/result/v1'
     ];
 }

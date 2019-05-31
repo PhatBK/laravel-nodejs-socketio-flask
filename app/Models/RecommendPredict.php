@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecommendPredict extends Model
 {
-    protected $table = "";
+    protected $table = "item_recommended";
     public function findToDate($date) {
 
     }
