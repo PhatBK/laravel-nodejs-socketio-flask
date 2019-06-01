@@ -19,7 +19,7 @@ from collaborative_filtering import user_reommendations
 app = Flask(__name__)
 app.config['TESTING'] = True
 
-items_recommended = None
+global share_data
 
 @app.route('/')
 def hello_world():
@@ -36,11 +36,12 @@ def recommend_CF_item_item():
                        str(now.strftime("%H")) + '-' + \
                        str(now.strftime("%M")) + \
                        '_item_item_sim.csv'
-    # get data
+    # get data from web-app server
     rate_json = requests.get('http://127.0.0.1/DATN-20182/public/api/data/rate/matrix/v1')
     like_json = requests.get('http://127.0.0.1/DATN-20182/public/api/data/like/matrix/v1')
     search_json = requests.get('http://127.0.0.1/DATN-20182/public/api/data/search/matrix/v1')
     watched_json = requests.get('http://127.0.0.1/DATN-20182/public/api/data/implict/matrix/v1')
+
     # build matrix user-item behavior
     rate_matrix = pd.read_json(rate_json.text)
     like_matrix = pd.read_json(like_json.text)
@@ -53,7 +54,6 @@ def recommend_CF_item_item():
     watched_item_simmilarity = watched_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
 
     # Integrate matrixs item-item simmilarity
-    # final_iteim_similarity = rate_item_simmilarity
     final_iteim_similarity = 1 / 7 * (4 * rate_item_simmilarity + watched_item_simmilarity + 2 * search_item_simmilarity)
 
     number_column = len(final_iteim_similarity.index)
@@ -63,21 +63,9 @@ def recommend_CF_item_item():
         i+=1
         _item = col
         _item_simmilarity = final_iteim_similarity[col].sort_values()
-
-        # print(_item_simmilarity.to_json())
-        # arr = _item_simmilarity.values
-        # print(_item_simmilarity.where(_item_simmilarity > 0))
-        # print(k_NN_items)
-        # print(k_NN_items.index)
-        # print(k_NN_items.values)
-        # print(np.asarray(k_NN_items.index))
-        # response_data[str(col)] = str(np.asarray(k_NN_items.index))
-        # print(_item_simmilarity.where(_item_simmilarity > 0).to_json())
-
         k_NN_items = _item_simmilarity.loc[_item_simmilarity > 0]
         response_data[str(col)] = str(k_NN_items.index.tolist())
         # response_data[str(col)] = k_NN_items.index.tolist()
-
     # Send data recommended to Web-app
     # headers = {'content-type': 'application/json'}
     # res_handler = requests.post('http://127.0.0.1/DATN-20182/public/api/handler/recommended/result/v1', data=json.dumps(response_data), headers=headers)
@@ -86,7 +74,8 @@ def recommend_CF_item_item():
     # save matrix simmilarity to file .csv
     final_iteim_similarity.to_csv(path_simmilarity, sep=',', encoding='utf-8')
     # return "Finish Caculator Recommendation"
-    items_recommended = response_data
+    global share_data
+    share_data = response_data
     with open('api/data.json', 'w') as json_file:
         json.dump(json.dumps(response_data), json_file)
     return json.dumps(response_data)
@@ -101,16 +90,18 @@ def post_data_recommended():
     with open('api/data.json') as json_file:
         data = json.load(json_file)
         items_recommended = data
-    print(items_recommended)
+    # print(items_recommended)
     # return json.dumps(items_recommended)
-    return items_recommended
+    global share_data
+    return json.dumps(share_data)
+    # return items_recommended
 
 @app.route('/api/response/data/recommended')
 def get_data_api():
-    result = {}
-    for predict in dataset:
-        result[predict] = user_reommendations(predict)
-    print(result)
+    # result = {}
+    # for predict in dataset:
+    #     result[predict] = user_reommendations(predict)
+    # print(result)
     return "SuccessFully"
 
 if __name__ == '__main__':

@@ -12,6 +12,7 @@ use App\Models\MonAn;
 use App\Models\MucDich;
 use App\Models\NhaHang;
 use App\Models\NhaHangMonAn;
+use App\Models\RecommendPredict;
 use App\Models\Theloai;
 use App\Models\User;
 use App\Models\UserPost;
@@ -211,20 +212,27 @@ class BKCookController extends Controller {
 
 		if (isset($id)) {
 			$monan = MonAn::find($id);
+			$recommended_list_id_monans = RecommendPredict::where('id_monan', $id)->get();
+			$recommendation_list_monans = [];
+			foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
+			    if ($id == $id_recommended) continue;
+                $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+            }
+
 			if (!(Session::get('id') == $id)) {
 				$monan->so_luot_xem++;
 				$monan->save();
 				Session::put('id', $id);
 			}
-			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(5)->get();
-			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(7)->get();
+			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(4)->get();
+			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
 
             $loai_mon_surveys = [];
             $monan_loai_mon_surveys = [];
 
             // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
-			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(5)->get();
-            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(5)->get();
+			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(3)->get();
+            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(3)->get();
 			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
             $comments = $monan->comment;
@@ -251,7 +259,8 @@ class BKCookController extends Controller {
                     'trungbinh',
                     'popularest_foods',
 					'new_last_foods',
-					'timeout_request_recommend'
+					'timeout_request_recommend',
+                    'recommendation_list_monans'
                 )
             );
 		} else {

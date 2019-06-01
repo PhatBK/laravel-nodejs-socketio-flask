@@ -365,10 +365,8 @@ class RecommenderCoreController extends Controller
         global $request_glo ;
         $request_glo = $req;
         $id_monans = MonAn::where('id' ,'>' ,0)->get('id');
-        
         $data = $req->text;
         $test = ['id_monan' => $id_monans];
-      
         return response()->json($data);
     }
     public function getHandlerRecommendedResult() {
@@ -376,21 +374,19 @@ class RecommenderCoreController extends Controller
     }
     public function convertJsonToArray() {
         // dd(json_decode($data, true));
+        RecommendPredict::query()->delete();
         $client = new GuzzleClient(['base_uri' => 'http://127.0.0.1:5000/']);
         $res = $client->request('POST', '/api/response/data/recommended/post');
         $recommended_items = json_decode($res->getBody()->getContents(), true);
-        $test = null;
         foreach ($recommended_items as $id_monan => $list_recommended) {
             break;
         }
         foreach ($recommended_items as $id_monan => $list_recommended) {
-            $test = $list_recommended;
             $item_pre = new RecommendPredict();
             $item_pre->id_monan = $id_monan;
             $item_pre->list_recommended = $list_recommended;
             $item_pre->save();
         }
-//        dd($test,json_decode($test, true));
         return "Success";
     }
 }

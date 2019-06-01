@@ -272,13 +272,19 @@
 			</div>
 			{{-- Món ăn tương tự --}}
 			<div id="monanlienquan" class="col-md-3">
-				<h5 style="text-align: center;">Món Ăn Liên Quan</h5>
-				@foreach($monan_lienquan as $md)
+				<h5 style="text-align: center;">Gợi Ý Xem Cùng</h5>
+				@foreach($recommendation_list_monans as $m_rec)
 					<div id="baiviet__">
-					<img src="uploads/monan/{{$md->anh_monan}}">
-					<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>
-				</div>
+						<img src="uploads/monan/{{$m_rec->anh_monan}}">
+						<p><a href="chitietmonan/{{$m_rec->id}}">{{$m_rec->ten_monan}}</a></p>
+					</div>
 				@endforeach
+{{--				@foreach($monan_lienquan as $md)--}}
+{{--					<div id="baiviet__">--}}
+{{--						<img src="uploads/monan/{{$md->anh_monan}}">--}}
+{{--						<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>--}}
+{{--					</div>--}}
+{{--				@endforeach--}}
 			</div>
 		</div>
 		<br>
@@ -346,17 +352,20 @@
 				{{-- Phần đổ bài viết liên quan --}}
 				{{-- Món ăn cùng nguyên liệu --}}
 				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
-					<h5 style="text-align: center;">Mọi Người Hay Xem Cùng</h5>
+					<h5 style="text-align: center;">Món Ăn Liên Quan</h5>
 					<div id="baiviet">
-
-					</div>
-				</div>
-
-				{{-- Món ăn cùng nguyên liệu --}}
-				<div id="baivietlienquan" class="col-md-3" style="background-color: white;; font-family: 'segoe ui light';" >
-					<h5 style="text-align: center;">Cùng Nguyên Liệu</h5>
-					<div id="baiviet">
-
+{{--						@foreach($recommendation_list_monans as $m_rec)--}}
+{{--							<div id="baiviet__">--}}
+{{--								<img src="uploads/monan/{{$m_rec->anh_monan}}">--}}
+{{--								<p><a href="chitietmonan/{{$m_rec->id}}">{{$m_rec->ten_monan}}</a></p>--}}
+{{--							</div>--}}
+{{--						@endforeach--}}
+						@foreach($monan_lienquan as $md)
+							<div id="baiviet__">
+								<img src="uploads/monan/{{$md->anh_monan}}">
+								<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>
+							</div>
+						@endforeach
 					</div>
 				</div>
 				<div id="baivietlienquan" class="col-md-12">
@@ -693,7 +702,6 @@
                                 document.getElementById(i).classList.remove('fa-star-o');
                                 document.getElementById(i).classList.add('fa-star');
 							}
-
 
 							var new_rated = response.total / response.count_dg;
 							document.getElementById("avg_rated").innerHTML = new_rated.toFixed(1);
