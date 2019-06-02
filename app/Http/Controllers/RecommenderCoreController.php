@@ -372,7 +372,7 @@ class RecommenderCoreController extends Controller
     public function getHandlerRecommendedResult() {
         return response()->json("Laravel Get handled result");
     }
-    public function convertJsonToArray() {
+    public function getItemRecommendedSaveDataBase() {
         // dd(json_decode($data, true));
         RecommendPredict::query()->delete();
         $client = new GuzzleClient(['base_uri' => 'http://127.0.0.1:5000/']);

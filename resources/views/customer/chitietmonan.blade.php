@@ -273,18 +273,14 @@
 			{{-- Món ăn tương tự --}}
 			<div id="monanlienquan" class="col-md-3">
 				<h5 style="text-align: center;">Gợi Ý Xem Cùng</h5>
-				@foreach($recommendation_list_monans as $m_rec)
-					<div id="baiviet__">
-						<img src="uploads/monan/{{$m_rec->anh_monan}}">
-						<p><a href="chitietmonan/{{$m_rec->id}}">{{$m_rec->ten_monan}}</a></p>
-					</div>
-				@endforeach
-{{--				@foreach($monan_lienquan as $md)--}}
-{{--					<div id="baiviet__">--}}
-{{--						<img src="uploads/monan/{{$md->anh_monan}}">--}}
-{{--						<p><a href="chitietmonan/{{$md->id}}">{{$md->ten_monan}}</a></p>--}}
-{{--					</div>--}}
-{{--				@endforeach--}}
+                @if (count($recommendation_list_monans) > 0)
+                    @foreach($recommendation_list_monans as $m_rec)
+                        <div id="baiviet__">
+                            <img src="uploads/monan/{{$m_rec->anh_monan}}">
+                            <p><a href="chitietmonan/{{$m_rec->id}}">{{$m_rec->ten_monan}}</a></p>
+                        </div>
+                    @endforeach
+                @endif
 			</div>
 		</div>
 		<br>

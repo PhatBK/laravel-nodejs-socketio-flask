@@ -11,22 +11,33 @@ import requests
 import json
 import pandas as pd
 from datetime import date, datetime
-
+from apscheduler.scheduler import Scheduler
 # my-code
-from recommendation_data import dataset
-from collaborative_filtering import user_reommendations
+# from recommendation_data import dataset
+# from collaborative_filtering import user_reommendations
 
 app = Flask(__name__)
 app.config['TESTING'] = True
 
+sched = Scheduler() # Scheduler object
+sched.start()
+
 global share_data
+share_data = None
+global file_name_item_recommended
+file_name_item_recommended = None
+global finish_caculator
+finish_caculator = None
+
 
 @app.route('/')
 def hello_world():
     return "Hello World, Welcome Flask API"
 
+
 @app.route('/api/caculator/recommend/CF_item_item/v1', methods=["GET", "POST"])
 def recommend_CF_item_item():
+    print("Start Caculator Recommendation...")
     today = date.today()
     now = datetime.now()
     path_simmilarity = 'simmilarity/' + \
@@ -66,43 +77,73 @@ def recommend_CF_item_item():
         k_NN_items = _item_simmilarity.loc[_item_simmilarity > 0]
         response_data[str(col)] = str(k_NN_items.index.tolist())
         # response_data[str(col)] = k_NN_items.index.tolist()
-    # Send data recommended to Web-app
-    # headers = {'content-type': 'application/json'}
-    # res_handler = requests.post('http://127.0.0.1/DATN-20182/public/api/handler/recommended/result/v1', data=json.dumps(response_data), headers=headers)
-    # print(res_handler.text)
 
     # save matrix simmilarity to file .csv
     final_iteim_similarity.to_csv(path_simmilarity, sep=',', encoding='utf-8')
-    # return "Finish Caculator Recommendation"
+
     global share_data
     share_data = response_data
-    with open('api/data.json', 'w') as json_file:
+    now_recommended = datetime.now()
+    global file_name_item_recommended
+    file_name_item_recommended = "recommended" + "/" +  \
+                                 str(now_recommended.year) + \
+                                 str(now_recommended.month) + \
+                                 str(now_recommended.day) + \
+                                 str(now.strftime("%H")) + \
+                                 str(now.strftime("%M")) + \
+                                 "_item_recommended.json"
+    with open(file_name_item_recommended, 'w') as json_file:
         json.dump(json.dumps(response_data), json_file)
-    return json.dumps(response_data)
+
+    global finish_caculator
+    finish_caculator = True
+    print("Finish Caculator Recommendation...")
+    return "Successfully finished recommendation caculator..."
+
 
 @app.route('/api/caculator/recommend/CF_user_user/v1')
 def recommend_CF_user_user():
     return "Success"
 
+
 @app.route('/api/response/data/recommended/post',  methods=["POST"])
 def post_data_recommended():
-    items_recommended = None
-    with open('api/data.json') as json_file:
-        data = json.load(json_file)
-        items_recommended = data
-    # print(items_recommended)
-    # return json.dumps(items_recommended)
+    print("Start Post Recommended data for Web App Server...")
+    # Send data recommended to Web-app
+    # headers = {'content-type': 'application/json'}
+    # res_handler = requests.post('http://127.0.0.1/DATN-20182/public/api/handler/recommended/result/v1', data=json.dumps(response_data), headers=headers)
+    # print(res_handler.text)
     global share_data
+    if share_data == None:
+        global file_name_item_recommended
+        data = None
+        with open(file_name_item_recommended) as json_file:
+            data = json.load(json_file)
+        return data
     return json.dumps(share_data)
-    # return items_recommended
 
-@app.route('/api/response/data/recommended')
-def get_data_api():
-    # result = {}
-    # for predict in dataset:
-    #     result[predict] = user_reommendations(predict)
-    # print(result)
-    return "SuccessFully"
+
+@app.route('/scheduler/start/item_based')
+def scheduler_item_based_start():
+    recommend_CF_item_item()
+    global finish_caculator
+    if finish_caculator == True:
+        print("Scheduler Running...")
+        res_scheduler = requests.get('http://127.0.0.1/DATN-20182/public/api/get/recommended/item-base/v1')
+        if res_scheduler.status_code < 300:
+            print("Successfully Post Data ...")
+        else:
+            print("Unsuccessfully Post Data...")
+        return "Scheduler Caculator Recommendation engine"
+    return "Recommendation Engine Error..."
+
+
+@app.errorhandler(500)
+def server_error_handler():
+    return "500 Server Error"
+
+
+sched.add_interval_job(scheduler_item_based_start, minutes=10)
 
 if __name__ == '__main__':
     app.run()

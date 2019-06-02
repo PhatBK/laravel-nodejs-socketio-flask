@@ -212,11 +212,17 @@ class BKCookController extends Controller {
 
 		if (isset($id)) {
 			$monan = MonAn::find($id);
+			$survey = Null;
 			$recommended_list_id_monans = RecommendPredict::where('id_monan', $id)->get();
 			$recommendation_list_monans = [];
-			foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
-			    if ($id == $id_recommended) continue;
-                $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+			if (count($recommended_list_id_monans) > 0) {
+                foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
+                    if ($id == $id_recommended) continue;
+                    $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+                }
+            }
+			if (Auth::user()) {
+                $survey = UserServey::where('user_id', Auth::user()->id)->get();
             }
 
 			if (!(Session::get('id') == $id)) {
@@ -226,9 +232,6 @@ class BKCookController extends Controller {
 			}
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(4)->get();
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
-
-            $loai_mon_surveys = [];
-            $monan_loai_mon_surveys = [];
 
             // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
 			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(3)->get();
@@ -248,7 +251,6 @@ class BKCookController extends Controller {
 				$trungbinh = 0;
 			}
 			// Lấy dữ liệu món ăn được gợi ý từ recommendation engine
-            $recommendation_list = [];
             return view('customer.chitietmonan',
                 compact(
                     'monan',

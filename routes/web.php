@@ -359,10 +359,8 @@ Route::get('/api/data/implict/matrix/v1','RecommenderCoreController@getAllImplic
 Route::get('/api/data/survey/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
 
 
-// test
-Route::get('test/convert/json', 'RecommenderCoreController@convertJsonToArray');
-
 // handler result recommendation system
+Route::get('/api/get/recommended/item-base/v1', 'RecommenderCoreController@getItemRecommendedSaveDataBase');
 Route::post('/api/handler/recommended/result/v1', 'RecommenderCoreController@postHandlerRecommendedResult');
 Route::get('/api/handler/recommended/result/v1', 'RecommenderCoreController@getHandlerRecommendedResult');
 
