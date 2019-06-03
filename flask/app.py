@@ -4,17 +4,25 @@
 from flask import Flask
 from flask import jsonify
 import numpy as np
+import scipy
+from scipy.sparse import csc_matrix
 import schedule
 import time
 import matplotlib.pyplot as plt
+from sklearn.metrics import jaccard_similarity_score
+from sklearn.metrics.pairwise import pairwise_distances
+from scipy.spatial.distance import squareform
+from scipy.spatial.distance import pdist, jaccard
+from scipy.spatial.distance import cdist
+# my-code
+# from recommendation_data import dataset
+# from collaborative_filtering import user_reommendations
 import requests
 import json
 import pandas as pd
 from datetime import date, datetime
 from apscheduler.scheduler import Scheduler
-# my-code
-# from recommendation_data import dataset
-# from collaborative_filtering import user_reommendations
+
 
 app = Flask(__name__)
 app.config['TESTING'] = True
@@ -28,6 +36,12 @@ global file_name_item_recommended
 file_name_item_recommended = None
 global finish_caculator
 finish_caculator = None
+global time_scheduler
+time_scheduler = 5
+
+global time_start_recommend
+time_start_recommend = "Time start:" + str(datetime.now())
+print(time_start_recommend)
 
 
 @app.route('/')
@@ -63,9 +77,15 @@ def recommend_CF_item_item():
     rate_item_simmilarity = rate_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
     search_item_simmilarity = search_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
     watched_item_simmilarity = watched_matrix.corr('pearson', 1).replace(to_replace=float('nan'), value=0)
+    # jaccard simmilarity
+    res = pdist(like_matrix[like_matrix.columns].T, 'jaccard')
+    squareform(res)
+    distance = 1 - pd.DataFrame(squareform(res), index=like_matrix.columns, columns=like_matrix.columns)
+    like_item_simmilarity = distance.replace(to_replace=float('nan'), value=0)
+    # print(like_item_simmilarity)
 
     # Integrate matrixs item-item simmilarity
-    final_iteim_similarity = 1 / 7 * (4 * rate_item_simmilarity + watched_item_simmilarity + 2 * search_item_simmilarity)
+    final_iteim_similarity = 1 / 9 * (4 * rate_item_simmilarity + watched_item_simmilarity + 2 * search_item_simmilarity + 2 * like_item_simmilarity)
 
     number_column = len(final_iteim_similarity.index)
     i = 0
@@ -103,6 +123,7 @@ def recommend_CF_item_item():
 
 @app.route('/api/caculator/recommend/CF_user_user/v1')
 def recommend_CF_user_user():
+
     return "Success"
 
 
@@ -138,12 +159,24 @@ def scheduler_item_based_start():
     return "Recommendation Engine Error..."
 
 
+def jaccard_similarities_matrix():
+    like_json = requests.get('http://127.0.0.1/DATN-20182/public/api/data/like/matrix/v1')
+    like_matrix = pd.read_json(like_json.text).replace(to_replace=float('nan'), value=0)
+    print(like_matrix)
+    res = pdist(like_matrix[like_matrix.columns].T, 'jaccard')
+    squareform(res)
+    distance = 1 - pd.DataFrame(squareform(res), index=like_matrix.columns, columns=like_matrix.columns)
+    print(distance.replace(to_replace=float('nan'), value=0))
+    return "Successfully"
+# jaccard_similarities_matrix()
+
 @app.errorhandler(500)
 def server_error_handler():
     return "500 Server Error"
 
 
-sched.add_interval_job(scheduler_item_based_start, minutes=10)
+sched.add_interval_job(scheduler_item_based_start, minutes=time_scheduler)
+
 
 if __name__ == '__main__':
     app.run()

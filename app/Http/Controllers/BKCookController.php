@@ -234,6 +234,7 @@ class BKCookController extends Controller {
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
 
             // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
+            // Xây dựng công thức xép hạng cho món ăn phổ biến nhất
 			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(3)->get();
             $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(3)->get();
 			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
