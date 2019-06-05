@@ -20,6 +20,7 @@ use App\Models\Video;
 use App\Models\VungMien;
 use App\Models\UserServey;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -215,14 +216,33 @@ class BKCookController extends Controller {
 			$survey = Null;
 			$recommended_list_id_monans = RecommendPredict::where('id_monan', $id)->get();
 			$recommendation_list_monans = [];
-			if (count($recommended_list_id_monans) > 0) {
-                foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
-                    if ($id == $id_recommended) continue;
-                    $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+
+			if (!Auth::user()) {
+                if (count($recommended_list_id_monans) > 0) {
+                    foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
+                        if ($id == $id_recommended) continue;
+                        $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+                    }
                 }
             }
+
 			if (Auth::user()) {
-                $survey = UserServey::where('user_id', Auth::user()->id)->get();
+			    if (count($recommended_list_id_monans) <= 0) {
+                    $survey = UserServey::where('user_id', Auth::user()->id)->get();
+                }
+                if (count($recommended_list_id_monans) > 0) {
+                    foreach (json_decode($recommended_list_id_monans[0]->list_recommended, true) as $id_recommended) {
+                        if ($id == $id_recommended) continue;
+                        $rated = DB::table('danhgiamonan')->where([
+                            ['id_user', '=', Auth::user()->id],
+                            ['id_monan', '=', $id_recommended],
+                        ])->get();
+                        if (count($rated) > 0) {
+                            continue;
+                        }
+                        $recommendation_list_monans[$id_recommended] = MonAn::find($id_recommended);
+                    }
+                }
             }
 
 			if (!(Session::get('id') == $id)) {
@@ -233,8 +253,6 @@ class BKCookController extends Controller {
 			$baiviet_lienquans = UserPost::where('id_loaimon', $monan->id_loaimon)->orderBy('created_at', 'desc')->take(4)->get();
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
 
-            // Lấy ra các món ăn phổ biến nhất, các món ăn mới nhất
-            // Xây dựng công thức xép hạng cho món ăn phổ biến nhất
 			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(3)->get();
             $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(3)->get();
 			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
@@ -420,7 +438,7 @@ class BKCookController extends Controller {
 			return redirect()->back()->with('thongbao', $tb);
 		} else {
 			$tb = "Đăng nhập thất bại...ahihi";
-			return redirect()->back()->withErrors("Đăng nhập thất bại..(sai username hoạc pass)");
+			return redirect()->back()->withErrors("Đăng nhập thất bại...");
 		}
 	}
 	// đăng xuất cho tất cả

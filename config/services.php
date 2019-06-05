@@ -35,9 +35,9 @@ return [
 		'secret' => env('STRIPE_SECRET'),
 	],
 	'google' => [
-		'client_id' => '269234388591-k9t1oelmhdr0v3c1heqbk9948695sue5.apps.googleusercontent.com',
-		'client_secret' => 'buj-Btzrw8XN0tXl952LhIMy',
-		'redirect' => 'http://localhost/bkcook.vn/public/login/google/callback',
+		'client_id' => '438875930406-n2esg5d68prp2veicbt4p1bassgm806g.apps.googleusercontent.com',
+		'client_secret' => 'mBxuzLmLed9yCjCytHNtBOax',
+		'redirect' => 'http://localhost/DATN-20182/public/login/google/callback',
 	],
     'firebase' => [
         'api_key' => 'AIzaSyCZvtRCktw6XWua-J49Wfa7nSz2ZD76HCc', // Only used for JS integration

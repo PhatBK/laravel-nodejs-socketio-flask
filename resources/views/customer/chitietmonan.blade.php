@@ -272,7 +272,7 @@
 			</div>
 			{{-- Món ăn tương tự --}}
 			<div id="monanlienquan" class="col-md-3">
-				<h5 style="text-align: center;">Gợi Ý Xem Cùng</h5>
+				<h5 style="text-align: center;">Gợi Ý Xem Thêm</h5>
                 @if (count($recommendation_list_monans) > 0)
                     @foreach($recommendation_list_monans as $m_rec)
                         <div id="baiviet__">
@@ -726,30 +726,6 @@
 	    });
 	</script>
 @endif
-{{--  call api request recommender  --}}
-<script>
-	setTimeout(function() {
-		$.ajaxSetup({
-			headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-		});
-		$.ajax({
-			type:'post',
-			url: 'user/api/request/start-recommend',
-			data:{
-				flag: true
-			},
-			success:function(response){
-				console.log(response);
-			},
-			error:function( err) {
-				console.log(err);
-			}
-		});
-	}, {{ $timeout_request_recommend }});
-	console.log({{  $timeout_request_recommend }});
-</script>
 {{--  auto hiển thị khảo sát người dùng  --}}
 <script>
     $(document).ready(function(){

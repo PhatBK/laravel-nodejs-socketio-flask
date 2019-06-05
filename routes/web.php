@@ -319,19 +319,9 @@ Route::get('commentpost', 'BKCookController@getCommentPost');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider')->name('google.login');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 
-/**
- * Route phần nâng cấp hệ thống
- * route phần giao tiếp với server flask cho chức năng recommend viết trên Python 2.7
- */
-
 
 Route::get('channel', 'BKCookController@getChannelView');
-/**
- * Phần hệ thống tương tác với recommender service
- * Hệ thống lấy các dữ liệu thu thập được từ người dùng
- * Đóng gói dưc liệu, gửi cho server chạy recommender service
- * server chạy recommender tính toán, gửi lại kết quả cho web app
-*/
+
 //TODO router for collector data of client
 // feedback của người dùng
 Route::post('user/data/feedback/v1', 'BKCookController@postFeedBack');
@@ -358,6 +348,8 @@ Route::get('/api/data/search/matrix/v1', 'RecommenderCoreController@getAllSearch
 Route::get('/api/data/implict/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
 Route::get('/api/data/survey/matrix/v1','RecommenderCoreController@getAllImplictToMatrix');
 
+// rank monan for date now
+Route::get('/api/rank/monan/date/v1', 'RecommenderCoreController@getRankMonAnDate');
 
 // handler result recommendation system
 Route::get('/api/get/recommended/item-base/v1', 'RecommenderCoreController@getItemRecommendedSaveDataBase');

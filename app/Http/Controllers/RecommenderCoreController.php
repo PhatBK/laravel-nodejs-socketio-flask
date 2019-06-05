@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Phpml\Association\Apriori;
+
 use App\Models\UserSearchKey;
 use App\Models\DanhGiaMonAn;
 use App\Models\UserServey;
@@ -10,18 +15,16 @@ use App\Models\LikeMonAn;
 use App\Models\User;
 use App\Models\MonAn;
 use App\Models\UserImplictsData;
+use App\Models\RecommendPredict;
 use App\Models\LoaiMon;
 use App\Models\UserPost;
-use App\Models\RecommendPredict;
-
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Models\RankMonAnDate;
 
 // use package of third
 use GuzzleHttp\Client as GuzzleClient;
-use Phpml\Association\Apriori;
+use Carbon\Carbon;
+
+
 
 
 class RecommenderCoreController extends Controller
@@ -32,14 +35,6 @@ class RecommenderCoreController extends Controller
     {
         $this->user_all = User::orderBy('id', 'ASC')->get();
         $this->monan_all = MonAn::orderBy('id', 'ASC')->get();
-    }
-    //TODO start Flask run caculator recommender
-    public function postStartRecommender(Request $req) {
-       
-        $client = new GuzzleClient(['base_uri' => 'http://127.0.0.1:5000/']);
-        $res = $client->request('GET', '/api/start/recommender/v1');
-        $datas = $res;
-        return response()->json("Success");
     }
     //TODO get data and send to flask
     public function getAllDataUserArray() {
@@ -378,15 +373,25 @@ class RecommenderCoreController extends Controller
         $client = new GuzzleClient(['base_uri' => 'http://127.0.0.1:5000/']);
         $res = $client->request('POST', '/api/response/data/recommended/post');
         $recommended_items = json_decode($res->getBody()->getContents(), true);
-        foreach ($recommended_items as $id_monan => $list_recommended) {
-            break;
-        }
+
         foreach ($recommended_items as $id_monan => $list_recommended) {
             $item_pre = new RecommendPredict();
             $item_pre->id_monan = $id_monan;
             $item_pre->list_recommended = $list_recommended;
             $item_pre->save();
         }
-        return "Success";
+        return response()->json("Success");
+    }
+    public function getRankMonAnDate() {
+        /**
+         * Score = (a*rate + b*like + c*search + d*watched ) / (age + 2)^g
+        */
+        $date_now = new \DateTime();
+        $date_now_ = new \DateTime();
+        $test = UserImplictsData::whereDate('created_at', Carbon::today())->get();
+        dd($test);
+        dd(strtotime($date_now->format('Y-m-d')) - strtotime($date_now_->format('Y-m-d')));
+        dd(getdate());
+
     }
 }
