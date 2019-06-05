@@ -356,17 +356,6 @@ class RecommenderCoreController extends Controller
     public function getImplictMatrixUser() {
         
     }
-    public function postHandlerRecommendedResult(Request $req) {
-        global $request_glo ;
-        $request_glo = $req;
-        $id_monans = MonAn::where('id' ,'>' ,0)->get('id');
-        $data = $req->text;
-        $test = ['id_monan' => $id_monans];
-        return response()->json($data);
-    }
-    public function getHandlerRecommendedResult() {
-        return response()->json("Laravel Get handled result");
-    }
     public function getItemRecommendedSaveDataBase() {
         // dd(json_decode($data, true));
         RecommendPredict::query()->delete();
@@ -383,15 +372,51 @@ class RecommenderCoreController extends Controller
         return response()->json("Success");
     }
     public function getRankMonAnDate() {
+//        $date_now_ = new \DateTime();
+//        $test = UserImplictsData::whereDate('created_at', Carbon::today())->get();
+//        dd(strtotime($date_now->format('Y-m-d')) - strtotime($date_now_->format('Y-m-d')));
         /**
          * Score = (a*rate + b*like + c*search + d*watched ) / (age + 2)^g
         */
-        $date_now = new \DateTime();
-        $date_now_ = new \DateTime();
-        $test = UserImplictsData::whereDate('created_at', Carbon::today())->get();
-        dd($test);
-        dd(strtotime($date_now->format('Y-m-d')) - strtotime($date_now_->format('Y-m-d')));
-        dd(getdate());
+        $A = 1000;
+        $B = 800;
+        $C = 800;
+        $D = 800;
+        $E = 800;
+        $G = 2;
 
+        $date_now = new \DateTime();
+        $all_mon_an = MonAn::all();
+        $ranking = [];
+        foreach ($all_mon_an as $monan) {
+            $total_view_number = $monan->so_luot_xem;
+            $total_watched_time = 0;
+            $total_rating = 0;
+            $all_rated = $monan->danhgiamonan;
+            foreach ($all_rated as $rate) {
+                if ($rate->danhgia < 4) continue;
+                $total_rating += $rate->danhgia;
+            }
+            $all_liked_number = count($monan->likemon);
+            $all_search_number = count(UserSearchKey::where('mon_an_id', $monan->id)->get());
+            $all_watcched = UserImplictsData::where('mon_an_id', $monan->id)->get();
+            foreach ($all_watcched as $watched) {
+                if ($watched->visited_time < 10) continue;
+                $total_watched_time += $watched->visited_time;
+            }
+            $age_sinece_create = (strtotime($date_now->format('Y-m-d')) - strtotime($monan->created_at->format('Y-m-d'))) / 3600;
+            $score_ranking = ($A * $total_rating + $B * $all_liked_number + $C * $all_search_number + $D * $total_watched_time + $E * $total_view_number - 1) / pow(($age_sinece_create + 2), $G);
+            $ranking[$monan->id] = $score_ranking;
+        }
+        arsort($ranking);
+        $ranking_result = array_slice($ranking, 0, 5, true);
+        RankMonAnDate::query()->delete();
+        foreach ($ranking_result as $key=>$value) {
+            $ranked = new RankMonAnDate();
+            $ranked->id_monan = $key;
+            $ranked->rank = $value;
+            $ranked->save();
+        }
+        return response()->json("Successfully");
     }
 }

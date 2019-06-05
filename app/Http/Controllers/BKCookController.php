@@ -12,6 +12,7 @@ use App\Models\MonAn;
 use App\Models\MucDich;
 use App\Models\NhaHang;
 use App\Models\NhaHangMonAn;
+use App\Models\RankMonAnDate;
 use App\Models\RecommendPredict;
 use App\Models\Theloai;
 use App\Models\User;
@@ -244,6 +245,10 @@ class BKCookController extends Controller {
                     }
                 }
             }
+			if (count($recommendation_list_monans) == 0) {
+                $recommendation_list_monans = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
+                dd($recommendation_list_monans);
+            }
 
 			if (!(Session::get('id') == $id)) {
 				$monan->so_luot_xem++;
@@ -254,7 +259,17 @@ class BKCookController extends Controller {
 			$monan_lienquan_loaimon = MonAn::where('id_loaimon', $monan->id_loaimon)->orderBy('id', 'desc')->take(4)->get();
 
 			$new_last_foods = MonAn::orderBy('created_at', 'desc')->take(3)->get();
-            $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(3)->get();
+
+            $popularest_foods = [];
+            $ranked_monan = RankMonAnDate::all();
+            foreach ($ranked_monan as $ranked) {
+                if ($ranked->id_monan == $id) continue;
+                $monan_rank = MonAn::find($ranked->id_monan);
+                $popularest_foods[] = $monan_rank;
+            }
+            if (count($popularest_foods) == 0) {
+                $popularest_foods = MonAn::orderBy('so_luot_xem', 'desc')->take(3)->get();
+            }
 			$monan_lienquan = collect($monan_lienquan_loaimon)->unique();
 			$cacbuocnau = CacBuocNau::where('id_monan', $id)->get();
             $comments = $monan->comment;

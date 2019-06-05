@@ -38,7 +38,7 @@ file_name_item_recommended = None
 global finish_caculator
 finish_caculator = None
 global time_scheduler
-time_scheduler = 10
+time_scheduler = 15
 
 global time_start_recommend
 time_start_recommend = "Time start:" + str(datetime.now())
@@ -174,11 +174,6 @@ def get_recommendation_item_base_libs():
 @app.route('/api/response/data/recommended/post',  methods=["POST"])
 def post_data_recommended():
     print("Start Post Recommended data for Web App Server...")
-    # Send data recommended to Web-app
-    # headers = {'content-type': 'application/json'}
-    # res_handler = requests.post('http://127.0.0.1/DATN-20182/public/api/handler/recommended/result/v1',
-    # data=json.dumps(response_data), headers=headers)
-    # print(res_handler.text)
     global share_data
     if share_data == None:
         global file_name_item_recommended
@@ -208,6 +203,12 @@ def scheduler_item_based_start():
 
 @app.route('/scheduler/start/rank/monan/v1')
 def scheduler_rank_monan():
+    print("Scheduler Running...")
+    res_scheduler = requests.get('http://127.0.0.1/DATN-20182/public/api/rank/monan/date/v1')
+    if res_scheduler.status_code < 300:
+        print("Ranking monan successfully...")
+    else:
+        print("Ranking monan Unsuccessfully...")
     return "Success"
 
 
@@ -216,7 +217,7 @@ def server_error_handler():
     return "500 Server Error"
 
 
-# recommend_CF_item_item()
+sched.add_interval_job(scheduler_rank_monan, minutes=5)
 sched.add_interval_job(scheduler_item_based_start, minutes=time_scheduler)
 
 
